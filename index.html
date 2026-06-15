@@ -1,64 +1,5 @@
 <!DOCTYPE html>
 <html lang="ko">
-<script>
-
-const year = 2026;
-const month = 7; // 1~12
-
-generateCalendar(year, month);
-
-function generateCalendar(year, month){
-
-    const calendar = document.getElementById('calendar');
-
-    calendar.innerHTML = '';
-
-    const firstDay = new Date(year, month - 1, 1);
-
-    const lastDate = new Date(year, month, 0).getDate();
-
-    let startDay = firstDay.getDay();
-
-    // 일요일=0 → 월요일 시작 기준 변환
-    startDay = startDay === 0 ? 6 : startDay - 1;
-
-    // 빈칸 생성
-    for(let i=0; i<startDay; i++){
-
-        const empty = document.createElement('div');
-        empty.className = 'day';
-        empty.style.visibility = 'hidden';
-
-        calendar.appendChild(empty);
-    }
-
-    // 날짜 생성
-    for(let day=1; day<=lastDate; day++){
-
-        const current = new Date(year, month - 1, day);
-
-        const weekday = current.getDay();
-
-        const isWeekend =
-            weekday === 0 ||
-            weekday === 6;
-
-        const maxSlot = isWeekend ? 1 : 2;
-
-        const div = document.createElement('div');
-
-        div.className = 'day available';
-
-        div.innerHTML = `
-            <div class="day-number">${day}</div>
-            <div class="slot">0 / ${maxSlot}</div>
-        `;
-
-        calendar.appendChild(div);
-    }
-}
-
-</script>
 
 
 
@@ -475,3 +416,63 @@ body{
 </body>
 
 </html>
+
+<script>
+
+const year = 2026;
+const month = 7; // 1~12
+
+generateCalendar(year, month);
+
+function generateCalendar(year, month){
+
+    const calendar = document.getElementById('calendar');
+
+    calendar.innerHTML = '';
+
+    const firstDay = new Date(year, month - 1, 1);
+
+    const lastDate = new Date(year, month, 0).getDate();
+
+    let startDay = firstDay.getDay();
+
+    // 일요일=0 → 월요일 시작 기준 변환
+    startDay = startDay === 0 ? 6 : startDay - 1;
+
+    // 빈칸 생성
+    for(let i=0; i<startDay; i++){
+
+        const empty = document.createElement('div');
+        empty.className = 'day';
+        empty.style.visibility = 'hidden';
+
+        calendar.appendChild(empty);
+    }
+
+    // 날짜 생성
+    for(let day=1; day<=lastDate; day++){
+
+        const current = new Date(year, month - 1, day);
+
+        const weekday = current.getDay();
+
+        const isWeekend =
+            weekday === 0 ||
+            weekday === 6;
+
+        const maxSlot = isWeekend ? 1 : 2;
+
+        const div = document.createElement('div');
+
+        div.className = 'day available';
+
+        div.innerHTML = `
+            <div class="day-number">${day}</div>
+            <div class="slot">0 / ${maxSlot}</div>
+        `;
+
+        calendar.appendChild(div);
+    }
+}
+
+</script>
