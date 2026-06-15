@@ -609,6 +609,88 @@ db.ref("schedules/" + staff).set({
 }
     
 
+    document
+.getElementById('staffSelect')
+.addEventListener('change', loadSchedule);
+
+    function loadSchedule(){
+
+    const staff =
+        document.getElementById('staffSelect').value;
+
+    if(!staff) return;
+
+    // 기존 선택 초기화
+    document
+    .querySelectorAll('.day')
+    .forEach(day => {
+
+        day.classList.remove('selected');
+
+    });
+
+    // Firebase 조회
+    db.ref('schedules/' + staff)
+    .once('value')
+
+    .then(snapshot => {
+
+        const data = snapshot.val();
+
+        if(!data || !data.days){
+
+            updateRemaining();
+            return;
+
+        }
+
+        data.days.forEach(savedDay => {
+
+            document
+            .querySelectorAll('.day')
+            .forEach(day => {
+
+                const dayNumber =
+                    day.querySelector('.day-number');
+
+                if(
+                    dayNumber &&
+                    dayNumber.textContent == savedDay
+                ){
+
+                    day.classList.add('selected');
+
+                }
+
+            });
+
+        });
+
+        updateRemaining();
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+    });
+
+}
+
+    const staffColors = {
+
+ "김은진":"#8b5cf6",
+ "이주훈":"#3b82f6",
+ "김명규":"#f59e0b",
+ "신민규":"#ef4444",
+ "박혜정":"#22c55e"
+
+};
+
+
+    db.ref('schedules').once(...)
+    
 </script>
 
 </body>
