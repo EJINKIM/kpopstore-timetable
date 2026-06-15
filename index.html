@@ -335,11 +335,11 @@ body{
 
             <div class="calendar-header">
 
-                <h2>2026년 7월</h2>
+              <h2 id="monthTitle"></h2>
 
                 <div class="month-nav">
-                    <button class="btn">←</button>
-                    <button class="btn">→</button>
+                 <button class="btn" id="prevBtn">←</button>
+                 <button class="btn" id="nextBtn">→</button>
                 </div>
 
             </div>
@@ -353,23 +353,9 @@ body{
                 <div>토</div>
                 <div>일</div>
             </div>
-
-            <div class="calendar">
-
-                <div class="day available">
-                    <div class="day-number">1</div>
-                    <div class="slot">1 / 2</div>
-                </div>
-
-                <div class="day selected">
-                    <div class="day-number">2</div>
-                    <div class="slot">선택됨</div>
-                </div>
-
-                <div class="day full">
-                    <div class="day-number">3</div>
-                    <div class="slot">마감</div>
-                </div>
+            
+<div class="calendar" id="calendar"></div>
+           
 
                 <div class="day available"><div class="day-number">4</div><div class="slot">0 / 2</div></div>
                 <div class="day available"><div class="day-number">5</div><div class="slot">1 / 2</div></div>
@@ -413,48 +399,45 @@ body{
 
 </div>
 
-    <script>
+<script>
 
-const year = 2026;
-const month = 7; // 1~12
+let currentYear = new Date().getFullYear();
+let currentMonth = new Date().getMonth() + 1;
 
-generateCalendar(year, month);
+render();
 
-function generateCalendar(year, month){
+function render() {
+
+    document.getElementById('monthTitle').textContent =
+        `${currentYear}년 ${currentMonth}월`;
+
+    generateCalendar(currentYear, currentMonth);
+}
+
+function generateCalendar(year, month) {
 
     const calendar = document.getElementById('calendar');
 
     calendar.innerHTML = '';
 
     const firstDay = new Date(year, month - 1, 1);
-
     const lastDate = new Date(year, month, 0).getDate();
 
     let startDay = firstDay.getDay();
-
-    // 일요일=0 → 월요일 시작 기준 변환
     startDay = startDay === 0 ? 6 : startDay - 1;
 
-    // 빈칸 생성
-    for(let i=0; i<startDay; i++){
-
+    for (let i = 0; i < startDay; i++) {
         const empty = document.createElement('div');
-        empty.className = 'day';
-        empty.style.visibility = 'hidden';
-
         calendar.appendChild(empty);
     }
 
-    // 날짜 생성
-    for(let day=1; day<=lastDate; day++){
+    for (let day = 1; day <= lastDate; day++) {
 
-        const current = new Date(year, month - 1, day);
-
-        const weekday = current.getDay();
+        const date = new Date(year, month - 1, day);
 
         const isWeekend =
-            weekday === 0 ||
-            weekday === 6;
+            date.getDay() === 0 ||
+            date.getDay() === 6;
 
         const maxSlot = isWeekend ? 1 : 2;
 
@@ -467,11 +450,40 @@ function generateCalendar(year, month){
             <div class="slot">0 / ${maxSlot}</div>
         `;
 
+        div.addEventListener('click', () => {
+            div.classList.toggle('selected');
+        });
+
         calendar.appendChild(div);
     }
 }
 
+document.getElementById('prevBtn').addEventListener('click', () => {
+
+    currentMonth--;
+
+    if (currentMonth < 1) {
+        currentMonth = 12;
+        currentYear--;
+    }
+
+    render();
+});
+
+document.getElementById('nextBtn').addEventListener('click', () => {
+
+    currentMonth++;
+
+    if (currentMonth > 12) {
+        currentMonth = 1;
+        currentYear++;
+    }
+
+    render();
+});
+
 </script>
+
 </body>
 
 </html>
