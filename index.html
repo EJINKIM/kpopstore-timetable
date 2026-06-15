@@ -1,719 +1,500 @@
 <!DOCTYPE html>
 <html lang="ko">
-
-
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Store Scheduler</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>K지니팝 휴무 신청</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-
-.staff-tag{
-    font-size:11px;
-    font-weight:600;
-    margin-top:2px;
-}
-
 :root{
-    --bg:#0f1117;
-    --card:rgba(255,255,255,0.06);
-    --border:rgba(255,255,255,.08);
-    --text:#fff;
-    --sub:#8f96a3;
-    --primary:#6c63ff;
-    --green:#22c55e;
-    --danger:#ef4444;
+  --bg:#0f1117;
+  --card:rgba(255,255,255,0.07);
+  --border:rgba(255,255,255,.10);
+  --text:#fff;
+  --sub:#9ca3af;
+  --primary:#6c63ff;
+  --green:#22c55e;
+  --danger:#ef4444;
+  --day:#171a22;
 }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Pretendard',sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Noto Sans KR',sans-serif;}
 
 body{
-    background:
+  min-height:100vh;
+  color:var(--text);
+  background:
     radial-gradient(circle at top right,#6c63ff33,transparent 30%),
     radial-gradient(circle at bottom left,#00d4ff22,transparent 30%),
     var(--bg);
-
-    min-height:100vh;
-    color:white;
 }
 
-.container{
-    max-width:1400px;
-    margin:auto;
-    padding:30px;
-}
+.container{max-width:1400px;margin:auto;padding:30px;}
 
-.topbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:30px;
-}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;}
+.logo{font-size:26px;font-weight:800;letter-spacing:-.02em;}
+.logo span{color:var(--primary);}
+.avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#6c63ff,#8b5cf6);}
 
-.logo{
-    font-size:26px;
-    font-weight:700;
-}
+.hero{display:grid;grid-template-columns:350px 1fr;gap:24px;align-items:start;}
+.card{background:var(--card);backdrop-filter:blur(18px);border:1px solid var(--border);border-radius:24px;box-shadow:0 24px 60px rgba(0,0,0,.18);}
+.sidebar{padding:25px;position:sticky;top:20px;}
+.sidebar h2{margin-bottom:15px;font-size:22px;}
+.staff-select{margin-top:20px;}
+.staff-select select,.staff-select input{width:100%;padding:14px;background:#171a22;border:1px solid rgba(255,255,255,.08);color:white;border-radius:12px;outline:none;}
+.staff-select input{margin-top:12px;}
+.remaining{margin-top:20px;padding:20px;border-radius:18px;background:#171a22;border:1px solid rgba(255,255,255,.06);}
+.remaining h1{font-size:54px;color:var(--green);line-height:1.05;}
+.remaining small,.remaining p{color:var(--sub);}
+.rules{margin-top:25px;}
+.rule{margin-bottom:10px;color:#9ca3af;font-size:14px;}
+.submit{margin-top:25px;width:100%;padding:18px;border:none;border-radius:16px;background:linear-gradient(135deg,#6c63ff,#8b5cf6);color:white;font-size:16px;font-weight:700;cursor:pointer;}
+.submit:hover{opacity:.92;}
 
-.logo span{
-    color:var(--primary);
-}
-
-.user-box{
-    display:flex;
-    gap:15px;
-    align-items:center;
-}
-
-.avatar{
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#6c63ff,#8b5cf6);
-}
-
-.hero{
-    display:grid;
-    grid-template-columns:350px 1fr;
-    gap:24px;
-}
-
-.card{
-    background:var(--card);
-    backdrop-filter:blur(18px);
-    border:1px solid var(--border);
-    border-radius:24px;
-}
-
-.sidebar{
-    padding:25px;
-}
-
-.sidebar h2{
-    margin-bottom:15px;
-}
-
-.remaining{
-    margin-top:20px;
-    padding:20px;
-    border-radius:18px;
-    background:#171a22;
-}
-
-.remaining h1{
-    font-size:54px;
-    color:#22c55e;
-}
-
-.staff-select{
-    margin-top:20px;
-}
-
-.staff-select select{
-    width:100%;
-    padding:14px;
-    background:#171a22;
-    border:none;
-    color:white;
-    border-radius:12px;
-}
-
-.rules{
-    margin-top:25px;
-}
-
-.rule{
-    margin-bottom:10px;
-    color:#9ca3af;
-}
-
-.calendar-card{
-    padding:25px;
-}
-
-.calendar-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
-}
-
-.calendar-header h2{
-    font-size:24px;
-}
-
-.month-nav{
-    display:flex;
-    gap:10px;
-}
-
-.btn{
-    width:42px;
-    height:42px;
-    border:none;
-    border-radius:12px;
-    background:#1b1f2b;
-    color:white;
-    cursor:pointer;
-}
-
-.weekdays{
-    display:grid;
-    grid-template-columns:repeat(7,1fr);
-    margin-bottom:12px;
-    text-align:center;
-    color:#6b7280;
-}
-
-.calendar{
-    display:grid;
-    grid-template-columns:repeat(7,1fr);
-    gap:12px;
-}
-
-.day{
-    aspect-ratio:1;
-    border-radius:20px;
-    background:#171a22;
-    border:1px solid rgba(255,255,255,.05);
-    padding:12px;
-    cursor:pointer;
-    transition:.25s;
-    position:relative;
-}
-
-.day:hover{
-    transform:translateY(-4px);
-    border-color:#6c63ff;
-}
-
-.day-number{
-    font-weight:600;
-}
-
-.day.available{
-    box-shadow:0 0 0 1px #22c55e40;
-}
-
-.day.selected{
-    background:linear-gradient(135deg,#6c63ff,#8b5cf6);
-}
-
-.day.full{
-    opacity:.4;
-    cursor:not-allowed;
-}
-
-.slot{
-    position:absolute;
-    bottom:12px;
-    left:12px;
-    font-size:12px;
-    color:#9ca3af;
-}
-
-.legend{
-    display:flex;
-    gap:12px;
-    margin-top:25px;
-}
-
-.badge{
-    padding:8px 14px;
-    border-radius:999px;
-    font-size:13px;
-}
-
-.available-badge{
-    background:#22c55e22;
-    color:#22c55e;
-}
-
-.full-badge{
-    background:#ef444422;
-    color:#ef4444;
-}
-
-.selected-badge{
-    background:#6c63ff22;
-    color:#a5b4fc;
-}
-
-.submit{
-    margin-top:25px;
-    width:100%;
-    padding:18px;
-    border:none;
-    border-radius:16px;
-    background:linear-gradient(135deg,#6c63ff,#8b5cf6);
-    color:white;
-    font-size:16px;
-    font-weight:600;
-    cursor:pointer;
-}
-
-.submit:hover{
-    opacity:.9;
-}
+.calendar-card{padding:25px;}
+.calendar-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:12px;}
+.calendar-header h2{font-size:24px;white-space:nowrap;}
+.month-nav{display:flex;gap:10px;}
+.btn{width:42px;height:42px;border:none;border-radius:12px;background:#1b1f2b;color:white;cursor:pointer;font-size:18px;}
+.weekdays{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:12px;text-align:center;color:#7b8290;font-size:14px;}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;}
+.day{aspect-ratio:1;border-radius:20px;background:var(--day);border:1px solid rgba(255,255,255,.06);padding:12px;cursor:pointer;transition:.2s;position:relative;overflow:hidden;min-height:86px;}
+.day:hover{transform:translateY(-3px);border-color:#6c63ff;}
+.day-number{font-weight:700;position:relative;z-index:2;}
+.day.available{box-shadow:0 0 0 1px #22c55e25;}
+.day.selected{outline:3px solid rgba(255,255,255,.65);outline-offset:-3px;}
+.day.full{opacity:.45;cursor:not-allowed;}
+.day.full:hover{transform:none;border-color:rgba(255,255,255,.06);}
+.slot{position:absolute;bottom:10px;left:10px;font-size:11px;color:#dbeafe;z-index:3;}
+.color-fill{position:absolute;inset:0;opacity:.72;z-index:1;}
+.staff-list{position:relative;z-index:3;display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;padding-right:2px;}
+.staff-tag{font-size:10.5px;font-weight:800;line-height:1;padding:5px 7px;border-radius:999px;background:rgba(255,255,255,.78);box-shadow:0 4px 12px rgba(0,0,0,.10);backdrop-filter:blur(10px);}
+.day.conflict{animation:shake .28s ease-in-out 0s 2;outline:2px solid rgba(239,68,68,.9);}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;}
+.badge{padding:8px 12px;border-radius:999px;font-size:13px;background:#ffffff10;color:#d1d5db;display:flex;align-items:center;gap:7px;}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
 
 @media(max-width:900px){
-
-.hero{
-    grid-template-columns:1fr;
+  .container{padding:16px;}
+  .topbar{margin-bottom:18px;}
+  .logo{font-size:22px;}
+  .hero{grid-template-columns:1fr;gap:16px;}
+  .sidebar{position:static;padding:20px;}
+  .calendar-card{padding:16px;}
+  .calendar-header h2{font-size:20px;}
+  .btn{width:38px;height:38px;}
+  .calendar{gap:7px;}
+  .weekdays{font-size:12px;}
+  .day{border-radius:13px;padding:8px;min-height:76px;}
+  .day-number{font-size:13px;}
+  .staff-list{gap:3px;margin-top:5px;}
+  .staff-tag{font-size:9px;padding:4px 5px;}
+  .slot{font-size:9px;bottom:6px;left:7px;}
+  .remaining h1{font-size:44px;}
 }
-
-.calendar{
-    gap:8px;
-}
-
-.day{
-    border-radius:14px;
-}
-
-}
-
 </style>
 </head>
 <body>
 
 <div class="container">
+  <div class="topbar">
+    <div class="logo">KGENIE<span> Timetable</span></div>
+    <div class="avatar"></div>
+  </div>
 
-    <div class="topbar">
+  <div class="hero">
+    <div class="card sidebar">
+      <h2>휴무 신청</h2>
 
-        <div class="logo">
-            Store<span>Scheduler</span>
-        </div>
+      <div class="staff-select">
+        <select id="staffSelect">
+          <option value="">K지니팝 직원 선택</option>
+          <option value="김은진">김은진</option>
+          <option value="이주훈">이주훈</option>
+          <option value="김명규">김명규</option>
+          <option value="신민규">신민규</option>
+          <option value="박혜정">박혜정</option>
+        </select>
+        <input type="password" id="pinInput" placeholder="PIN 번호 입력" />
+      </div>
 
-        <div class="user-box">
-            <div class="avatar"></div>
-        </div>
+      <div class="remaining">
+        <p>남은 휴무</p>
+        <h1 id="remainingDays">8</h1>
+        <small>총 8회 선택 가능</small>
+      </div>
 
+      <div class="rules">
+        <div class="rule">✓ 직원별 월 8회 휴무 신청</div>
+        <div class="rule">✓ 평일 최대 2명 휴무 가능</div>
+        <div class="rule">✓ 토·일 최대 1명 휴무 가능</div>
+        <div class="rule">✓ 충돌 날짜는 신청 전 자동 안내</div>
+      </div>
+
+      <button class="submit" id="submitBtn">신청 완료하기</button>
     </div>
 
-    <div class="hero">
-
-        <div class="card sidebar">
-
-            <h2>휴무 신청</h2>
-
-          <div class="staff-select">
-
-    <select id="staffSelect">
-        <option value="">K지니팝 직원 선택</option>
-        <option value="김은진">김은진</option>
-        <option value="이주훈">이주훈</option>
-        <option value="김명규">김명규</option>
-        <option value="신민규">신민규</option>
-        <option value="박혜정">박혜정</option>
-    </select>
-
-    <input
-        type="password"
-        id="pinInput"
-        placeholder="PIN 번호 입력"
-        style="
-            width:100%;
-            margin-top:12px;
-            padding:14px;
-            background:#171a22;
-            border:none;
-            border-radius:12px;
-            color:white;
-        "
-    >
-
-</div>
-
-            <div class="remaining">
-                <p>남은 휴무</p>
-                <h1 id="remainingDays">8</h1>
-                <small>총 8회 선택 가능</small>
-            </div>
-
-            <div class="rules">
-                <div class="rule">✓ 평일 최대 2명</div>
-                <div class="rule">✓ 토요일 최대 1명</div>
-                <div class="rule">✓ 일요일 최대 1명</div>
-                <div class="rule">✓ 선착순 마감</div>
-            </div>
-
-            <button class="submit" id="submitBtn">
-    신청 완료하기
-</button>
-
+    <div class="card calendar-card">
+      <div class="calendar-header">
+        <h2 id="monthTitle"></h2>
+        <div class="month-nav">
+          <button class="btn" id="prevBtn" type="button">←</button>
+          <button class="btn" id="nextBtn" type="button">→</button>
         </div>
+      </div>
 
-        <div class="card calendar-card">
+      <div class="weekdays">
+        <div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div><div>일</div>
+      </div>
+      <div class="calendar" id="calendar"></div>
 
-            <div class="calendar-header">
-
-              <h2 id="monthTitle"></h2>
-
-                <div class="month-nav">
-                 <button class="btn" id="prevBtn">←</button>
-                 <button class="btn" id="nextBtn">→</button>
-                </div>
-
-            </div>
-
-            <div class="weekdays">
-                <div>월</div>
-                <div>화</div>
-                <div>수</div>
-                <div>목</div>
-                <div>금</div>
-                <div>토</div>
-                <div>일</div>
-            </div>
-            
-<div class="calendar" id="calendar"></div>
-           
-
-            </div>
-
-            <div class="legend">
-
-                <div class="badge available-badge">
-                    선택 가능
-                </div>
-
-                <div class="badge selected-badge">
-                    내 휴무
-                </div>
-
-                <div class="badge full-badge">
-                    마감
-                </div>
-
-            </div>
-
-        </div>
-
+      <div class="legend" id="legend"></div>
     </div>
-
+  </div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <script>
-
 const firebaseConfig = {
-    apiKey: "1:848394973405:web:6221818a6a358fb0c5eb34"
+  apiKey: "여기에_FIREBASE_API_KEY_붙여넣기",
   authDomain: "kpopstore-timetable.firebaseapp.com",
   databaseURL: "https://kpopstore-timetable-default-rtdb.firebaseio.com",
   projectId: "kpopstore-timetable",
   storageBucket: "kpopstore-timetable.firebasestorage.app",
   messagingSenderId: "848394973405",
-  appId: "1:848394973405:web:6221818a6a358fb0c5eb34"});
+  appId: "1:848394973405:web:6221818a6a358fb0c5eb34"
 };
 
-firebase.initializeApp(firebaseConfig);
+let db = null;
+try {
+  if (!firebaseConfig.apiKey.includes("여기에")) {
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.database();
+  }
+} catch (error) {
+  console.error("Firebase 연결 오류:", error);
+}
 
-const db = firebase.database();
-
-</script>
-    
-<script>
-
-    const employeePins = {
-
-    "김은진":"6666",
-    "이주훈":"2222",
-    "김명규":"3333",
-    "신민규":"4444",
-    "박혜정":"5555"
-
+const employeePins = {
+  "김은진":"6666",
+  "이주훈":"2222",
+  "김명규":"3333",
+  "신민규":"4444",
+  "박혜정":"5555"
 };
 
-    
+const staffColors = {
+  "김은진":"#7dd3fc",  // 은진: 하늘색
+  "이주훈":"#fde68a",  // 주훈: 옐로우
+  "김명규":"#bbf7d0",  // 명규: 그린
+  "신민규":"#bfdbfe",  // 민규: 블루
+  "박혜정":"#fbcfe8"   // 혜정: 핑크
+};
+
+const staffTextColors = {
+  "김은진":"#075985",
+  "이주훈":"#854d0e",
+  "김명규":"#166534",
+  "신민규":"#1e40af",
+  "박혜정":"#9d174d"
+};
+
+const shortNames = {
+  "김은진":"은진",
+  "이주훈":"주훈",
+  "김명규":"명규",
+  "신민규":"민규",
+  "박혜정":"혜정"
+};
+
 let currentYear = new Date().getFullYear();
 let currentMonth = new Date().getMonth() + 1;
+let allSchedules = {};
+let mySelectedDays = new Set();
 
+renderLegend();
 render();
+loadAllSchedules();
 
-function render() {
-
-    document.getElementById('monthTitle').textContent =
-        `${currentYear}년 ${currentMonth}월`;
-
-    generateCalendar(currentYear, currentMonth);
+function monthKey(){
+  return `${currentYear}-${String(currentMonth).padStart(2,'0')}`;
 }
 
-function generateCalendar(year, month) {
+function renderLegend(){
+  const legend = document.getElementById('legend');
+  legend.innerHTML = Object.keys(staffColors).map(name => `
+    <div class="badge"><span class="dot" style="background:${staffColors[name]}"></span>${shortNames[name]}</div>
+  `).join('') + `<div class="badge">진한 테두리 = 내가 선택한 휴무</div>`;
+}
 
-    const calendar = document.getElementById('calendar');
+function render(){
+  document.getElementById('monthTitle').textContent = `${currentYear}년 ${currentMonth}월`;
+  generateCalendar(currentYear, currentMonth);
+  paintSavedSchedules();
+  updateRemaining();
+}
 
-    calendar.innerHTML = '';
+function generateCalendar(year, month){
+  const calendar = document.getElementById('calendar');
+  calendar.innerHTML = '';
 
-    const firstDay = new Date(year, month - 1, 1);
-    const lastDate = new Date(year, month, 0).getDate();
+  const firstDay = new Date(year, month - 1, 1);
+  const lastDate = new Date(year, month, 0).getDate();
 
-    let startDay = firstDay.getDay();
-    startDay = startDay === 0 ? 6 : startDay - 1;
+  let startDay = firstDay.getDay();
+  startDay = startDay === 0 ? 6 : startDay - 1;
 
-    for (let i = 0; i < startDay; i++) {
-        const empty = document.createElement('div');
-        calendar.appendChild(empty);
+  for(let i = 0; i < startDay; i++){
+    const empty = document.createElement('div');
+    calendar.appendChild(empty);
+  }
+
+  for(let day = 1; day <= lastDate; day++){
+    const date = new Date(year, month - 1, day);
+    const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+    const maxSlot = isWeekend ? 1 : 2;
+
+    const div = document.createElement('div');
+    div.className = 'day available';
+    div.dataset.day = String(day);
+    div.dataset.max = String(maxSlot);
+    div.innerHTML = `
+      <div class="color-fill"></div>
+      <div class="day-number">${day}</div>
+      <div class="slot">0 / ${maxSlot}</div>
+    `;
+
+    div.addEventListener('click', () => toggleDay(day));
+    calendar.appendChild(div);
+  }
+}
+
+function toggleDay(day){
+  const staff = document.getElementById('staffSelect').value;
+  if(!staff){
+    alert('먼저 직원을 선택해주세요.');
+    return;
+  }
+
+  const dayBox = document.querySelector(`.day[data-day="${day}"]`);
+  const maxSlot = Number(dayBox.dataset.max);
+
+  if(mySelectedDays.has(day)){
+    mySelectedDays.delete(day);
+  } else {
+    if(mySelectedDays.size >= 8){
+      alert('휴무는 최대 8일까지만 선택 가능합니다.');
+      return;
     }
 
-    for (let day = 1; day <= lastDate; day++) {
+    const otherApplicants = getSavedApplicantsForDay(day).filter(name => name !== staff);
 
-        const date = new Date(year, month - 1, day);
-
-        const isWeekend =
-            date.getDay() === 0 ||
-            date.getDay() === 6;
-
-        const maxSlot = isWeekend ? 1 : 2;
-
-        const div = document.createElement('div');
-
-        div.className = 'day available';
-
-      div.innerHTML = `
-    <div class="day-number">${day}</div>
-    <div class="staff-list"></div>
-    <div class="slot">0 / ${maxSlot}</div>
-`;
-       div.addEventListener('click', () => {
-
-    const selectedCount =
-        document.querySelectorAll('.day.selected').length;
-
-    if (!div.classList.contains('selected')) {
-
-        if (selectedCount >= 8) {
-            alert('휴무는 최대 8일까지만 선택 가능합니다.');
-            return;
-        }
-
-const currentStaff =
-    document.getElementById('staffSelect').value;
-
-div.classList.add('selected');
-
-div.style.background =
-staffColors[currentStaff];
- } else {
-
-    div.classList.remove('selected');
-    div.style.background='';
-
-}
-
-    updateRemaining();
-});
-
-        calendar.appendChild(div);
+    if(otherApplicants.length >= maxSlot){
+      showConflict(day, otherApplicants, maxSlot);
+      return;
     }
+
+    mySelectedDays.add(day);
+  }
+
+  paintSavedSchedules();
+  updateRemaining();
 }
+
+function getSavedApplicantsForDay(day){
+  const monthData = allSchedules[monthKey()] || {};
+  const applicants = [];
+
+  Object.keys(monthData).forEach(staff => {
+    const days = monthData[staff]?.days || [];
+    if(days.map(Number).includes(Number(day))) applicants.push(staff);
+  });
+
+  return applicants;
+}
+
+function getApplicantsForDay(day){
+  const applicants = getSavedApplicantsForDay(day);
+  const currentStaff = document.getElementById('staffSelect').value;
+
+  if(currentStaff && mySelectedDays.has(Number(day)) && !applicants.includes(currentStaff)){
+    applicants.push(currentStaff);
+  }
+
+  return applicants;
+}
+
+function paintSavedSchedules(){
+  document.querySelectorAll('.day').forEach(dayBox => {
+    const day = Number(dayBox.dataset.day);
+    if(!day) return;
+
+    const applicants = getApplicantsForDay(day);
+    const maxSlot = Number(dayBox.dataset.max);
+    const fill = dayBox.querySelector('.color-fill');
+    const slot = dayBox.querySelector('.slot');
+    const staffList = dayBox.querySelector('.staff-list');
+    const currentStaff = document.getElementById('staffSelect').value;
+
+    dayBox.classList.remove('selected','full','conflict');
+    fill.style.background = '';
+    staffList.innerHTML = '';
+
+    applicants.forEach(name => {
+      const tag = document.createElement('div');
+      tag.className = 'staff-tag';
+      tag.textContent = shortNames[name] || name;
+      tag.style.color = staffTextColors[name] || '#111827';
+      tag.style.border = `1px solid ${staffTextColors[name] || '#111827'}22`;
+      staffList.appendChild(tag);
+    });
+
+    if(applicants.length === 1){
+      fill.style.background = staffColors[applicants[0]];
+    } else if(applicants.length >= 2){
+      const colors = applicants.map((name, index) => {
+        const start = Math.round(index * 100 / applicants.length);
+        const end = Math.round((index + 1) * 100 / applicants.length);
+        return `${staffColors[name]} ${start}% ${end}%`;
+      }).join(', ');
+      fill.style.background = `linear-gradient(135deg, ${colors})`;
+    }
+
+    if(currentStaff && mySelectedDays.has(day)){
+      dayBox.classList.add('selected');
+    }
+
+    if(applicants.length >= maxSlot && !(currentStaff && mySelectedDays.has(day))){
+      dayBox.classList.add('full');
+    }
+
+    slot.textContent = `${Math.min(applicants.length, maxSlot)} / ${maxSlot}`;
+  });
+}
+function showConflict(day, applicants, maxSlot){
+  const dayBox = document.querySelector(`.day[data-day="${day}"]`);
+  if(dayBox){
+    dayBox.classList.add('conflict');
+    setTimeout(() => dayBox.classList.remove('conflict'), 700);
+  }
+
+  const names = applicants.map(name => shortNames[name] || name).join(', ');
+  alert(`${currentMonth}월 ${day}일은 이미 ${names}님이 신청해서 마감되었습니다.
+이 날짜는 최대 ${maxSlot}명까지만 휴무 신청할 수 있습니다.`);
+}
+
+function validateBeforeSubmit(staff){
+  const conflicts = [];
+
+  Array.from(mySelectedDays).forEach(day => {
+    const dayBox = document.querySelector(`.day[data-day="${day}"]`);
+    const maxSlot = Number(dayBox.dataset.max);
+    const otherApplicants = getSavedApplicantsForDay(day).filter(name => name !== staff);
+
+    if(otherApplicants.length >= maxSlot){
+      conflicts.push({ day, applicants: otherApplicants, maxSlot });
+    }
+  });
+
+  if(conflicts.length){
+    const message = conflicts.map(item => {
+      const names = item.applicants.map(name => shortNames[name] || name).join(', ');
+      return `${currentMonth}월 ${item.day}일: ${names} 신청 완료`;
+    }).join('\n');
+
+    alert(`중복 신청 충돌이 있습니다.
+
+${message}
+
+다른 날짜를 선택해주세요.`);
+    const first = conflicts[0];
+    const dayBox = document.querySelector(`.day[data-day="${first.day}"]`);
+    if(dayBox){
+      dayBox.classList.add('conflict');
+      setTimeout(() => dayBox.classList.remove('conflict'), 900);
+    }
+    return false;
+  }
+
+  return true;
+}
+
+function updateRemaining(){
+  document.getElementById('remainingDays').textContent = 8 - mySelectedDays.size;
+}
+
+function loadAllSchedules(){
+  if(!db){
+    console.warn('Firebase API KEY를 넣으면 저장/불러오기 기능이 작동합니다.');
+    return;
+  }
+
+  db.ref('schedules').on('value', snapshot => {
+    allSchedules = snapshot.val() || {};
+    loadMySchedule();
+    paintSavedSchedules();
+  });
+}
+
+function loadMySchedule(){
+  const staff = document.getElementById('staffSelect').value;
+  mySelectedDays.clear();
+
+  if(staff){
+    const saved = allSchedules[monthKey()]?.[staff]?.days || [];
+    saved.map(Number).forEach(day => mySelectedDays.add(day));
+  }
+
+  paintSavedSchedules();
+  updateRemaining();
+}
+
+document.getElementById('staffSelect').addEventListener('change', loadMySchedule);
 
 document.getElementById('prevBtn').addEventListener('click', () => {
-
-    currentMonth--;
-
-    if (currentMonth < 1) {
-        currentMonth = 12;
-        currentYear--;
-    }
-
-    render();
+  currentMonth--;
+  if(currentMonth < 1){ currentMonth = 12; currentYear--; }
+  mySelectedDays.clear();
+  render();
+  loadMySchedule();
 });
 
 document.getElementById('nextBtn').addEventListener('click', () => {
-
-    currentMonth++;
-
-    if (currentMonth > 12) {
-        currentMonth = 1;
-        currentYear++;
-    }
-
-    render();
-});
-document.getElementById('submitBtn')
-.addEventListener('click', () => {
-
-    const staff =
-        document.getElementById('staffSelect').value;
-
-    const pin =
-        document.getElementById('pinInput').value;
-
-    if(!staff){
-
-        alert('직원을 선택해주세요.');
-        return;
-    }
-
-    if(employeePins[staff] !== pin){
-
-        alert('PIN 번호가 올바르지 않습니다.');
-        return;
-    }
-
-    const selectedDays =
-        document.querySelectorAll('.day.selected');
-
-    if(selectedDays.length !== 8){
-
-        alert(
-            `휴무를 8일 선택해주세요.\n현재 ${selectedDays.length}일 선택됨`
-        );
-
-        return;
-    }
-
-  const selectedDates = [];
-
-document
-.querySelectorAll('.day.selected')
-.forEach(day=>{
-
-    selectedDates.push(
-        day.querySelector('.day-number').textContent
-    );
-
+  currentMonth++;
+  if(currentMonth > 12){ currentMonth = 1; currentYear++; }
+  mySelectedDays.clear();
+  render();
+  loadMySchedule();
 });
 
-db.ref("schedules/" + staff).set({
+document.getElementById('submitBtn').addEventListener('click', () => {
+  const staff = document.getElementById('staffSelect').value;
+  const pin = document.getElementById('pinInput').value;
 
+  if(!staff){ alert('직원을 선택해주세요.'); return; }
+  if(employeePins[staff] !== pin){ alert('PIN 번호가 올바르지 않습니다.'); return; }
+  if(mySelectedDays.size !== 8){ alert(`휴무를 8일 선택해주세요.\n현재 ${mySelectedDays.size}일 선택됨`); return; }
+  if(!validateBeforeSubmit(staff)) return;
+  if(!db){ alert('Firebase API KEY를 넣어야 저장됩니다.'); return; }
+
+  db.ref(`schedules/${monthKey()}/${staff}`).set({
     name: staff,
-    days: selectedDates,
+    days: Array.from(mySelectedDays).sort((a,b) => a-b),
     updatedAt: Date.now()
-
-})
-.then(()=>{
-
-    alert(
-      `${staff}님의 휴무 신청이 완료되었습니다.`
-    );
-
-})
-.catch(error=>{
-
-    alert("저장 실패");
-
+  }).then(() => {
+    alert(`${staff}님의 ${currentYear}년 ${currentMonth}월 휴무 신청이 저장되었습니다.`);
+  }).catch(error => {
+    alert('저장 실패');
     console.error(error);
-
+  });
 });
-
-});
-    
-    function updateRemaining() {
-
-    const selectedCount =
-        document.querySelectorAll('.day.selected').length;
-
-    document.getElementById('remainingDays').textContent =
-        8 - selectedCount;
-}
-    
-
-    document
-.getElementById('staffSelect')
-.addEventListener('change', loadSchedule);
-
-    function loadSchedule(){
-
-    const staff =
-        document.getElementById('staffSelect').value;
-
-    if(!staff) return;
-
-    // 기존 선택 초기화
-    document
-    .querySelectorAll('.day')
-    .forEach(day => {
-
-        day.classList.remove('selected');
-
-    });
-
-    // Firebase 조회
-    db.ref('schedules/' + staff)
-    .once('value')
-
-    .then(snapshot => {
-
-        const data = snapshot.val();
-
-        if(!data || !data.days){
-
-            updateRemaining();
-            return;
-
-        }
-
-      data.days.forEach(savedDay => {
-
-    document
-    .querySelectorAll('.day')
-    .forEach(day => {
-
-        const dayNumber =
-            day.querySelector('.day-number');
-
-        if(
-            dayNumber &&
-            dayNumber.textContent == savedDay
-        ){
-
-            day.classList.add('selected');
-
-            day.style.background =
-                staffColors[staff];
-
-        }
-
-    });
-
-});
-        });
-
-        updateRemaining();
-
-    })
-
-    .catch(error => {
-
-        console.error(error);
-
-    });
-
-}
-
-const staffColors = {
-
- "김은진":"#8b5cf6",
- "이주훈":"#3b82f6",
- "김명규":"#f59e0b",
- "신민규":"#ef4444",
- "박혜정":"#22c55e"
-
-};
-
-
-    div.style.background =
-    staffColors[currentStaff];
-
-    
 </script>
-
 </body>
-
 </html>
-
-
