@@ -404,7 +404,6 @@ body{
 <script>
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
   authDomain: "kpopstore-timetable.firebaseapp.com",
   databaseURL: "https://kpopstore-timetable-default-rtdb.firebaseio.com",
   projectId: "kpopstore-timetable",
@@ -678,7 +677,7 @@ db.ref("schedules/" + staff).set({
 
 }
 
-    const staffColors = {
+const staffColors = {
 
  "김은진":"#8b5cf6",
  "이주훈":"#3b82f6",
@@ -687,9 +686,6 @@ db.ref("schedules/" + staff).set({
  "박혜정":"#22c55e"
 
 };
-
-
-    db.ref('schedules').once(...)
     
 </script>
 
