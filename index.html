@@ -103,7 +103,7 @@ body{
 
 <div class="container">
   <div class="topbar">
-    <div class="logo">K GENIE POP<span> Timetable</span></div>
+    <div class="logo">KGENIE<span> Timetable</span></div>
     <div class="avatar"></div>
   </div>
 
@@ -268,6 +268,7 @@ function generateCalendar(year, month){
     div.innerHTML = `
       <div class="color-fill"></div>
       <div class="day-number">${day}</div>
+      <div class="staff-list"></div>
       <div class="slot">0 / ${maxSlot}</div>
     `;
 
@@ -344,8 +345,8 @@ function paintSavedSchedules(){
     const currentStaff = document.getElementById('staffSelect').value;
 
     dayBox.classList.remove('selected','full','conflict');
-    fill.style.background = '';
-    staffList.innerHTML = '';
+    if (fill) fill.style.background = '';
+    if (staffList) staffList.innerHTML = '';
 
     applicants.forEach(name => {
       const tag = document.createElement('div');
@@ -353,18 +354,18 @@ function paintSavedSchedules(){
       tag.textContent = shortNames[name] || name;
       tag.style.color = staffTextColors[name] || '#111827';
       tag.style.border = `1px solid ${staffTextColors[name] || '#111827'}22`;
-      staffList.appendChild(tag);
+      if (staffList) staffList.appendChild(tag);
     });
 
     if(applicants.length === 1){
-      fill.style.background = staffColors[applicants[0]];
+      if (fill) fill.style.background = staffColors[applicants[0]];
     } else if(applicants.length >= 2){
       const colors = applicants.map((name, index) => {
         const start = Math.round(index * 100 / applicants.length);
         const end = Math.round((index + 1) * 100 / applicants.length);
         return `${staffColors[name]} ${start}% ${end}%`;
       }).join(', ');
-      fill.style.background = `linear-gradient(135deg, ${colors})`;
+      if (fill) fill.style.background = `linear-gradient(135deg, ${colors})`;
     }
 
     if(currentStaff && mySelectedDays.has(day)){
@@ -407,7 +408,8 @@ function validateBeforeSubmit(staff){
     const message = conflicts.map(item => {
       const names = item.applicants.map(name => shortNames[name] || name).join(', ');
       return `${currentMonth}월 ${item.day}일: ${names} 신청 완료`;
-    }).join('\n');
+    }).join('
+');
 
     alert(`중복 신청 충돌이 있습니다.
 
