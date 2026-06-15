@@ -573,9 +573,39 @@ document.getElementById('submitBtn')
         return;
     }
 
-    alert(
-        `${staff}님의 휴무 신청이 완료되었습니다.`
+  const selectedDates = [];
+
+document
+.querySelectorAll('.day.selected')
+.forEach(day=>{
+
+    selectedDates.push(
+        day.querySelector('.day-number').textContent
     );
+
+});
+
+db.ref("schedules/" + staff).set({
+
+    name: staff,
+    days: selectedDates,
+    updatedAt: Date.now()
+
+})
+.then(()=>{
+
+    alert(
+      `${staff}님의 휴무 신청이 완료되었습니다.`
+    );
+
+})
+.catch(error=>{
+
+    alert("저장 실패");
+
+    console.error(error);
+
+});
 
 });
     
@@ -590,7 +620,9 @@ document.getElementById('submitBtn')
     
 
 </script>
-
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+    
 </body>
 
 </html>
