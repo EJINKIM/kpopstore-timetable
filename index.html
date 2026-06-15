@@ -10,14 +10,17 @@
 <title>Store Scheduler</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pretendard..." rel="stylesheet">
 
-    .staff-tag{
+<style>
+
+.staff-tag{
     font-size:11px;
     font-weight:600;
     margin-top:2px;
 }
-<style>
+
+:root{
 
 :root{
     --bg:#0f1117;
@@ -505,10 +508,12 @@ div.classList.add('selected');
 div.style.background =
     staffColors[currentStaff];
 
-    } else {
+ } else {
 
-div.style.background = '';
-    }
+    div.classList.remove('selected');
+    div.style.background='';
+
+}
 
     updateRemaining();
 });
@@ -654,19 +659,30 @@ db.ref("schedules/" + staff).set({
 
         }
 
-        data.days.forEach(savedDay => {
+      data.days.forEach(savedDay => {
 
-            document
-            .querySelectorAll('.day')
-            .forEach(day => {
+    document
+    .querySelectorAll('.day')
+    .forEach(day => {
 
-                const dayNumber =
-                day.classList.add('selected');
+        const dayNumber =
+            day.querySelector('.day-number');
 
-day.style.background =
-    staffColors[staff];
-            });
+        if(
+            dayNumber &&
+            dayNumber.textContent == savedDay
+        ){
 
+            day.classList.add('selected');
+
+            day.style.background =
+                staffColors[staff];
+
+        }
+
+    });
+
+});
         });
 
         updateRemaining();
@@ -690,6 +706,11 @@ const staffColors = {
  "박혜정":"#22c55e"
 
 };
+
+
+    div.style.background =
+    staffColors[currentStaff];
+
     
 </script>
 
