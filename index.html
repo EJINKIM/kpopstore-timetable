@@ -1,8 +1,4 @@
-from pathlib import Path
-
-api_key = "AIzaSyDMybA0gbpf-sxf83HZJEUtoEzgAxlA6bs"
-
-html = f"""<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
@@ -14,7 +10,7 @@ html = f"""<!DOCTYPE html>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-:root{{
+:root{
   --bg:#0f1117;
   --card:rgba(255,255,255,0.075);
   --border:rgba(255,255,255,.11);
@@ -24,123 +20,123 @@ html = f"""<!DOCTYPE html>
   --green:#22c55e;
   --danger:#ef4444;
   --day:#171a22;
-}}
+}
 
-*{{margin:0;padding:0;box-sizing:border-box;font-family:'Noto Sans KR',sans-serif;}}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Noto Sans KR',sans-serif;}
 
-body{{
+body{
   min-height:100vh;
   color:var(--text);
   background:
     radial-gradient(circle at top right,#a78bfa33,transparent 32%),
     radial-gradient(circle at bottom left,#7dd3fc22,transparent 32%),
     linear-gradient(135deg,#0f1117,#111827 50%,#0b1120);
-}}
+}
 
-.container{{max-width:1440px;margin:auto;padding:30px;}}
-.topbar{{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;gap:14px;}}
-.logo{{font-size:26px;font-weight:800;letter-spacing:-.04em;}}
-.logo span{{color:var(--primary);}}
-.status-pill{{font-size:13px;color:#d1d5db;background:#ffffff12;border:1px solid var(--border);border-radius:999px;padding:9px 13px;white-space:nowrap;}}
+.container{max-width:1440px;margin:auto;padding:30px;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;gap:14px;}
+.logo{font-size:26px;font-weight:800;letter-spacing:-.04em;}
+.logo span{color:var(--primary);}
+.status-pill{font-size:13px;color:#d1d5db;background:#ffffff12;border:1px solid var(--border);border-radius:999px;padding:9px 13px;white-space:nowrap;}
 
-.hero{{display:grid;grid-template-columns:350px 1fr;gap:24px;align-items:start;}}
-.card{{background:var(--card);backdrop-filter:blur(18px);border:1px solid var(--border);border-radius:26px;box-shadow:0 24px 70px rgba(0,0,0,.24);}}
-.sidebar{{padding:25px;position:sticky;top:20px;}}
-.sidebar h2{{margin-bottom:8px;font-size:22px;letter-spacing:-.03em;}}
-.helper{{font-size:13px;color:var(--sub);line-height:1.5;margin-bottom:18px;}}
+.hero{display:grid;grid-template-columns:350px 1fr;gap:24px;align-items:start;}
+.card{background:var(--card);backdrop-filter:blur(18px);border:1px solid var(--border);border-radius:26px;box-shadow:0 24px 70px rgba(0,0,0,.24);}
+.sidebar{padding:25px;position:sticky;top:20px;}
+.sidebar h2{margin-bottom:8px;font-size:22px;letter-spacing:-.03em;}
+.helper{font-size:13px;color:var(--sub);line-height:1.5;margin-bottom:18px;}
 
-.staff-select{{margin-top:18px;display:grid;gap:12px;}}
-.staff-select select,.staff-select input{{
+.staff-select{margin-top:18px;display:grid;gap:12px;}
+.staff-select select,.staff-select input{
   width:100%;padding:14px;background:#171a22;border:1px solid rgba(255,255,255,.09);
   color:white;border-radius:14px;outline:none;
-}}
-.staff-select select:focus,.staff-select input:focus{{border-color:#a78bfa;box-shadow:0 0 0 4px #a78bfa22;}}
+}
+.staff-select select:focus,.staff-select input:focus{border-color:#a78bfa;box-shadow:0 0 0 4px #a78bfa22;}
 
-.remaining{{margin-top:20px;padding:20px;border-radius:20px;background:#171a22;border:1px solid rgba(255,255,255,.07);}}
-.remaining h1{{font-size:54px;color:var(--green);line-height:1.05;letter-spacing:-.06em;}}
-.remaining small,.remaining p{{color:var(--sub);}}
+.remaining{margin-top:20px;padding:20px;border-radius:20px;background:#171a22;border:1px solid rgba(255,255,255,.07);}
+.remaining h1{font-size:54px;color:var(--green);line-height:1.05;letter-spacing:-.06em;}
+.remaining small,.remaining p{color:var(--sub);}
 
-.rules{{margin-top:22px;display:grid;gap:9px;}}
-.rule{{color:#cbd5e1;font-size:14px;background:#ffffff08;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:10px 12px;}}
+.rules{margin-top:22px;display:grid;gap:9px;}
+.rule{color:#cbd5e1;font-size:14px;background:#ffffff08;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:10px 12px;}
 
-.submit{{
+.submit{
   margin-top:24px;width:100%;padding:18px;border:none;border-radius:18px;
   background:linear-gradient(135deg,#ddd6fe,#bae6fd);
   color:#111827;font-size:16px;font-weight:800;cursor:pointer;transition:.2s;
-}}
-.submit:hover{{transform:translateY(-1px);filter:brightness(1.04);}}
+}
+.submit:hover{transform:translateY(-1px);filter:brightness(1.04);}
 
-.notice{{display:none;margin-top:14px;border-radius:16px;padding:12px 13px;font-size:13px;line-height:1.45;border:1px solid rgba(255,255,255,.08);}}
-.notice.show{{display:block;}}
-.notice.success{{background:#22c55e20;color:#bbf7d0;border-color:#22c55e55;}}
-.notice.error{{background:#ef444420;color:#fecdd3;border-color:#ef444455;}}
+.notice{display:none;margin-top:14px;border-radius:16px;padding:12px 13px;font-size:13px;line-height:1.45;border:1px solid rgba(255,255,255,.08);}
+.notice.show{display:block;}
+.notice.success{background:#22c55e20;color:#bbf7d0;border-color:#22c55e55;}
+.notice.error{background:#ef444420;color:#fecdd3;border-color:#ef444455;}
 
-.calendar-card{{padding:25px;}}
-.calendar-header{{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:12px;}}
-.calendar-header h2{{font-size:24px;white-space:nowrap;letter-spacing:-.04em;}}
-.month-nav{{display:flex;gap:10px;}}
-.btn{{width:42px;height:42px;border:none;border-radius:14px;background:#1b1f2b;color:white;cursor:pointer;font-size:18px;border:1px solid rgba(255,255,255,.08);transition:.2s;}}
-.btn:hover{{background:#ffffff18;transform:translateY(-1px);}}
+.calendar-card{padding:25px;}
+.calendar-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:12px;}
+.calendar-header h2{font-size:24px;white-space:nowrap;letter-spacing:-.04em;}
+.month-nav{display:flex;gap:10px;}
+.btn{width:42px;height:42px;border:none;border-radius:14px;background:#1b1f2b;color:white;cursor:pointer;font-size:18px;border:1px solid rgba(255,255,255,.08);transition:.2s;}
+.btn:hover{background:#ffffff18;transform:translateY(-1px);}
 
-.weekdays{{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:12px;text-align:center;color:#7b8290;font-size:14px;font-weight:700;}}
-.calendar{{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;}}
-.empty-day{{min-height:100px;}}
-.day{{min-height:108px;border-radius:20px;background:var(--day);border:1px solid rgba(255,255,255,.06);padding:12px;cursor:pointer;transition:.2s;position:relative;overflow:hidden;}}
-.day:hover{{transform:translateY(-3px);border-color:#a78bfa;}}
-.day-number{{font-weight:800;position:relative;z-index:3;}}
-.day.available{{box-shadow:0 0 0 1px #22c55e25;}}
-.day.selected{{outline:3px solid rgba(255,255,255,.75);outline-offset:-3px;}}
-.day.full{{opacity:.48;cursor:not-allowed;}}
-.day.full:hover{{transform:none;border-color:rgba(255,255,255,.06);}}
-.color-fill{{position:absolute;inset:0;opacity:.78;z-index:1;}}
-.staff-list{{position:relative;z-index:3;display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;padding-right:2px;}}
-.staff-tag{{font-size:10.5px;font-weight:900;line-height:1;padding:5px 7px;border-radius:999px;background:rgba(255,255,255,.82);box-shadow:0 4px 12px rgba(0,0,0,.10);backdrop-filter:blur(10px);}}
-.slot{{position:absolute;bottom:10px;left:10px;font-size:11px;color:#f1f5f9;z-index:3;}}
-.day.conflict{{animation:shake .28s ease-in-out 0s 2;outline:2px solid rgba(239,68,68,.95);}}
-@keyframes shake{{0%,100%{{transform:translateX(0)}}25%{{transform:translateX(-3px)}}75%{{transform:translateX(3px)}}}}
+.weekdays{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:12px;text-align:center;color:#7b8290;font-size:14px;font-weight:700;}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;}
+.empty-day{min-height:100px;}
+.day{min-height:108px;border-radius:20px;background:var(--day);border:1px solid rgba(255,255,255,.06);padding:12px;cursor:pointer;transition:.2s;position:relative;overflow:hidden;}
+.day:hover{transform:translateY(-3px);border-color:#a78bfa;}
+.day-number{font-weight:800;position:relative;z-index:3;}
+.day.available{box-shadow:0 0 0 1px #22c55e25;}
+.day.selected{outline:3px solid rgba(255,255,255,.75);outline-offset:-3px;}
+.day.full{opacity:.48;cursor:not-allowed;}
+.day.full:hover{transform:none;border-color:rgba(255,255,255,.06);}
+.color-fill{position:absolute;inset:0;opacity:.78;z-index:1;}
+.staff-list{position:relative;z-index:3;display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;padding-right:2px;}
+.staff-tag{font-size:10.5px;font-weight:900;line-height:1;padding:5px 7px;border-radius:999px;background:rgba(255,255,255,.82);box-shadow:0 4px 12px rgba(0,0,0,.10);backdrop-filter:blur(10px);}
+.slot{position:absolute;bottom:10px;left:10px;font-size:11px;color:#f1f5f9;z-index:3;}
+.day.conflict{animation:shake .28s ease-in-out 0s 2;outline:2px solid rgba(239,68,68,.95);}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
 
-.legend{{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;}}
-.badge{{padding:8px 12px;border-radius:999px;font-size:13px;background:#ffffff10;color:#d1d5db;display:flex;align-items:center;gap:7px;border:1px solid rgba(255,255,255,.07);}}
-.dot{{width:10px;height:10px;border-radius:50%;display:inline-block;}}
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;}
+.badge{padding:8px 12px;border-radius:999px;font-size:13px;background:#ffffff10;color:#d1d5db;display:flex;align-items:center;gap:7px;border:1px solid rgba(255,255,255,.07);}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
 
-.summary-card{{margin-top:22px;padding:22px;}}
-.summary-title{{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;}}
-.summary-title h3{{font-size:20px;letter-spacing:-.03em;}}
-.summary-title small{{color:var(--sub);}}
-.summary-list{{display:grid;gap:9px;}}
-.summary-item{{background:rgba(15,17,23,.55);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:12px 14px;font-size:14px;line-height:1.55;color:#e5e7eb;}}
-.summary-item strong{{font-weight:900;color:#ffffff;}}
+.summary-card{margin-top:22px;padding:22px;}
+.summary-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;}
+.summary-title h3{font-size:20px;letter-spacing:-.03em;}
+.summary-title small{color:var(--sub);}
+.summary-list{display:grid;gap:9px;}
+.summary-item{background:rgba(15,17,23,.55);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:12px 14px;font-size:14px;line-height:1.55;color:#e5e7eb;}
+.summary-item strong{font-weight:900;color:#ffffff;}
 
-@media(max-width:900px){{
-  .container{{padding:16px;}}
-  .topbar{{margin-bottom:18px;align-items:flex-start;flex-direction:column;}}
-  .logo{{font-size:22px;}}
-  .hero{{grid-template-columns:1fr;gap:16px;}}
-  .sidebar{{position:static;padding:20px;}}
-  .calendar-card{{padding:16px;}}
-  .calendar-header h2{{font-size:20px;}}
-  .btn{{width:38px;height:38px;}}
-  .calendar{{gap:7px;}}
-  .weekdays{{font-size:12px;}}
-  .day{{border-radius:13px;padding:8px;min-height:78px;}}
-  .empty-day{{min-height:78px;}}
-  .day-number{{font-size:13px;}}
-  .staff-list{{gap:3px;margin-top:5px;}}
-  .staff-tag{{font-size:9px;padding:4px 5px;}}
-  .slot{{font-size:9px;bottom:6px;left:7px;}}
-  .remaining h1{{font-size:44px;}}
-  .summary-card{{padding:16px;}}
-  .summary-item{{font-size:13px;}}
-}}
+@media(max-width:900px){
+  .container{padding:16px;}
+  .topbar{margin-bottom:18px;align-items:flex-start;flex-direction:column;}
+  .logo{font-size:22px;}
+  .hero{grid-template-columns:1fr;gap:16px;}
+  .sidebar{position:static;padding:20px;}
+  .calendar-card{padding:16px;}
+  .calendar-header h2{font-size:20px;}
+  .btn{width:38px;height:38px;}
+  .calendar{gap:7px;}
+  .weekdays{font-size:12px;}
+  .day{border-radius:13px;padding:8px;min-height:78px;}
+  .empty-day{min-height:78px;}
+  .day-number{font-size:13px;}
+  .staff-list{gap:3px;margin-top:5px;}
+  .staff-tag{font-size:9px;padding:4px 5px;}
+  .slot{font-size:9px;bottom:6px;left:7px;}
+  .remaining h1{font-size:44px;}
+  .summary-card{padding:16px;}
+  .summary-item{font-size:13px;}
+}
 
-@media(max-width:430px){{
-  .container{{padding:12px;}}
-  .calendar{{gap:4px;}}
-  .day{{min-height:68px;border-radius:12px;}}
-  .empty-day{{min-height:68px;}}
-  .slot{{display:none;}}
-  .staff-tag{{font-size:8px;padding:3px 4px;}}
-}}
+@media(max-width:430px){
+  .container{padding:12px;}
+  .calendar{gap:4px;}
+  .day{min-height:68px;border-radius:12px;}
+  .empty-day{min-height:68px;}
+  .slot{display:none;}
+  .staff-tag{font-size:8px;padding:3px 4px;}
+}
 </style>
 </head>
 <body>
@@ -217,100 +213,100 @@ body{{
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <script>
-const firebaseConfig = {{
-  apiKey: "{api_key}",
+const firebaseConfig = {
+  apiKey: "AIzaSyDMybA0gbpf-sxf83HZJEUtoEzgAxlA6bs",
   authDomain: "kpopstore-timetable.firebaseapp.com",
   databaseURL: "https://kpopstore-timetable-default-rtdb.firebaseio.com",
   projectId: "kpopstore-timetable",
   storageBucket: "kpopstore-timetable.firebasestorage.app",
   messagingSenderId: "848394973405",
   appId: "1:848394973405:web:6221818a6a358fb0c5eb34"
-}};
+};
 
 let db = null;
-try {{
+try {
   firebase.initializeApp(firebaseConfig);
   db = firebase.database();
   document.getElementById('saveStatus').textContent = 'Firebase 연결됨';
-}} catch (error) {{
+} catch (error) {
   console.error("Firebase 연결 오류:", error);
   document.getElementById('saveStatus').textContent = 'Firebase 연결 오류';
-}}
+}
 
 const employees = ["김은진", "이주훈", "이명규", "심민규", "박혜정"];
 
-const employeePins = {{
+const employeePins = {
   "김은진":"6666",
   "이주훈":"2222",
   "이명규":"3333",
   "심민규":"4444",
   "박혜정":"5555"
-}};
+};
 
-const staffColors = {{
+const staffColors = {
   "김은진":"#7dd3fc",
   "이주훈":"#fde68a",
   "이명규":"#bbf7d0",
   "심민규":"#bfdbfe",
   "박혜정":"#fbcfe8"
-}};
+};
 
-const staffTextColors = {{
+const staffTextColors = {
   "김은진":"#075985",
   "이주훈":"#854d0e",
   "이명규":"#166534",
   "심민규":"#1e40af",
   "박혜정":"#9d174d"
-}};
+};
 
-const shortNames = {{
+const shortNames = {
   "김은진":"은진",
   "이주훈":"주훈",
   "이명규":"명규",
   "심민규":"민규",
   "박혜정":"혜정"
-}};
+};
 
 const weekdayNames = ["일", "월", "화", "수", "목", "금", "토"];
 
 let currentYear = new Date().getFullYear();
 let currentMonth = new Date().getMonth() + 1;
-let allSchedules = {{}};
+let allSchedules = {};
 let mySelectedDays = new Set();
 
 renderLegend();
 render();
 loadAllSchedules();
 
-function monthKey(){{
-  return `${{currentYear}}-${{String(currentMonth).padStart(2,'0')}}`;
-}}
+function monthKey(){
+  return `${currentYear}-${String(currentMonth).padStart(2,'0')}`;
+}
 
-function renderLegend(){{
+function renderLegend(){
   const legend = document.getElementById('legend');
   legend.innerHTML = employees.map(name => `
-    <div class="badge"><span class="dot" style="background:${{staffColors[name]}}"></span>${{shortNames[name]}}</div>
+    <div class="badge"><span class="dot" style="background:${staffColors[name]}"></span>${shortNames[name]}</div>
   `).join('') + `<div class="badge">진한 테두리 = 내가 선택한 휴무</div>`;
-}}
+}
 
-function showNotice(message, type='success'){{
+function showNotice(message, type='success'){
   const notice = document.getElementById('noticeBox');
   notice.textContent = message;
-  notice.className = `notice show ${{type}}`;
-  setTimeout(() => {{
+  notice.className = `notice show ${type}`;
+  setTimeout(() => {
     notice.className = 'notice';
-  }}, 4500);
-}}
+  }, 4500);
+}
 
-function render(){{
-  document.getElementById('monthTitle').textContent = `${{currentYear}}년 ${{currentMonth}}월`;
+function render(){
+  document.getElementById('monthTitle').textContent = `${currentYear}년 ${currentMonth}월`;
   generateCalendar(currentYear, currentMonth);
   paintSavedSchedules();
   renderMonthlySummary();
   updateRemaining();
-}}
+}
 
-function generateCalendar(year, month){{
+function generateCalendar(year, month){
   const calendar = document.getElementById('calendar');
   calendar.innerHTML = '';
 
@@ -320,13 +316,13 @@ function generateCalendar(year, month){{
   let startDay = firstDay.getDay();
   startDay = startDay === 0 ? 6 : startDay - 1;
 
-  for(let i = 0; i < startDay; i++){{
+  for(let i = 0; i < startDay; i++){
     const empty = document.createElement('div');
     empty.className = 'empty-day';
     calendar.appendChild(empty);
-  }}
+  }
 
-  for(let day = 1; day <= lastDate; day++){{
+  for(let day = 1; day <= lastDate; day++){
     const date = new Date(year, month - 1, day);
     const isWeekend = date.getDay() === 0 || date.getDay() === 6;
     const maxSlot = isWeekend ? 1 : 2;
@@ -337,74 +333,74 @@ function generateCalendar(year, month){{
     div.dataset.max = String(maxSlot);
     div.innerHTML = `
       <div class="color-fill"></div>
-      <div class="day-number">${{day}}</div>
+      <div class="day-number">${day}</div>
       <div class="staff-list"></div>
-      <div class="slot">0 / ${{maxSlot}}</div>
+      <div class="slot">0 / ${maxSlot}</div>
     `;
 
     div.addEventListener('click', () => toggleDay(day));
     calendar.appendChild(div);
-  }}
-}}
+  }
+}
 
-function toggleDay(day){{
+function toggleDay(day){
   const staff = document.getElementById('staffSelect').value;
-  if(!staff){{
+  if(!staff){
     alert('먼저 직원을 선택해주세요.');
     return;
-  }}
+  }
 
-  const dayBox = document.querySelector(`.day[data-day="${{day}}"]`);
+  const dayBox = document.querySelector(`.day[data-day="${day}"]`);
   const maxSlot = Number(dayBox.dataset.max);
 
-  if(mySelectedDays.has(day)){{
+  if(mySelectedDays.has(day)){
     mySelectedDays.delete(day);
-  }} else {{
-    if(mySelectedDays.size >= 8){{
+  } else {
+    if(mySelectedDays.size >= 8){
       alert('휴무는 최대 8일까지만 선택 가능합니다.');
       return;
-    }}
+    }
 
     const otherApplicants = getSavedApplicantsForDay(day).filter(name => name !== staff);
 
-    if(otherApplicants.length >= maxSlot){{
+    if(otherApplicants.length >= maxSlot){
       showConflict(day, otherApplicants, maxSlot);
       return;
-    }}
+    }
 
     mySelectedDays.add(day);
-  }}
+  }
 
   paintSavedSchedules();
   renderMonthlySummary();
   updateRemaining();
-}}
+}
 
-function getSavedApplicantsForDay(day){{
-  const monthData = allSchedules[monthKey()] || {{}};
+function getSavedApplicantsForDay(day){
+  const monthData = allSchedules[monthKey()] || {};
   const applicants = [];
 
-  Object.keys(monthData).forEach(staff => {{
+  Object.keys(monthData).forEach(staff => {
     const days = monthData[staff]?.days || [];
     if(days.map(Number).includes(Number(day))) applicants.push(staff);
-  }});
+  });
 
   return applicants;
-}}
+}
 
-function getApplicantsForDay(day){{
+function getApplicantsForDay(day){
   const applicants = getSavedApplicantsForDay(day);
   const currentStaff = document.getElementById('staffSelect').value;
 
-  if(currentStaff && mySelectedDays.has(Number(day)) && !applicants.includes(currentStaff)){{
+  if(currentStaff && mySelectedDays.has(Number(day)) && !applicants.includes(currentStaff)){
     applicants.push(currentStaff);
-  }}
+  }
 
   return applicants;
-}}
+}
 
-function paintSavedSchedules(){{
-  document.querySelectorAll('.day').forEach(dayBox => {{
+function paintSavedSchedules(){
+  document.querySelectorAll('.day').forEach(dayBox => {
     const day = Number(dayBox.dataset.day);
     if(!day) return;
 
@@ -419,194 +415,189 @@ function paintSavedSchedules(){{
     if (fill) fill.style.background = '';
     if (staffList) staffList.innerHTML = '';
 
-    applicants.forEach(name => {{
+    applicants.forEach(name => {
       const tag = document.createElement('div');
       tag.className = 'staff-tag';
       tag.textContent = shortNames[name] || name;
       tag.style.color = staffTextColors[name] || '#111827';
-      tag.style.border = `1px solid ${{staffTextColors[name] || '#111827'}}22`;
+      tag.style.border = `1px solid ${staffTextColors[name] || '#111827'}22`;
       if (staffList) staffList.appendChild(tag);
-    }});
+    });
 
-    if(applicants.length === 1){{
+    if(applicants.length === 1){
       if (fill) fill.style.background = staffColors[applicants[0]];
-    }} else if(applicants.length >= 2){{
-      const colors = applicants.map((name, index) => {{
+    } else if(applicants.length >= 2){
+      const colors = applicants.map((name, index) => {
         const start = Math.round(index * 100 / applicants.length);
         const end = Math.round((index + 1) * 100 / applicants.length);
-        return `${{staffColors[name]}} ${{start}}% ${{end}}%`;
-      }}).join(', ');
-      if (fill) fill.style.background = `linear-gradient(135deg, ${{colors}})`;
-    }}
+        return `${staffColors[name]} ${start}% ${end}%`;
+      }).join(', ');
+      if (fill) fill.style.background = `linear-gradient(135deg, ${colors})`;
+    }
 
-    if(currentStaff && mySelectedDays.has(day)){{
+    if(currentStaff && mySelectedDays.has(day)){
       dayBox.classList.add('selected');
-    }}
+    }
 
-    if(applicants.length >= maxSlot && !(currentStaff && mySelectedDays.has(day))){{
+    if(applicants.length >= maxSlot && !(currentStaff && mySelectedDays.has(day))){
       dayBox.classList.add('full');
-    }}
+    }
 
-    slot.textContent = `${{Math.min(applicants.length, maxSlot)}} / ${{maxSlot}}`;
-  }});
-}}
+    slot.textContent = `${Math.min(applicants.length, maxSlot)} / ${maxSlot}`;
+  });
+}
 
-function showConflict(day, applicants, maxSlot){{
-  const dayBox = document.querySelector(`.day[data-day="${{day}}"]`);
-  if(dayBox){{
+function showConflict(day, applicants, maxSlot){
+  const dayBox = document.querySelector(`.day[data-day="${day}"]`);
+  if(dayBox){
     dayBox.classList.add('conflict');
     setTimeout(() => dayBox.classList.remove('conflict'), 700);
-  }}
+  }
 
   const names = applicants.map(name => shortNames[name] || name).join(', ');
-  alert(`${{currentMonth}}월 ${{day}}일은 이미 ${{names}}님이 신청해서 마감되었습니다.\\n이 날짜는 최대 ${{maxSlot}}명까지만 휴무 신청할 수 있습니다.`);
-}}
+  alert(`${currentMonth}월 ${day}일은 이미 ${names}님이 신청해서 마감되었습니다.\n이 날짜는 최대 ${maxSlot}명까지만 휴무 신청할 수 있습니다.`);
+}
 
-function validateBeforeSubmit(staff){{
+function validateBeforeSubmit(staff){
   const conflicts = [];
 
-  Array.from(mySelectedDays).forEach(day => {{
-    const dayBox = document.querySelector(`.day[data-day="${{day}}"]`);
+  Array.from(mySelectedDays).forEach(day => {
+    const dayBox = document.querySelector(`.day[data-day="${day}"]`);
     const maxSlot = Number(dayBox.dataset.max);
     const otherApplicants = getSavedApplicantsForDay(day).filter(name => name !== staff);
 
-    if(otherApplicants.length >= maxSlot){{
-      conflicts.push({{ day, applicants: otherApplicants, maxSlot }});
-    }}
-  }});
+    if(otherApplicants.length >= maxSlot){
+      conflicts.push({ day, applicants: otherApplicants, maxSlot });
+    }
+  });
 
-  if(conflicts.length){{
-    const message = conflicts.map(item => {{
+  if(conflicts.length){
+    const message = conflicts.map(item => {
       const names = item.applicants.map(name => shortNames[name] || name).join(', ');
-      return `${{currentMonth}}월 ${{item.day}}일: ${{names}} 신청 완료`;
-    }}).join('\\n');
+      return `${currentMonth}월 ${item.day}일: ${names} 신청 완료`;
+    }).join('\n');
 
-    alert(`중복 신청 충돌이 있습니다.\\n\\n${{message}}\\n\\n다른 날짜를 선택해주세요.`);
+    alert(`중복 신청 충돌이 있습니다.\n\n${message}\n\n다른 날짜를 선택해주세요.`);
     const first = conflicts[0];
-    const dayBox = document.querySelector(`.day[data-day="${{first.day}}"]`);
-    if(dayBox){{
+    const dayBox = document.querySelector(`.day[data-day="${first.day}"]`);
+    if(dayBox){
       dayBox.classList.add('conflict');
       setTimeout(() => dayBox.classList.remove('conflict'), 900);
-    }}
+    }
     return false;
-  }}
+  }
 
   return true;
-}}
+}
 
-function updateRemaining(){{
+function updateRemaining(){
   document.getElementById('remainingDays').textContent = 8 - mySelectedDays.size;
-}}
+}
 
-function loadAllSchedules(){{
-  if(!db){{
+function loadAllSchedules(){
+  if(!db){
     console.warn('Firebase 연결이 없으면 저장/불러오기 기능이 작동하지 않습니다.');
     return;
-  }}
+  }
 
-  db.ref('schedules').on('value', snapshot => {{
-    allSchedules = snapshot.val() || {{}};
+  db.ref('schedules').on('value', snapshot => {
+    allSchedules = snapshot.val() || {};
     loadMySchedule(false);
     paintSavedSchedules();
     renderMonthlySummary();
-  }});
-}}
+  });
+}
 
-function loadMySchedule(shouldPaint = true){{
+function loadMySchedule(shouldPaint = true){
   const staff = document.getElementById('staffSelect').value;
   mySelectedDays.clear();
 
-  if(staff){{
+  if(staff){
     const saved = allSchedules[monthKey()]?.[staff]?.days || [];
     saved.map(Number).forEach(day => mySelectedDays.add(day));
-  }}
+  }
 
-  if(shouldPaint){{
+  if(shouldPaint){
     paintSavedSchedules();
     renderMonthlySummary();
-  }}
+  }
   updateRemaining();
-}}
+}
 
-function getAttendanceForDay(day){{
+function getAttendanceForDay(day){
   const off = getApplicantsForDay(day);
   const working = employees.filter(name => !off.includes(name));
-  return {{ off, working }};
-}}
+  return { off, working };
+}
 
-function renderMonthlySummary(){{
+function renderMonthlySummary(){
   const summary = document.getElementById('monthlySummary');
   const lastDate = new Date(currentYear, currentMonth, 0).getDate();
   const items = [];
 
-  for(let day=1; day<=lastDate; day++){{
+  for(let day=1; day<=lastDate; day++){
     const date = new Date(currentYear, currentMonth - 1, day);
     const weekday = weekdayNames[date.getDay()];
-    const {{ off, working }} = getAttendanceForDay(day);
+    const { off, working } = getAttendanceForDay(day);
 
     const workingText = working.length ? working.map(name => shortNames[name]).join(', ') : '없음';
     const offText = off.length ? off.map(name => shortNames[name]).join(', ') : '없음';
 
     items.push(`
       <div class="summary-item">
-        ${{currentMonth}}월 ${{day}}일(${{weekday}})에는
-        <strong>${{workingText}}</strong>님이 출근하며,
-        <strong>${{offText}}</strong>님이 휴무입니다.
+        ${currentMonth}월 ${day}일(${weekday})에는
+        <strong>${workingText}</strong>님이 출근하며,
+        <strong>${offText}</strong>님이 휴무입니다.
       </div>
     `);
-  }}
+  }
 
   summary.innerHTML = items.join('');
-}}
+}
 
-document.getElementById('staffSelect').addEventListener('change', () => {{
+document.getElementById('staffSelect').addEventListener('change', () => {
   loadMySchedule();
-}});
+});
 
-document.getElementById('prevBtn').addEventListener('click', () => {{
+document.getElementById('prevBtn').addEventListener('click', () => {
   currentMonth--;
-  if(currentMonth < 1){{ currentMonth = 12; currentYear--; }}
+  if(currentMonth < 1){ currentMonth = 12; currentYear--; }
   mySelectedDays.clear();
   render();
   loadMySchedule();
-}});
+});
 
-document.getElementById('nextBtn').addEventListener('click', () => {{
+document.getElementById('nextBtn').addEventListener('click', () => {
   currentMonth++;
-  if(currentMonth > 12){{ currentMonth = 1; currentYear++; }}
+  if(currentMonth > 12){ currentMonth = 1; currentYear++; }
   mySelectedDays.clear();
   render();
   loadMySchedule();
-}});
+});
 
-document.getElementById('submitBtn').addEventListener('click', () => {{
+document.getElementById('submitBtn').addEventListener('click', () => {
   const staff = document.getElementById('staffSelect').value;
   const pin = document.getElementById('pinInput').value;
 
-  if(!staff){{ alert('직원을 선택해주세요.'); return; }}
-  if(employeePins[staff] !== pin){{ alert('PIN 번호가 올바르지 않습니다.'); return; }}
-  if(mySelectedDays.size !== 8){{ alert(`휴무를 8일 선택해주세요.\\n현재 ${{mySelectedDays.size}}일 선택됨`); return; }}
+  if(!staff){ alert('직원을 선택해주세요.'); return; }
+  if(employeePins[staff] !== pin){ alert('PIN 번호가 올바르지 않습니다.'); return; }
+  if(mySelectedDays.size !== 8){ alert(`휴무를 8일 선택해주세요.\n현재 ${mySelectedDays.size}일 선택됨`); return; }
   if(!validateBeforeSubmit(staff)) return;
-  if(!db){{ alert('Firebase 연결을 확인해주세요.'); return; }}
+  if(!db){ alert('Firebase 연결을 확인해주세요.'); return; }
 
-  db.ref(`schedules/${{monthKey()}}/${{staff}}`).set({{
+  db.ref(`schedules/${monthKey()}/${staff}`).set({
     name: staff,
     days: Array.from(mySelectedDays).sort((a,b) => a-b),
     updatedAt: Date.now()
-  }}).then(() => {{
-    showNotice(`${{staff}}님의 ${{currentYear}}년 ${{currentMonth}}월 휴무 신청이 저장되었습니다.`, 'success');
-    alert(`${{staff}}님의 ${{currentYear}}년 ${{currentMonth}}월 휴무 신청이 저장되었습니다.`);
-  }}).catch(error => {{
+  }).then(() => {
+    showNotice(`${staff}님의 ${currentYear}년 ${currentMonth}월 휴무 신청이 저장되었습니다.`, 'success');
+    alert(`${staff}님의 ${currentYear}년 ${currentMonth}월 휴무 신청이 저장되었습니다.`);
+  }).catch(error => {
     showNotice('저장 실패. Firebase 설정을 확인해주세요.', 'error');
     alert('저장 실패');
     console.error(error);
-  }});
-}});
+  });
+});
 </script>
 </body>
 </html>
-"""
-
-out = Path("/mnt/data/kgenie_timetable_staff_summary.html")
-out.write_text(html, encoding="utf-8")
-out.as_posix()
