@@ -314,7 +314,7 @@ body{
 
             <div class="remaining">
                 <p>남은 휴무</p>
-                <h1>8</h1>
+                <h1 id="remainingDays">8</h1>
                 <small>총 8회 선택 가능</small>
             </div>
 
@@ -325,9 +325,9 @@ body{
                 <div class="rule">✓ 선착순 마감</div>
             </div>
 
-            <button class="submit">
-                신청 완료하기
-            </button>
+            <button class="submit" id="submitBtn">
+    신청 완료하기
+</button>
 
         </div>
 
@@ -450,9 +450,27 @@ function generateCalendar(year, month) {
             <div class="slot">0 / ${maxSlot}</div>
         `;
 
-        div.addEventListener('click', () => {
-            div.classList.toggle('selected');
-        });
+       div.addEventListener('click', () => {
+
+    const selectedCount =
+        document.querySelectorAll('.day.selected').length;
+
+    if (!div.classList.contains('selected')) {
+
+        if (selectedCount >= 8) {
+            alert('휴무는 최대 8일까지만 선택 가능합니다.');
+            return;
+        }
+
+        div.classList.add('selected');
+
+    } else {
+
+        div.classList.remove('selected');
+    }
+
+    updateRemaining();
+});
 
         calendar.appendChild(div);
     }
@@ -482,6 +500,32 @@ document.getElementById('nextBtn').addEventListener('click', () => {
     render();
 });
 
+    function updateRemaining() {
+
+    const selectedCount =
+        document.querySelectorAll('.day.selected').length;
+
+    document.getElementById('remainingDays').textContent =
+        8 - selectedCount;
+}
+    
+document.getElementById('submitBtn')
+.addEventListener('click', () => {
+
+    const selectedDays =
+        document.querySelectorAll('.day.selected');
+
+    if(selectedDays.length !== 8){
+
+        alert(`휴무를 8일 선택해주세요.\n현재 ${selectedDays.length}일 선택됨`);
+
+        return;
+    }
+
+    alert('휴무 신청이 완료되었습니다!');
+
+});
+    
 </script>
 
 </body>
