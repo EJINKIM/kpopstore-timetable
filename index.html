@@ -10,7 +10,7 @@
 <title>Store Scheduler</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Pretendard..." rel="stylesheet">
+
 
 <style>
 
@@ -19,8 +19,6 @@
     font-weight:600;
     margin-top:2px;
 }
-
-:root{
 
 :root{
     --bg:#0f1117;
@@ -412,12 +410,13 @@ body{
 <script>
 
 const firebaseConfig = {
+    apiKey: "1:848394973405:web:6221818a6a358fb0c5eb34"
   authDomain: "kpopstore-timetable.firebaseapp.com",
   databaseURL: "https://kpopstore-timetable-default-rtdb.firebaseio.com",
   projectId: "kpopstore-timetable",
   storageBucket: "kpopstore-timetable.firebasestorage.app",
   messagingSenderId: "848394973405",
-  appId: "1:848394973405:web:6221818a6a358fb0c5eb34"
+  appId: "1:848394973405:web:6221818a6a358fb0c5eb34"});
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -506,8 +505,7 @@ const currentStaff =
 div.classList.add('selected');
 
 div.style.background =
-    staffColors[currentStaff];
-
+staffColors[currentStaff];
  } else {
 
     div.classList.remove('selected');
