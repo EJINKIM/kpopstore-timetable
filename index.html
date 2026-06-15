@@ -12,6 +12,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    .staff-tag{
+    font-size:11px;
+    font-weight:600;
+    margin-top:2px;
+}
 <style>
 
 :root{
@@ -475,11 +480,11 @@ function generateCalendar(year, month) {
 
         div.className = 'day available';
 
-        div.innerHTML = `
-            <div class="day-number">${day}</div>
-            <div class="slot">0 / ${maxSlot}</div>
-        `;
-
+      div.innerHTML = `
+    <div class="day-number">${day}</div>
+    <div class="staff-list"></div>
+    <div class="slot">0 / ${maxSlot}</div>
+`;
        div.addEventListener('click', () => {
 
     const selectedCount =
