@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="ko">
+<script>
+
+const year = 2026;
+const month = 7; // 1~12
+
+generateCalendar(year, month);
+
+function generateCalendar(year, month){
+
+    const calendar = document.getElementById('calendar');
+
+    calendar.innerHTML = '';
+
+    const firstDay = new Date(year, month - 1, 1);
+
+    const lastDate = new Date(year, month, 0).getDate();
+
+    let startDay = firstDay.getDay();
+
+    // 일요일=0 → 월요일 시작 기준 변환
+    startDay = startDay === 0 ? 6 : startDay - 1;
+
+    // 빈칸 생성
+    for(let i=0; i<startDay; i++){
+
+        const empty = document.createElement('div');
+        empty.className = 'day';
+        empty.style.visibility = 'hidden';
+
+        calendar.appendChild(empty);
+    }
+
+    // 날짜 생성
+    for(let day=1; day<=lastDate; day++){
+
+        const current = new Date(year, month - 1, day);
+
+        const weekday = current.getDay();
+
+        const isWeekend =
+            weekday === 0 ||
+            weekday === 6;
+
+        const maxSlot = isWeekend ? 1 : 2;
+
+        const div = document.createElement('div');
+
+        div.className = 'day available';
+
+        div.innerHTML = `
+            <div class="day-number">${day}</div>
+            <div class="slot">0 / ${maxSlot}</div>
+        `;
+
+        calendar.appendChild(div);
+    }
+}
+
+</script>
+
+
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Store Scheduler</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --bg:#0f1117;
+    --card:rgba(255,255,255,0.06);
+    --border:rgba(255,255,255,.08);
+    --text:#fff;
+    --sub:#8f96a3;
+    --primary:#6c63ff;
+    --green:#22c55e;
+    --danger:#ef4444;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Pretendard',sans-serif;
+}
+
+body{
+    background:
+    radial-gradient(circle at top right,#6c63ff33,transparent 30%),
+    radial-gradient(circle at bottom left,#00d4ff22,transparent 30%),
+    var(--bg);
+
+    min-height:100vh;
+    color:white;
+}
+
+.container{
+    max-width:1400px;
+    margin:auto;
+    padding:30px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.logo{
+    font-size:26px;
+    font-weight:700;
+}
+
+.logo span{
+    color:var(--primary);
+}
+
+.user-box{
+    display:flex;
+    gap:15px;
+    align-items:center;
+}
+
+.avatar{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#6c63ff,#8b5cf6);
+}
+
+.hero{
+    display:grid;
+    grid-template-columns:350px 1fr;
+    gap:24px;
+}
+
+.card{
+    background:var(--card);
+    backdrop-filter:blur(18px);
+    border:1px solid var(--border);
+    border-radius:24px;
+}
+
+.sidebar{
+    padding:25px;
+}
+
+.sidebar h2{
+    margin-bottom:15px;
+}
+
+.remaining{
+    margin-top:20px;
+    padding:20px;
+    border-radius:18px;
+    background:#171a22;
+}
+
+.remaining h1{
+    font-size:54px;
+    color:#22c55e;
+}
+
+.staff-select{
+    margin-top:20px;
+}
+
+.staff-select select{
+    width:100%;
+    padding:14px;
+    background:#171a22;
+    border:none;
+    color:white;
+    border-radius:12px;
+}
+
+.rules{
+    margin-top:25px;
+}
+
+.rule{
+    margin-bottom:10px;
+    color:#9ca3af;
+}
+
+.calendar-card{
+    padding:25px;
+}
+
+.calendar-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.calendar-header h2{
+    font-size:24px;
+}
+
+.month-nav{
+    display:flex;
+    gap:10px;
+}
+
+.btn{
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:12px;
+    background:#1b1f2b;
+    color:white;
+    cursor:pointer;
+}
+
+.weekdays{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    margin-bottom:12px;
+    text-align:center;
+    color:#6b7280;
+}
+
+.calendar{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:12px;
+}
+
+.day{
+    aspect-ratio:1;
+    border-radius:20px;
+    background:#171a22;
+    border:1px solid rgba(255,255,255,.05);
+    padding:12px;
+    cursor:pointer;
+    transition:.25s;
+    position:relative;
+}
+
+.day:hover{
+    transform:translateY(-4px);
+    border-color:#6c63ff;
+}
+
+.day-number{
+    font-weight:600;
+}
+
+.day.available{
+    box-shadow:0 0 0 1px #22c55e40;
+}
+
+.day.selected{
+    background:linear-gradient(135deg,#6c63ff,#8b5cf6);
+}
+
+.day.full{
+    opacity:.4;
+    cursor:not-allowed;
+}
+
+.slot{
+    position:absolute;
+    bottom:12px;
+    left:12px;
+    font-size:12px;
+    color:#9ca3af;
+}
+
+.legend{
+    display:flex;
+    gap:12px;
+    margin-top:25px;
+}
+
+.badge{
+    padding:8px 14px;
+    border-radius:999px;
+    font-size:13px;
+}
+
+.available-badge{
+    background:#22c55e22;
+    color:#22c55e;
+}
+
+.full-badge{
+    background:#ef444422;
+    color:#ef4444;
+}
+
+.selected-badge{
+    background:#6c63ff22;
+    color:#a5b4fc;
+}
+
+.submit{
+    margin-top:25px;
+    width:100%;
+    padding:18px;
+    border:none;
+    border-radius:16px;
+    background:linear-gradient(135deg,#6c63ff,#8b5cf6);
+    color:white;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.submit:hover{
+    opacity:.9;
+}
+
+@media(max-width:900px){
+
+.hero{
+    grid-template-columns:1fr;
+}
+
+.calendar{
+    gap:8px;
+}
+
+.day{
+    border-radius:14px;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="topbar">
+
+        <div class="logo">
+            Store<span>Scheduler</span>
+        </div>
+
+        <div class="user-box">
+            <div class="avatar"></div>
+        </div>
+
+    </div>
+
+    <div class="hero">
+
+        <div class="card sidebar">
+
+            <h2>휴무 신청</h2>
+
+            <div class="staff-select">
+                <select>
+                    <option>직원 선택</option>
+                    <option>김은진</option>
+                    <option>이주훈</option>
+                    <option>김명규</option>
+                    <option>신민규</option>
+                    <option>박혜정</option>
+                </select>
+            </div>
+
+            <div class="remaining">
+                <p>남은 휴무</p>
+                <h1>8</h1>
+                <small>총 8회 선택 가능</small>
+            </div>
+
+            <div class="rules">
+                <div class="rule">✓ 평일 최대 2명</div>
+                <div class="rule">✓ 토요일 최대 1명</div>
+                <div class="rule">✓ 일요일 최대 1명</div>
+                <div class="rule">✓ 선착순 마감</div>
+            </div>
+
+            <button class="submit">
+                신청 완료하기
+            </button>
+
+        </div>
+
+        <div class="card calendar-card">
+
+            <div class="calendar-header">
+
+                <h2>2026년 7월</h2>
+
+                <div class="month-nav">
+                    <button class="btn">←</button>
+                    <button class="btn">→</button>
+                </div>
+
+            </div>
+
+            <div class="weekdays">
+                <div>월</div>
+                <div>화</div>
+                <div>수</div>
+                <div>목</div>
+                <div>금</div>
+                <div>토</div>
+                <div>일</div>
+            </div>
+
+            <div class="calendar">
+
+                <div class="day available">
+                    <div class="day-number">1</div>
+                    <div class="slot">1 / 2</div>
+                </div>
+
+                <div class="day selected">
+                    <div class="day-number">2</div>
+                    <div class="slot">선택됨</div>
+                </div>
+
+                <div class="day full">
+                    <div class="day-number">3</div>
+                    <div class="slot">마감</div>
+                </div>
+
+                <div class="day available"><div class="day-number">4</div><div class="slot">0 / 2</div></div>
+                <div class="day available"><div class="day-number">5</div><div class="slot">1 / 2</div></div>
+                <div class="day available"><div class="day-number">6</div><div class="slot">0 / 2</div></div>
+                <div class="day available"><div class="day-number">7</div><div class="slot">0 / 2</div></div>
+
+                <div class="day available"><div class="day-number">8</div><div class="slot">0 / 2</div></div>
+                <div class="day available"><div class="day-number">9</div><div class="slot">0 / 1</div></div>
+                <div class="day full"><div class="day-number">10</div><div class="slot">마감</div></div>
+
+                <div class="day available"><div class="day-number">11</div><div class="slot">0 / 2</div></div>
+                <div class="day available"><div class="day-number">12</div><div class="slot">1 / 2</div></div>
+                <div class="day available"><div class="day-number">13</div><div class="slot">0 / 2</div></div>
+                <div class="day available"><div class="day-number">14</div><div class="slot">0 / 2</div></div>
+
+                <div class="day available"><div class="day-number">15</div><div class="slot">1 / 2</div></div>
+                <div class="day available"><div class="day-number">16</div><div class="slot">0 / 1</div></div>
+                <div class="day available"><div class="day-number">17</div><div class="slot">0 / 1</div></div>
+
+            </div>
+
+            <div class="legend">
+
+                <div class="badge available-badge">
+                    선택 가능
+                </div>
+
+                <div class="badge selected-badge">
+                    내 휴무
+                </div>
+
+                <div class="badge full-badge">
+                    마감
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
