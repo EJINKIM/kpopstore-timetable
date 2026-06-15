@@ -301,16 +301,33 @@ body{
 
             <h2>휴무 신청</h2>
 
-            <div class="staff-select">
-                <select>
-                    <option>직원 선택</option>
-                    <option>김은진</option>
-                    <option>이주훈</option>
-                    <option>김명규</option>
-                    <option>신민규</option>
-                    <option>박혜정</option>
-                </select>
-            </div>
+          <div class="staff-select">
+
+    <select id="staffSelect">
+        <option value="">K지니팝 직원 선택</option>
+        <option value="김은진">김은진</option>
+        <option value="이주훈">이주훈</option>
+        <option value="김명규">김명규</option>
+        <option value="신민규">신민규</option>
+        <option value="박혜정">박혜정</option>
+    </select>
+
+    <input
+        type="password"
+        id="pinInput"
+        placeholder="PIN 번호 입력"
+        style="
+            width:100%;
+            margin-top:12px;
+            padding:14px;
+            background:#171a22;
+            border:none;
+            border-radius:12px;
+            color:white;
+        "
+    >
+
+</div>
 
             <div class="remaining">
                 <p>남은 휴무</p>
@@ -401,6 +418,17 @@ body{
 
 <script>
 
+    const employeePins = {
+
+    "김은진":"6666",
+    "이주훈":"2222",
+    "김명규":"3333",
+    "신민규":"4444",
+    "박혜정":"5555"
+
+};
+
+    
 let currentYear = new Date().getFullYear();
 let currentMonth = new Date().getMonth() + 1;
 
@@ -499,7 +527,45 @@ document.getElementById('nextBtn').addEventListener('click', () => {
 
     render();
 });
+document.getElementById('submitBtn')
+.addEventListener('click', () => {
 
+    const staff =
+        document.getElementById('staffSelect').value;
+
+    const pin =
+        document.getElementById('pinInput').value;
+
+    if(!staff){
+
+        alert('직원을 선택해주세요.');
+        return;
+    }
+
+    if(employeePins[staff] !== pin){
+
+        alert('PIN 번호가 올바르지 않습니다.');
+        return;
+    }
+
+    const selectedDays =
+        document.querySelectorAll('.day.selected');
+
+    if(selectedDays.length !== 8){
+
+        alert(
+            `휴무를 8일 선택해주세요.\n현재 ${selectedDays.length}일 선택됨`
+        );
+
+        return;
+    }
+
+    alert(
+        `${staff}님의 휴무 신청이 완료되었습니다.`
+    );
+
+});
+    
     function updateRemaining() {
 
     const selectedCount =
@@ -509,23 +575,7 @@ document.getElementById('nextBtn').addEventListener('click', () => {
         8 - selectedCount;
 }
     
-document.getElementById('submitBtn')
-.addEventListener('click', () => {
 
-    const selectedDays =
-        document.querySelectorAll('.day.selected');
-
-    if(selectedDays.length !== 8){
-
-        alert(`휴무를 8일 선택해주세요.\n현재 ${selectedDays.length}일 선택됨`);
-
-        return;
-    }
-
-    alert('휴무 신청이 완료되었습니다!');
-
-});
-    
 </script>
 
 </body>
