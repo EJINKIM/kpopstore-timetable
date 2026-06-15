@@ -374,24 +374,6 @@ body{
 <div class="calendar" id="calendar"></div>
            
 
-                <div class="day available"><div class="day-number">4</div><div class="slot">0 / 2</div></div>
-                <div class="day available"><div class="day-number">5</div><div class="slot">1 / 2</div></div>
-                <div class="day available"><div class="day-number">6</div><div class="slot">0 / 2</div></div>
-                <div class="day available"><div class="day-number">7</div><div class="slot">0 / 2</div></div>
-
-                <div class="day available"><div class="day-number">8</div><div class="slot">0 / 2</div></div>
-                <div class="day available"><div class="day-number">9</div><div class="slot">0 / 1</div></div>
-                <div class="day full"><div class="day-number">10</div><div class="slot">마감</div></div>
-
-                <div class="day available"><div class="day-number">11</div><div class="slot">0 / 2</div></div>
-                <div class="day available"><div class="day-number">12</div><div class="slot">1 / 2</div></div>
-                <div class="day available"><div class="day-number">13</div><div class="slot">0 / 2</div></div>
-                <div class="day available"><div class="day-number">14</div><div class="slot">0 / 2</div></div>
-
-                <div class="day available"><div class="day-number">15</div><div class="slot">1 / 2</div></div>
-                <div class="day available"><div class="day-number">16</div><div class="slot">0 / 1</div></div>
-                <div class="day available"><div class="day-number">17</div><div class="slot">0 / 1</div></div>
-
             </div>
 
             <div class="legend">
@@ -417,8 +399,12 @@ body{
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-    const firebaseConfig = {
-  apiKey: "AIzaSyDMybA0gbpf-sxf83HZJEUtoEzgAxlA6bs",
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+<script>
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
   authDomain: "kpopstore-timetable.firebaseapp.com",
   databaseURL: "https://kpopstore-timetable-default-rtdb.firebaseio.com",
   projectId: "kpopstore-timetable",
@@ -426,8 +412,12 @@ body{
   messagingSenderId: "848394973405",
   appId: "1:848394973405:web:6221818a6a358fb0c5eb34"
 };
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-    
+
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.database();
+
+</script>
     
 <script>
 
@@ -620,9 +610,7 @@ db.ref("schedules/" + staff).set({
     
 
 </script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-    
+
 </body>
 
 </html>
