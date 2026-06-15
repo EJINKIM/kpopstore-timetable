@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+from pathlib import Path
+
+api_key = "AIzaSyDMybA0gbpf-sxf83HZJEUtoEzgAxlA6bs"
+
+html = f"""<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
@@ -10,500 +14,155 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-:root{
+:root{{
   --bg:#0f1117;
   --card:rgba(255,255,255,0.075);
   --border:rgba(255,255,255,.11);
   --text:#fff;
   --sub:#9ca3af;
-  --primary:#9b8cff;
+  --primary:#a78bfa;
   --green:#22c55e;
   --danger:#ef4444;
   --day:#171a22;
-}
+}}
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Noto Sans KR',sans-serif;
-}
+*{{margin:0;padding:0;box-sizing:border-box;font-family:'Noto Sans KR',sans-serif;}}
 
-body{
+body{{
   min-height:100vh;
   color:var(--text);
   background:
-    radial-gradient(circle at top right,#9b8cff38,transparent 30%),
-    radial-gradient(circle at bottom left,#7dd3fc24,transparent 30%),
-    linear-gradient(135deg,#0f1117,#111827 55%,#0b1120);
-}
+    radial-gradient(circle at top right,#a78bfa33,transparent 32%),
+    radial-gradient(circle at bottom left,#7dd3fc22,transparent 32%),
+    linear-gradient(135deg,#0f1117,#111827 50%,#0b1120);
+}}
 
-.container{
-  max-width:1400px;
-  margin:auto;
-  padding:30px;
-}
+.container{{max-width:1440px;margin:auto;padding:30px;}}
+.topbar{{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;gap:14px;}}
+.logo{{font-size:26px;font-weight:800;letter-spacing:-.04em;}}
+.logo span{{color:var(--primary);}}
+.status-pill{{font-size:13px;color:#d1d5db;background:#ffffff12;border:1px solid var(--border);border-radius:999px;padding:9px 13px;white-space:nowrap;}}
 
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:28px;
-  gap:16px;
-}
+.hero{{display:grid;grid-template-columns:350px 1fr;gap:24px;align-items:start;}}
+.card{{background:var(--card);backdrop-filter:blur(18px);border:1px solid var(--border);border-radius:26px;box-shadow:0 24px 70px rgba(0,0,0,.24);}}
+.sidebar{{padding:25px;position:sticky;top:20px;}}
+.sidebar h2{{margin-bottom:8px;font-size:22px;letter-spacing:-.03em;}}
+.helper{{font-size:13px;color:var(--sub);line-height:1.5;margin-bottom:18px;}}
 
-.logo{
-  font-size:26px;
-  font-weight:800;
-  letter-spacing:-.03em;
-}
+.staff-select{{margin-top:18px;display:grid;gap:12px;}}
+.staff-select select,.staff-select input{{
+  width:100%;padding:14px;background:#171a22;border:1px solid rgba(255,255,255,.09);
+  color:white;border-radius:14px;outline:none;
+}}
+.staff-select select:focus,.staff-select input:focus{{border-color:#a78bfa;box-shadow:0 0 0 4px #a78bfa22;}}
 
-.logo span{
-  color:var(--primary);
-}
+.remaining{{margin-top:20px;padding:20px;border-radius:20px;background:#171a22;border:1px solid rgba(255,255,255,.07);}}
+.remaining h1{{font-size:54px;color:var(--green);line-height:1.05;letter-spacing:-.06em;}}
+.remaining small,.remaining p{{color:var(--sub);}}
 
-.status{
-  padding:9px 13px;
-  border-radius:999px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.10);
-  color:#cbd5e1;
-  font-size:12px;
-  white-space:nowrap;
-}
+.rules{{margin-top:22px;display:grid;gap:9px;}}
+.rule{{color:#cbd5e1;font-size:14px;background:#ffffff08;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:10px 12px;}}
 
-.hero{
-  display:grid;
-  grid-template-columns:350px minmax(0,1fr);
-  gap:24px;
-  align-items:start;
-}
-
-.card{
-  background:var(--card);
-  backdrop-filter:blur(18px);
-  border:1px solid var(--border);
-  border-radius:26px;
-  box-shadow:0 24px 70px rgba(0,0,0,.22);
-}
-
-.sidebar{
-  padding:25px;
-  position:sticky;
-  top:20px;
-}
-
-.sidebar h2{
-  margin-bottom:8px;
-  font-size:22px;
-}
-
-.sidebar .desc{
-  color:#a8b0bf;
-  font-size:13px;
-  line-height:1.5;
-}
-
-.staff-select{
-  margin-top:20px;
-}
-
-.staff-select select,
-.staff-select input{
-  width:100%;
-  padding:14px;
-  background:#171a22;
-  border:1px solid rgba(255,255,255,.09);
-  color:white;
-  border-radius:14px;
-  outline:none;
-}
-
-.staff-select input{
-  margin-top:12px;
-}
-
-.staff-select select:focus,
-.staff-select input:focus{
-  border-color:#9b8cff;
-  box-shadow:0 0 0 4px rgba(155,140,255,.14);
-}
-
-.remaining{
-  margin-top:20px;
-  padding:20px;
-  border-radius:20px;
-  background:rgba(23,26,34,.86);
-  border:1px solid rgba(255,255,255,.07);
-}
-
-.remaining h1{
-  font-size:54px;
-  color:var(--green);
-  line-height:1.05;
-  letter-spacing:-.04em;
-}
-
-.remaining small,
-.remaining p{
-  color:var(--sub);
-}
-
-.rules{
-  margin-top:25px;
-}
-
-.rule{
-  margin-bottom:10px;
-  color:#aeb6c4;
-  font-size:14px;
-}
-
-.submit{
-  margin-top:25px;
-  width:100%;
-  padding:18px;
-  border:none;
-  border-radius:18px;
+.submit{{
+  margin-top:24px;width:100%;padding:18px;border:none;border-radius:18px;
   background:linear-gradient(135deg,#ddd6fe,#bae6fd);
-  color:#111827;
-  font-size:16px;
-  font-weight:800;
-  cursor:pointer;
-}
+  color:#111827;font-size:16px;font-weight:800;cursor:pointer;transition:.2s;
+}}
+.submit:hover{{transform:translateY(-1px);filter:brightness(1.04);}}
 
-.submit:hover{
-  filter:brightness(1.04);
-}
+.notice{{display:none;margin-top:14px;border-radius:16px;padding:12px 13px;font-size:13px;line-height:1.45;border:1px solid rgba(255,255,255,.08);}}
+.notice.show{{display:block;}}
+.notice.success{{background:#22c55e20;color:#bbf7d0;border-color:#22c55e55;}}
+.notice.error{{background:#ef444420;color:#fecdd3;border-color:#ef444455;}}
 
-.notice{
-  margin-top:14px;
-  padding:12px 14px;
-  border-radius:16px;
-  font-size:13px;
-  display:none;
-  line-height:1.45;
-}
+.calendar-card{{padding:25px;}}
+.calendar-header{{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:12px;}}
+.calendar-header h2{{font-size:24px;white-space:nowrap;letter-spacing:-.04em;}}
+.month-nav{{display:flex;gap:10px;}}
+.btn{{width:42px;height:42px;border:none;border-radius:14px;background:#1b1f2b;color:white;cursor:pointer;font-size:18px;border:1px solid rgba(255,255,255,.08);transition:.2s;}}
+.btn:hover{{background:#ffffff18;transform:translateY(-1px);}}
 
-.notice.show{
-  display:block;
-}
+.weekdays{{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:12px;text-align:center;color:#7b8290;font-size:14px;font-weight:700;}}
+.calendar{{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;}}
+.empty-day{{min-height:100px;}}
+.day{{min-height:108px;border-radius:20px;background:var(--day);border:1px solid rgba(255,255,255,.06);padding:12px;cursor:pointer;transition:.2s;position:relative;overflow:hidden;}}
+.day:hover{{transform:translateY(-3px);border-color:#a78bfa;}}
+.day-number{{font-weight:800;position:relative;z-index:3;}}
+.day.available{{box-shadow:0 0 0 1px #22c55e25;}}
+.day.selected{{outline:3px solid rgba(255,255,255,.75);outline-offset:-3px;}}
+.day.full{{opacity:.48;cursor:not-allowed;}}
+.day.full:hover{{transform:none;border-color:rgba(255,255,255,.06);}}
+.color-fill{{position:absolute;inset:0;opacity:.78;z-index:1;}}
+.staff-list{{position:relative;z-index:3;display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;padding-right:2px;}}
+.staff-tag{{font-size:10.5px;font-weight:900;line-height:1;padding:5px 7px;border-radius:999px;background:rgba(255,255,255,.82);box-shadow:0 4px 12px rgba(0,0,0,.10);backdrop-filter:blur(10px);}}
+.slot{{position:absolute;bottom:10px;left:10px;font-size:11px;color:#f1f5f9;z-index:3;}}
+.day.conflict{{animation:shake .28s ease-in-out 0s 2;outline:2px solid rgba(239,68,68,.95);}}
+@keyframes shake{{0%,100%{{transform:translateX(0)}}25%{{transform:translateX(-3px)}}75%{{transform:translateX(3px)}}}}
 
-.notice.error{
-  background:rgba(239,68,68,.14);
-  border:1px solid rgba(239,68,68,.28);
-  color:#fecdd3;
-}
+.legend{{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;}}
+.badge{{padding:8px 12px;border-radius:999px;font-size:13px;background:#ffffff10;color:#d1d5db;display:flex;align-items:center;gap:7px;border:1px solid rgba(255,255,255,.07);}}
+.dot{{width:10px;height:10px;border-radius:50%;display:inline-block;}}
 
-.notice.success{
-  background:rgba(34,197,94,.14);
-  border:1px solid rgba(34,197,94,.28);
-  color:#bbf7d0;
-}
+.summary-card{{margin-top:22px;padding:22px;}}
+.summary-title{{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;}}
+.summary-title h3{{font-size:20px;letter-spacing:-.03em;}}
+.summary-title small{{color:var(--sub);}}
+.summary-list{{display:grid;gap:9px;}}
+.summary-item{{background:rgba(15,17,23,.55);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:12px 14px;font-size:14px;line-height:1.55;color:#e5e7eb;}}
+.summary-item strong{{font-weight:900;color:#ffffff;}}
 
-.calendar-card{
-  padding:25px;
-}
+@media(max-width:900px){{
+  .container{{padding:16px;}}
+  .topbar{{margin-bottom:18px;align-items:flex-start;flex-direction:column;}}
+  .logo{{font-size:22px;}}
+  .hero{{grid-template-columns:1fr;gap:16px;}}
+  .sidebar{{position:static;padding:20px;}}
+  .calendar-card{{padding:16px;}}
+  .calendar-header h2{{font-size:20px;}}
+  .btn{{width:38px;height:38px;}}
+  .calendar{{gap:7px;}}
+  .weekdays{{font-size:12px;}}
+  .day{{border-radius:13px;padding:8px;min-height:78px;}}
+  .empty-day{{min-height:78px;}}
+  .day-number{{font-size:13px;}}
+  .staff-list{{gap:3px;margin-top:5px;}}
+  .staff-tag{{font-size:9px;padding:4px 5px;}}
+  .slot{{font-size:9px;bottom:6px;left:7px;}}
+  .remaining h1{{font-size:44px;}}
+  .summary-card{{padding:16px;}}
+  .summary-item{{font-size:13px;}}
+}}
 
-.calendar-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:20px;
-  gap:12px;
-}
-
-.calendar-header h2{
-  font-size:24px;
-  white-space:nowrap;
-}
-
-.month-nav{
-  display:flex;
-  gap:10px;
-}
-
-.btn{
-  width:42px;
-  height:42px;
-  border:none;
-  border-radius:14px;
-  background:#1b1f2b;
-  color:white;
-  cursor:pointer;
-  font-size:18px;
-}
-
-.btn:hover{
-  background:#252a38;
-}
-
-.weekdays{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  margin-bottom:12px;
-  text-align:center;
-  color:#7b8290;
-  font-size:14px;
-  font-weight:700;
-}
-
-.calendar{
-  display:grid;
-  grid-template-columns:repeat(7,minmax(0,1fr));
-  gap:12px;
-}
-
-.empty-day{
-  min-height:96px;
-}
-
-.day{
-  min-height:96px;
-  border-radius:20px;
-  background:var(--day);
-  border:1px solid rgba(255,255,255,.06);
-  padding:12px;
-  cursor:pointer;
-  transition:.2s;
-  position:relative;
-  overflow:hidden;
-}
-
-.day:hover{
-  transform:translateY(-3px);
-  border-color:#9b8cff;
-}
-
-.day-number{
-  font-weight:800;
-  position:relative;
-  z-index:2;
-}
-
-.day.available{
-  box-shadow:0 0 0 1px #22c55e25;
-}
-
-.day.selected{
-  outline:3px solid rgba(255,255,255,.72);
-  outline-offset:-3px;
-}
-
-.day.full{
-  opacity:.55;
-  cursor:not-allowed;
-}
-
-.day.full:hover{
-  transform:none;
-}
-
-.color-fill{
-  position:absolute;
-  inset:0;
-  opacity:.78;
-  z-index:1;
-}
-
-.staff-list{
-  position:relative;
-  z-index:3;
-  display:flex;
-  flex-wrap:wrap;
-  gap:4px;
-  margin-top:8px;
-  padding-right:2px;
-}
-
-.staff-tag{
-  font-size:10.5px;
-  font-weight:900;
-  line-height:1;
-  padding:5px 7px;
-  border-radius:999px;
-  background:rgba(255,255,255,.80);
-  box-shadow:0 4px 12px rgba(0,0,0,.10);
-  backdrop-filter:blur(10px);
-}
-
-.slot{
-  position:absolute;
-  bottom:10px;
-  left:10px;
-  font-size:11px;
-  color:#e5e7eb;
-  z-index:3;
-}
-
-.day.conflict{
-  animation:shake .28s ease-in-out 0s 2;
-  outline:2px solid rgba(239,68,68,.95);
-}
-
-@keyframes shake{
-  0%,100%{transform:translateX(0)}
-  25%{transform:translateX(-3px)}
-  75%{transform:translateX(3px)}
-}
-
-.legend{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:22px;
-}
-
-.badge{
-  padding:8px 12px;
-  border-radius:999px;
-  font-size:13px;
-  background:#ffffff12;
-  color:#d1d5db;
-  display:flex;
-  align-items:center;
-  gap:7px;
-  border:1px solid rgba(255,255,255,.08);
-}
-
-.dot{
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  display:inline-block;
-}
-
-@media(max-width:900px){
-  .container{
-    padding:16px;
-  }
-
-  .topbar{
-    margin-bottom:18px;
-    align-items:flex-start;
-    flex-direction:column;
-  }
-
-  .logo{
-    font-size:22px;
-  }
-
-  .hero{
-    grid-template-columns:1fr;
-    gap:16px;
-  }
-
-  .sidebar{
-    position:static;
-    padding:20px;
-  }
-
-  .calendar-card{
-    padding:16px;
-  }
-
-  .calendar-header h2{
-    font-size:20px;
-  }
-
-  .btn{
-    width:38px;
-    height:38px;
-  }
-
-  .calendar{
-    gap:7px;
-  }
-
-  .weekdays{
-    font-size:12px;
-  }
-
-  .day{
-    border-radius:13px;
-    padding:8px;
-    min-height:76px;
-  }
-
-  .empty-day{
-    min-height:76px;
-  }
-
-  .day-number{
-    font-size:13px;
-  }
-
-  .staff-list{
-    gap:3px;
-    margin-top:5px;
-  }
-
-  .staff-tag{
-    font-size:9px;
-    padding:4px 5px;
-  }
-
-  .slot{
-    font-size:9px;
-    bottom:6px;
-    left:7px;
-  }
-
-  .remaining h1{
-    font-size:44px;
-  }
-}
-
-@media(max-width:430px){
-  .container{
-    padding:12px;
-  }
-
-  .calendar{
-    gap:5px;
-  }
-
-  .day{
-    min-height:66px;
-    border-radius:12px;
-    padding:7px;
-  }
-
-  .empty-day{
-    min-height:66px;
-  }
-
-  .slot{
-    display:none;
-  }
-
-  .staff-tag{
-    font-size:8px;
-    padding:3px 4px;
-  }
-}
+@media(max-width:430px){{
+  .container{{padding:12px;}}
+  .calendar{{gap:4px;}}
+  .day{{min-height:68px;border-radius:12px;}}
+  .empty-day{{min-height:68px;}}
+  .slot{{display:none;}}
+  .staff-tag{{font-size:8px;padding:3px 4px;}}
+}}
 </style>
 </head>
-
 <body>
+
 <div class="container">
   <div class="topbar">
     <div class="logo">K GENIE POP<span> Timetable</span></div>
-    <div class="status" id="statusText">달력 준비 중</div>
+    <div class="status-pill" id="saveStatus">달력 준비 중</div>
   </div>
 
   <div class="hero">
     <div class="card sidebar">
       <h2>휴무 신청</h2>
-      <p class="desc">직원을 선택하고 PIN 입력 후 휴무 8일을 선택하세요.</p>
+      <p class="helper">직원 선택 후 PIN을 입력하고 월 8회 휴무를 선택하세요.</p>
 
       <div class="staff-select">
         <select id="staffSelect">
           <option value="">K지니팝 직원 선택</option>
           <option value="김은진">김은진</option>
           <option value="이주훈">이주훈</option>
-          <option value="김명규">김명규</option>
-          <option value="신민규">신민규</option>
+          <option value="이명규">이명규</option>
+          <option value="심민규">심민규</option>
           <option value="박혜정">박혜정</option>
         </select>
         <input type="password" id="pinInput" placeholder="PIN 번호 입력" />
@@ -522,25 +181,34 @@ body{
         <div class="rule">✓ 충돌 날짜는 신청 전 자동 안내</div>
       </div>
 
-      <button class="submit" id="submitBtn" type="button">신청 완료하기</button>
+      <button class="submit" id="submitBtn">신청 완료하기</button>
       <div class="notice" id="noticeBox"></div>
     </div>
 
-    <div class="card calendar-card">
-      <div class="calendar-header">
-        <h2 id="monthTitle"></h2>
-        <div class="month-nav">
-          <button class="btn" id="prevBtn" type="button">←</button>
-          <button class="btn" id="nextBtn" type="button">→</button>
+    <div>
+      <div class="card calendar-card">
+        <div class="calendar-header">
+          <h2 id="monthTitle"></h2>
+          <div class="month-nav">
+            <button class="btn" id="prevBtn" type="button">←</button>
+            <button class="btn" id="nextBtn" type="button">→</button>
+          </div>
         </div>
+
+        <div class="weekdays">
+          <div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div><div>일</div>
+        </div>
+        <div class="calendar" id="calendar"></div>
+        <div class="legend" id="legend"></div>
       </div>
 
-      <div class="weekdays">
-        <div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div><div>일</div>
+      <div class="card summary-card">
+        <div class="summary-title">
+          <h3>월간 출근/휴무 요약</h3>
+          <small>신청 완료 기준 자동 반영</small>
+        </div>
+        <div class="summary-list" id="monthlySummary"></div>
       </div>
-
-      <div class="calendar" id="calendar"></div>
-      <div class="legend" id="legend"></div>
     </div>
   </div>
 </div>
@@ -549,426 +217,396 @@ body{
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyDMybA0gbpf-sxf83HZJEUtoEzgAxlA6bs",
+const firebaseConfig = {{
+  apiKey: "{api_key}",
   authDomain: "kpopstore-timetable.firebaseapp.com",
   databaseURL: "https://kpopstore-timetable-default-rtdb.firebaseio.com",
   projectId: "kpopstore-timetable",
   storageBucket: "kpopstore-timetable.firebasestorage.app",
   messagingSenderId: "848394973405",
   appId: "1:848394973405:web:6221818a6a358fb0c5eb34"
-};
+}};
 
 let db = null;
+try {{
+  firebase.initializeApp(firebaseConfig);
+  db = firebase.database();
+  document.getElementById('saveStatus').textContent = 'Firebase 연결됨';
+}} catch (error) {{
+  console.error("Firebase 연결 오류:", error);
+  document.getElementById('saveStatus').textContent = 'Firebase 연결 오류';
+}}
 
-const employeePins = {
+const employees = ["김은진", "이주훈", "이명규", "심민규", "박혜정"];
+
+const employeePins = {{
   "김은진":"6666",
   "이주훈":"2222",
-  "김명규":"3333",
-  "신민규":"4444",
+  "이명규":"3333",
+  "심민규":"4444",
   "박혜정":"5555"
-};
+}};
 
-const staffColors = {
+const staffColors = {{
   "김은진":"#7dd3fc",
   "이주훈":"#fde68a",
-  "김명규":"#bbf7d0",
-  "신민규":"#bfdbfe",
+  "이명규":"#bbf7d0",
+  "심민규":"#bfdbfe",
   "박혜정":"#fbcfe8"
-};
+}};
 
-const staffTextColors = {
+const staffTextColors = {{
   "김은진":"#075985",
   "이주훈":"#854d0e",
-  "김명규":"#166534",
-  "신민규":"#1e40af",
+  "이명규":"#166534",
+  "심민규":"#1e40af",
   "박혜정":"#9d174d"
-};
+}};
 
-const shortNames = {
+const shortNames = {{
   "김은진":"은진",
   "이주훈":"주훈",
-  "김명규":"명규",
-  "신민규":"민규",
+  "이명규":"명규",
+  "심민규":"민규",
   "박혜정":"혜정"
-};
+}};
+
+const weekdayNames = ["일", "월", "화", "수", "목", "금", "토"];
 
 let currentYear = new Date().getFullYear();
 let currentMonth = new Date().getMonth() + 1;
-let allSchedules = {};
+let allSchedules = {{}};
 let mySelectedDays = new Set();
 
-const calendarEl = document.getElementById("calendar");
-const monthTitleEl = document.getElementById("monthTitle");
-const remainingDaysEl = document.getElementById("remainingDays");
-const staffSelectEl = document.getElementById("staffSelect");
-const pinInputEl = document.getElementById("pinInput");
-const noticeBoxEl = document.getElementById("noticeBox");
-const statusTextEl = document.getElementById("statusText");
+renderLegend();
+render();
+loadAllSchedules();
 
-document.addEventListener("DOMContentLoaded", function(){
-  initFirebase();
-  renderLegend();
-  bindEvents();
-  render();
-  loadAllSchedules();
-});
+function monthKey(){{
+  return `${{currentYear}}-${{String(currentMonth).padStart(2,'0')}}`;
+}}
 
-function initFirebase(){
-  try{
-    if(
-      window.firebase &&
-      firebaseConfig.apiKey &&
-      !firebaseConfig.apiKey.includes("여기에")
-    ){
-      firebase.initializeApp(firebaseConfig);
-      db = firebase.database();
-      statusTextEl.textContent = "Firebase 연결됨";
-    }else{
-      statusTextEl.textContent = "미리보기 모드";
-    }
-  }catch(error){
-    console.error("Firebase 연결 오류:", error);
-    statusTextEl.textContent = "Firebase 연결 오류";
-    db = null;
-  }
-}
+function renderLegend(){{
+  const legend = document.getElementById('legend');
+  legend.innerHTML = employees.map(name => `
+    <div class="badge"><span class="dot" style="background:${{staffColors[name]}}"></span>${{shortNames[name]}}</div>
+  `).join('') + `<div class="badge">진한 테두리 = 내가 선택한 휴무</div>`;
+}}
 
-function bindEvents(){
-  document.getElementById("prevBtn").addEventListener("click", function(){
-    currentMonth--;
-    if(currentMonth < 1){
-      currentMonth = 12;
-      currentYear--;
-    }
-    mySelectedDays.clear();
-    render();
-    loadMySchedule();
-  });
+function showNotice(message, type='success'){{
+  const notice = document.getElementById('noticeBox');
+  notice.textContent = message;
+  notice.className = `notice show ${{type}}`;
+  setTimeout(() => {{
+    notice.className = 'notice';
+  }}, 4500);
+}}
 
-  document.getElementById("nextBtn").addEventListener("click", function(){
-    currentMonth++;
-    if(currentMonth > 12){
-      currentMonth = 1;
-      currentYear++;
-    }
-    mySelectedDays.clear();
-    render();
-    loadMySchedule();
-  });
+function render(){{
+  document.getElementById('monthTitle').textContent = `${{currentYear}}년 ${{currentMonth}}월`;
+  generateCalendar(currentYear, currentMonth);
+  paintSavedSchedules();
+  renderMonthlySummary();
+  updateRemaining();
+}}
 
-  staffSelectEl.addEventListener("change", function(){
-    loadMySchedule();
-  });
+function generateCalendar(year, month){{
+  const calendar = document.getElementById('calendar');
+  calendar.innerHTML = '';
 
-  document.getElementById("submitBtn").addEventListener("click", submitSchedule);
-}
-
-function monthKey(){
-  return currentYear + "-" + String(currentMonth).padStart(2,"0");
-}
-
-function renderLegend(){
-  const legend = document.getElementById("legend");
-  legend.innerHTML = Object.keys(staffColors).map(function(name){
-    return '<div class="badge"><span class="dot" style="background:' + staffColors[name] + '"></span>' + shortNames[name] + '</div>';
-  }).join("") + '<div class="badge">진한 테두리 = 내가 선택한 휴무</div>';
-}
-
-function render(){
-  monthTitleEl.textContent = currentYear + "년 " + currentMonth + "월";
-  calendarEl.innerHTML = "";
-
-  const firstDay = new Date(currentYear, currentMonth - 1, 1);
-  const lastDate = new Date(currentYear, currentMonth, 0).getDate();
+  const firstDay = new Date(year, month - 1, 1);
+  const lastDate = new Date(year, month, 0).getDate();
 
   let startDay = firstDay.getDay();
   startDay = startDay === 0 ? 6 : startDay - 1;
 
-  for(let i=0; i<startDay; i++){
-    const empty = document.createElement("div");
-    empty.className = "empty-day";
-    calendarEl.appendChild(empty);
-  }
+  for(let i = 0; i < startDay; i++){{
+    const empty = document.createElement('div');
+    empty.className = 'empty-day';
+    calendar.appendChild(empty);
+  }}
 
-  for(let day=1; day<=lastDate; day++){
-    const date = new Date(currentYear, currentMonth - 1, day);
+  for(let day = 1; day <= lastDate; day++){{
+    const date = new Date(year, month - 1, day);
     const isWeekend = date.getDay() === 0 || date.getDay() === 6;
     const maxSlot = isWeekend ? 1 : 2;
 
-    const div = document.createElement("div");
-    div.className = "day available";
+    const div = document.createElement('div');
+    div.className = 'day available';
     div.dataset.day = String(day);
     div.dataset.max = String(maxSlot);
+    div.innerHTML = `
+      <div class="color-fill"></div>
+      <div class="day-number">${{day}}</div>
+      <div class="staff-list"></div>
+      <div class="slot">0 / ${{maxSlot}}</div>
+    `;
 
-    div.innerHTML =
-      '<div class="color-fill"></div>' +
-      '<div class="day-number">' + day + '</div>' +
-      '<div class="staff-list"></div>' +
-      '<div class="slot">0 / ' + maxSlot + '</div>';
+    div.addEventListener('click', () => toggleDay(day));
+    calendar.appendChild(div);
+  }}
+}}
 
-    div.addEventListener("click", function(){
-      toggleDay(day);
-    });
-
-    calendarEl.appendChild(div);
-  }
-
-  paintSchedules();
-  updateRemaining();
-}
-
-function getSavedApplicantsForDay(day){
-  const monthData = allSchedules[monthKey()] || {};
-  const applicants = [];
-
-  Object.keys(monthData).forEach(function(staff){
-    const days = (monthData[staff] && monthData[staff].days) ? monthData[staff].days : [];
-    if(days.map(Number).includes(Number(day))){
-      applicants.push(staff);
-    }
-  });
-
-  return applicants;
-}
-
-function getApplicantsForDay(day){
-  const applicants = getSavedApplicantsForDay(day);
-  const currentStaff = staffSelectEl.value;
-
-  if(currentStaff && mySelectedDays.has(Number(day)) && !applicants.includes(currentStaff)){
-    applicants.push(currentStaff);
-  }
-
-  return applicants;
-}
-
-function toggleDay(day){
-  const staff = staffSelectEl.value;
-
-  if(!staff){
-    showNotice("먼저 직원을 선택해주세요.", "error");
+function toggleDay(day){{
+  const staff = document.getElementById('staffSelect').value;
+  if(!staff){{
+    alert('먼저 직원을 선택해주세요.');
     return;
-  }
+  }}
 
-  const dayBox = document.querySelector('.day[data-day="' + day + '"]');
-  if(!dayBox) return;
-
+  const dayBox = document.querySelector(`.day[data-day="${{day}}"]`);
   const maxSlot = Number(dayBox.dataset.max);
 
-  if(mySelectedDays.has(day)){
+  if(mySelectedDays.has(day)){{
     mySelectedDays.delete(day);
-  }else{
-    if(mySelectedDays.size >= 8){
-      showNotice("휴무는 최대 8일까지만 선택 가능합니다.", "error");
+  }} else {{
+    if(mySelectedDays.size >= 8){{
+      alert('휴무는 최대 8일까지만 선택 가능합니다.');
       return;
-    }
+    }}
 
-    const otherApplicants = getSavedApplicantsForDay(day).filter(function(name){
-      return name !== staff;
-    });
+    const otherApplicants = getSavedApplicantsForDay(day).filter(name => name !== staff);
 
-    if(otherApplicants.length >= maxSlot){
+    if(otherApplicants.length >= maxSlot){{
       showConflict(day, otherApplicants, maxSlot);
       return;
-    }
+    }}
 
     mySelectedDays.add(day);
-  }
+  }}
 
-  paintSchedules();
+  paintSavedSchedules();
+  renderMonthlySummary();
   updateRemaining();
-}
+}}
 
-function paintSchedules(){
-  document.querySelectorAll(".day").forEach(function(dayBox){
+function getSavedApplicantsForDay(day){{
+  const monthData = allSchedules[monthKey()] || {{}};
+  const applicants = [];
+
+  Object.keys(monthData).forEach(staff => {{
+    const days = monthData[staff]?.days || [];
+    if(days.map(Number).includes(Number(day))) applicants.push(staff);
+  }});
+
+  return applicants;
+}}
+
+function getApplicantsForDay(day){{
+  const applicants = getSavedApplicantsForDay(day);
+  const currentStaff = document.getElementById('staffSelect').value;
+
+  if(currentStaff && mySelectedDays.has(Number(day)) && !applicants.includes(currentStaff)){{
+    applicants.push(currentStaff);
+  }}
+
+  return applicants;
+}}
+
+function paintSavedSchedules(){{
+  document.querySelectorAll('.day').forEach(dayBox => {{
     const day = Number(dayBox.dataset.day);
     if(!day) return;
 
     const applicants = getApplicantsForDay(day);
     const maxSlot = Number(dayBox.dataset.max);
-    const fill = dayBox.querySelector(".color-fill");
-    const slot = dayBox.querySelector(".slot");
-    const staffList = dayBox.querySelector(".staff-list");
-    const currentStaff = staffSelectEl.value;
+    const fill = dayBox.querySelector('.color-fill');
+    const slot = dayBox.querySelector('.slot');
+    const staffList = dayBox.querySelector('.staff-list');
+    const currentStaff = document.getElementById('staffSelect').value;
 
-    dayBox.classList.remove("selected","full","conflict");
+    dayBox.classList.remove('selected','full','conflict');
+    if (fill) fill.style.background = '';
+    if (staffList) staffList.innerHTML = '';
 
-    if(fill) fill.style.background = "";
-    if(staffList) staffList.innerHTML = "";
-
-    applicants.forEach(function(name){
-      const tag = document.createElement("div");
-      tag.className = "staff-tag";
+    applicants.forEach(name => {{
+      const tag = document.createElement('div');
+      tag.className = 'staff-tag';
       tag.textContent = shortNames[name] || name;
-      tag.style.color = staffTextColors[name] || "#111827";
-      tag.style.border = "1px solid " + (staffTextColors[name] || "#111827") + "22";
-      if(staffList) staffList.appendChild(tag);
-    });
+      tag.style.color = staffTextColors[name] || '#111827';
+      tag.style.border = `1px solid ${{staffTextColors[name] || '#111827'}}22`;
+      if (staffList) staffList.appendChild(tag);
+    }});
 
-    if(applicants.length === 1){
-      if(fill) fill.style.background = staffColors[applicants[0]];
-    }else if(applicants.length >= 2){
-      const colors = applicants.map(function(name, index){
+    if(applicants.length === 1){{
+      if (fill) fill.style.background = staffColors[applicants[0]];
+    }} else if(applicants.length >= 2){{
+      const colors = applicants.map((name, index) => {{
         const start = Math.round(index * 100 / applicants.length);
         const end = Math.round((index + 1) * 100 / applicants.length);
-        return staffColors[name] + " " + start + "% " + end + "%";
-      }).join(", ");
-      if(fill) fill.style.background = "linear-gradient(135deg, " + colors + ")";
-    }
+        return `${{staffColors[name]}} ${{start}}% ${{end}}%`;
+      }}).join(', ');
+      if (fill) fill.style.background = `linear-gradient(135deg, ${{colors}})`;
+    }}
 
-    if(currentStaff && mySelectedDays.has(day)){
-      dayBox.classList.add("selected");
-    }
+    if(currentStaff && mySelectedDays.has(day)){{
+      dayBox.classList.add('selected');
+    }}
 
-    if(applicants.length >= maxSlot && !(currentStaff && mySelectedDays.has(day))){
-      dayBox.classList.add("full");
-    }
+    if(applicants.length >= maxSlot && !(currentStaff && mySelectedDays.has(day))){{
+      dayBox.classList.add('full');
+    }}
 
-    if(slot){
-      slot.textContent = Math.min(applicants.length, maxSlot) + " / " + maxSlot;
-    }
-  });
-}
+    slot.textContent = `${{Math.min(applicants.length, maxSlot)}} / ${{maxSlot}}`;
+  }});
+}}
 
-function showConflict(day, applicants, maxSlot){
-  const dayBox = document.querySelector('.day[data-day="' + day + '"]');
-  if(dayBox){
-    dayBox.classList.add("conflict");
-    setTimeout(function(){
-      dayBox.classList.remove("conflict");
-    }, 700);
-  }
+function showConflict(day, applicants, maxSlot){{
+  const dayBox = document.querySelector(`.day[data-day="${{day}}"]`);
+  if(dayBox){{
+    dayBox.classList.add('conflict');
+    setTimeout(() => dayBox.classList.remove('conflict'), 700);
+  }}
 
-  const names = applicants.map(function(name){
-    return shortNames[name] || name;
-  }).join(", ");
+  const names = applicants.map(name => shortNames[name] || name).join(', ');
+  alert(`${{currentMonth}}월 ${{day}}일은 이미 ${{names}}님이 신청해서 마감되었습니다.\\n이 날짜는 최대 ${{maxSlot}}명까지만 휴무 신청할 수 있습니다.`);
+}}
 
-  showNotice(currentMonth + "월 " + day + "일은 이미 " + names + "님이 신청해서 마감되었습니다. 이 날짜는 최대 " + maxSlot + "명까지만 가능합니다.", "error");
-}
-
-function validateBeforeSubmit(staff){
+function validateBeforeSubmit(staff){{
   const conflicts = [];
 
-  Array.from(mySelectedDays).forEach(function(day){
-    const dayBox = document.querySelector('.day[data-day="' + day + '"]');
-    if(!dayBox) return;
-
+  Array.from(mySelectedDays).forEach(day => {{
+    const dayBox = document.querySelector(`.day[data-day="${{day}}"]`);
     const maxSlot = Number(dayBox.dataset.max);
-    const otherApplicants = getSavedApplicantsForDay(day).filter(function(name){
-      return name !== staff;
-    });
+    const otherApplicants = getSavedApplicantsForDay(day).filter(name => name !== staff);
 
-    if(otherApplicants.length >= maxSlot){
-      conflicts.push({
-        day: day,
-        applicants: otherApplicants,
-        maxSlot: maxSlot
-      });
-    }
-  });
+    if(otherApplicants.length >= maxSlot){{
+      conflicts.push({{ day, applicants: otherApplicants, maxSlot }});
+    }}
+  }});
 
-  if(conflicts.length){
-    const message = conflicts.map(function(item){
-      const names = item.applicants.map(function(name){
-        return shortNames[name] || name;
-      }).join(", ");
-      return currentMonth + "월 " + item.day + "일: " + names + " 신청 완료";
-    }).join("\\n");
+  if(conflicts.length){{
+    const message = conflicts.map(item => {{
+      const names = item.applicants.map(name => shortNames[name] || name).join(', ');
+      return `${{currentMonth}}월 ${{item.day}}일: ${{names}} 신청 완료`;
+    }}).join('\\n');
 
-    showNotice("중복 신청 충돌이 있습니다.\\n" + message + "\\n다른 날짜를 선택해주세요.", "error");
-
+    alert(`중복 신청 충돌이 있습니다.\\n\\n${{message}}\\n\\n다른 날짜를 선택해주세요.`);
     const first = conflicts[0];
-    const dayBox = document.querySelector('.day[data-day="' + first.day + '"]');
-    if(dayBox){
-      dayBox.classList.add("conflict");
-      setTimeout(function(){
-        dayBox.classList.remove("conflict");
-      }, 900);
-    }
-
+    const dayBox = document.querySelector(`.day[data-day="${{first.day}}"]`);
+    if(dayBox){{
+      dayBox.classList.add('conflict');
+      setTimeout(() => dayBox.classList.remove('conflict'), 900);
+    }}
     return false;
-  }
+  }}
 
   return true;
-}
+}}
 
-function updateRemaining(){
-  remainingDaysEl.textContent = 8 - mySelectedDays.size;
-}
+function updateRemaining(){{
+  document.getElementById('remainingDays').textContent = 8 - mySelectedDays.size;
+}}
 
-function showNotice(message, type){
-  noticeBoxEl.textContent = message;
-  noticeBoxEl.className = "notice show " + (type || "");
-}
-
-function loadAllSchedules(){
-  if(!db){
-    console.warn("Firebase API KEY를 넣으면 저장/불러오기 기능이 작동합니다.");
-    paintSchedules();
+function loadAllSchedules(){{
+  if(!db){{
+    console.warn('Firebase 연결이 없으면 저장/불러오기 기능이 작동하지 않습니다.');
     return;
-  }
+  }}
 
-  db.ref("schedules").on("value", function(snapshot){
-    allSchedules = snapshot.val() || {};
-    loadMySchedule();
-    paintSchedules();
-  });
-}
+  db.ref('schedules').on('value', snapshot => {{
+    allSchedules = snapshot.val() || {{}};
+    loadMySchedule(false);
+    paintSavedSchedules();
+    renderMonthlySummary();
+  }});
+}}
 
-function loadMySchedule(){
-  const staff = staffSelectEl.value;
+function loadMySchedule(shouldPaint = true){{
+  const staff = document.getElementById('staffSelect').value;
   mySelectedDays.clear();
 
-  if(staff){
-    const monthData = allSchedules[monthKey()] || {};
-    const saved = monthData[staff] && monthData[staff].days ? monthData[staff].days : [];
-    saved.map(Number).forEach(function(day){
-      mySelectedDays.add(day);
-    });
-  }
+  if(staff){{
+    const saved = allSchedules[monthKey()]?.[staff]?.days || [];
+    saved.map(Number).forEach(day => mySelectedDays.add(day));
+  }}
 
-  paintSchedules();
+  if(shouldPaint){{
+    paintSavedSchedules();
+    renderMonthlySummary();
+  }}
   updateRemaining();
-}
+}}
 
-function submitSchedule(){
-  const staff = staffSelectEl.value;
-  const pin = pinInputEl.value;
+function getAttendanceForDay(day){{
+  const off = getApplicantsForDay(day);
+  const working = employees.filter(name => !off.includes(name));
+  return {{ off, working }};
+}}
 
-  if(!staff){
-    showNotice("직원을 선택해주세요.", "error");
-    return;
-  }
+function renderMonthlySummary(){{
+  const summary = document.getElementById('monthlySummary');
+  const lastDate = new Date(currentYear, currentMonth, 0).getDate();
+  const items = [];
 
-  if(employeePins[staff] !== pin){
-    showNotice("PIN 번호가 올바르지 않습니다.", "error");
-    return;
-  }
+  for(let day=1; day<=lastDate; day++){{
+    const date = new Date(currentYear, currentMonth - 1, day);
+    const weekday = weekdayNames[date.getDay()];
+    const {{ off, working }} = getAttendanceForDay(day);
 
-  if(mySelectedDays.size !== 8){
-    showNotice("휴무를 8일 선택해주세요. 현재 " + mySelectedDays.size + "일 선택됨", "error");
-    return;
-  }
+    const workingText = working.length ? working.map(name => shortNames[name]).join(', ') : '없음';
+    const offText = off.length ? off.map(name => shortNames[name]).join(', ') : '없음';
 
+    items.push(`
+      <div class="summary-item">
+        ${{currentMonth}}월 ${{day}}일(${{weekday}})에는
+        <strong>${{workingText}}</strong>님이 출근하며,
+        <strong>${{offText}}</strong>님이 휴무입니다.
+      </div>
+    `);
+  }}
+
+  summary.innerHTML = items.join('');
+}}
+
+document.getElementById('staffSelect').addEventListener('change', () => {{
+  loadMySchedule();
+}});
+
+document.getElementById('prevBtn').addEventListener('click', () => {{
+  currentMonth--;
+  if(currentMonth < 1){{ currentMonth = 12; currentYear--; }}
+  mySelectedDays.clear();
+  render();
+  loadMySchedule();
+}});
+
+document.getElementById('nextBtn').addEventListener('click', () => {{
+  currentMonth++;
+  if(currentMonth > 12){{ currentMonth = 1; currentYear++; }}
+  mySelectedDays.clear();
+  render();
+  loadMySchedule();
+}});
+
+document.getElementById('submitBtn').addEventListener('click', () => {{
+  const staff = document.getElementById('staffSelect').value;
+  const pin = document.getElementById('pinInput').value;
+
+  if(!staff){{ alert('직원을 선택해주세요.'); return; }}
+  if(employeePins[staff] !== pin){{ alert('PIN 번호가 올바르지 않습니다.'); return; }}
+  if(mySelectedDays.size !== 8){{ alert(`휴무를 8일 선택해주세요.\\n현재 ${{mySelectedDays.size}}일 선택됨`); return; }}
   if(!validateBeforeSubmit(staff)) return;
+  if(!db){{ alert('Firebase 연결을 확인해주세요.'); return; }}
 
-  if(!db){
-    showNotice("Firebase API KEY를 넣어야 저장됩니다. 현재는 미리보기 모드입니다.", "error");
-    return;
-  }
-
-  db.ref("schedules/" + monthKey() + "/" + staff).set({
+  db.ref(`schedules/${{monthKey()}}/${{staff}}`).set({{
     name: staff,
-    days: Array.from(mySelectedDays).sort(function(a,b){ return a-b; }),
+    days: Array.from(mySelectedDays).sort((a,b) => a-b),
     updatedAt: Date.now()
-  }).then(function(){
-    showNotice(staff + "님의 " + currentYear + "년 " + currentMonth + "월 휴무 신청이 저장되었습니다.", "success");
-  }).catch(function(error){
+  }}).then(() => {{
+    showNotice(`${{staff}}님의 ${{currentYear}}년 ${{currentMonth}}월 휴무 신청이 저장되었습니다.`, 'success');
+    alert(`${{staff}}님의 ${{currentYear}}년 ${{currentMonth}}월 휴무 신청이 저장되었습니다.`);
+  }}).catch(error => {{
+    showNotice('저장 실패. Firebase 설정을 확인해주세요.', 'error');
+    alert('저장 실패');
     console.error(error);
-    showNotice("저장 실패: Firebase 설정을 확인해주세요.", "error");
-  });
-}
+  }});
+}});
 </script>
 </body>
 </html>
+"""
+
+out = Path("/mnt/data/kgenie_timetable_staff_summary.html")
+out.write_text(html, encoding="utf-8")
+out.as_posix()
