@@ -497,11 +497,17 @@ function generateCalendar(year, month) {
             return;
         }
 
-        div.classList.add('selected');
+const currentStaff =
+    document.getElementById('staffSelect').value;
+
+div.classList.add('selected');
+
+div.style.background =
+    staffColors[currentStaff];
 
     } else {
 
-        div.classList.remove('selected');
+div.style.background = '';
     }
 
     updateRemaining();
@@ -655,17 +661,10 @@ db.ref("schedules/" + staff).set({
             .forEach(day => {
 
                 const dayNumber =
-                    day.querySelector('.day-number');
+                day.classList.add('selected');
 
-                if(
-                    dayNumber &&
-                    dayNumber.textContent == savedDay
-                ){
-
-                    day.classList.add('selected');
-
-                }
-
+day.style.background =
+    staffColors[staff];
             });
 
         });
