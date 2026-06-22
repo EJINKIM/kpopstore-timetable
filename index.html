@@ -231,6 +231,21 @@ body::before{
 .day.selected{outline:3px solid rgba(71,85,105,.62);outline-offset:-4px;}
 .day.full{opacity:.62;cursor:not-allowed;}
 .day.full:hover{transform:none;border-color:rgba(255,255,255,.86);}
+.day.locked{
+  opacity:.55;
+  cursor:not-allowed;
+}
+.day.locked:hover{
+  transform:none;
+  border-color:rgba(255,255,255,.86);
+  box-shadow:0 10px 26px rgba(148,163,184,.15);
+}
+.submit:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+  filter:grayscale(.18);
+}
+
 .color-fill{position:absolute;inset:0;opacity:.72;z-index:1;}
 .staff-list{position:relative;z-index:3;display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;padding-right:2px;}
 .staff-tag{
@@ -331,7 +346,7 @@ body::before{
 
   <div class="hero">
     <div class="card sidebar">
-      <h2>휴무일을 정하기</h2>
+      <h2>휴무일을 정해볼까요?</h2>
       <p class="helper">직원 선택 후 PIN을 입력하고 월 8회 휴무를 선택하세요.</p>
 
       <div class="staff-select">
@@ -354,11 +369,9 @@ body::before{
 
       <div class="rules">
         <div class="rule">✓ 직원별 월 8회 휴무 신청</div>
-        <div class="rule">✓ 평일 최대 2명 휴무 가능</div>
-        <div class="rule">✓ 토·일 최대 1명 휴무 가능</div>
-        <div class="rule">✓ 충돌 날짜는 신청 전 자동 안내</div>
-       <div class="rule">✓ 25일부터 다음 달 휴무 신청 가능</div>
-        <div class="rule">✓ 이번 달 휴무 변경은 24일까지만 가능</div>
+        <div class="rule">✓ 매월 15일부터 다음 달 휴무 신청 가능</div>
+        <div class="rule">✓ 신청 마감: 매월 25일 23:59</div>
+        <div class="rule">✓ 평일 최대 2명 / 주말 최대 1명 휴무</div>
       </div>
 
       <button class="submit" id="submitBtn">신청 완료하기</button>
@@ -428,7 +441,7 @@ const employeePins = {
 };
 
 const staffColors = {
-  "김은진":"#7dd3fc",
+  "김은진":"#DDD6FE",
   "이주훈":"#fde68a",
   "이명규":"#bbf7d0",
   "심민규":"#bfdbfe",
@@ -436,7 +449,7 @@ const staffColors = {
 };
 
 const staffTextColors = {
-  "김은진":"#9FA1FF",
+  "김은진":"#8B5CF6",
   "이주훈":"#FFC94D",
   "이명규":"#84C5B1",
   "심민규":"#43ADD0",
@@ -465,6 +478,73 @@ loadAllSchedules();
 function monthKey(){
   return `${currentYear}-${String(currentMonth).padStart(2,'0')}`;
 }
+function getEditableStatus(year, month){
+  const now = new Date();
+  const thisYear = now.getFullYear();
+  const thisMonth = now.getMonth() + 1;
+  const nowDay = now.getDate();
+  const nowHour = now.getHours();
+  const nowMinute = now.getMinutes();
+
+  const viewingMonthIndex = year * 12 + month;
+  const nextMonthIndex = thisYear * 12 + thisMonth + 1;
+
+  const isOpenDay = nowDay >= 15;
+  const isBeforeDeadline = nowDay < 25 || (nowDay === 25 && (nowHour < 23 || (nowHour === 23 && nowMinute <= 59)));
+  const canEdit = viewingMonthIndex === nextMonthIndex && isOpenDay && isBeforeDeadline;
+
+  if(canEdit){
+    return {
+      canEdit: true,
+      message: `${year}년 ${month}월 휴무 신청 가능 · 마감 ${thisMonth}월 25일 23:59`
+    };
+  }
+
+  if(viewingMonthIndex !== nextMonthIndex){
+    return {
+      canEdit: false,
+      message: '신청 기간 아님 · 매월 15일부터 다음 달 휴무만 신청 가능'
+    };
+  }
+
+  if(!isOpenDay){
+    return {
+      canEdit: false,
+      message: '신청 대기 · 매월 15일부터 다음 달 휴무 신청 가능'
+    };
+  }
+
+  return {
+    canEdit: false,
+    message: '신청 마감 · 매월 25일 23:59 이후 수정 불가'
+  };
+}
+
+function isMonthEditable(year, month){
+  return getEditableStatus(year, month).canEdit;
+}
+
+function updateEditableUI(){
+  const status = getEditableStatus(currentYear, currentMonth);
+  const submitBtn = document.getElementById('submitBtn');
+  const saveStatus = document.getElementById('saveStatus');
+
+  if(saveStatus){
+    saveStatus.textContent = db
+      ? `Firebase 연결됨 · ${status.message}`
+      : `Firebase 연결 오류 · ${status.message}`;
+  }
+
+  if(submitBtn){
+    submitBtn.disabled = !status.canEdit;
+    submitBtn.textContent = status.canEdit ? '신청 완료하기' : '신청 기간 아님';
+  }
+
+  document.querySelectorAll('.day').forEach(dayBox => {
+    dayBox.classList.toggle('locked', !status.canEdit);
+  });
+}
+
 
 function renderLegend(){
   const legend = document.getElementById('legend');
@@ -488,6 +568,7 @@ function render(){
   paintSavedSchedules();
   renderMonthlySummary();
   updateRemaining();
+  updateEditableUI();
 }
 
 function generateCalendar(year, month){
@@ -528,6 +609,12 @@ function generateCalendar(year, month){
 }
 
 function toggleDay(day){
+  if(!isMonthEditable(currentYear, currentMonth)){
+    alert('현재는 이 달의 휴무 신청/수정 기간이 아닙니다.
+매월 15일부터 25일 23:59까지 다음 달 휴무만 신청할 수 있습니다.');
+    return;
+  }
+
   const staff = document.getElementById('staffSelect').value;
   if(!staff){
     alert('먼저 직원을 선택해주세요.');
@@ -772,6 +859,12 @@ document.getElementById('nextBtn').addEventListener('click', () => {
 });
 
 document.getElementById('submitBtn').addEventListener('click', () => {
+  if(!isMonthEditable(currentYear, currentMonth)){
+    alert('현재는 이 달의 휴무 신청/수정 기간이 아닙니다.
+매월 15일부터 25일 23:59까지 다음 달 휴무만 신청할 수 있습니다.');
+    return;
+  }
+
   const staff = document.getElementById('staffSelect').value;
   const pin = document.getElementById('pinInput').value;
 
