@@ -205,6 +205,37 @@ body::before{
   color:#916516;background:rgba(255,255,255,.68);border:1px solid rgba(226,177,59,.34);
 }
 .gem-vault.royal .gem-throne-badge{display:block;}
+
+.gem-royal-benefit{
+  display:none;
+  margin-top:12px;
+  padding:13px 14px;
+  border-radius:17px;
+  text-align:left;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.82),rgba(255,249,226,.72)),
+    linear-gradient(90deg,rgba(255,228,230,.25),rgba(224,231,255,.28));
+  border:1px solid rgba(226,177,59,.32);
+  box-shadow:0 9px 22px rgba(180,130,35,.11);
+}
+.gem-vault.royal .gem-royal-benefit{display:block;}
+.gem-royal-benefit-title{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin-bottom:5px;
+  color:#8f6518;
+  font-size:12px;
+  font-weight:900;
+}
+.gem-royal-benefit p{
+  color:#746447;
+  font-size:11px;
+  font-weight:700;
+  line-height:1.6;
+}
+.gem-royal-benefit strong{color:#9a6b16;}
+
 @keyframes gemAppear{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
 @keyframes gemFloat{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-5px) rotate(3deg)}}
 @keyframes crownBounce{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-5px) rotate(2deg)}}
@@ -550,6 +581,13 @@ body::before{
   .gem-icon{font-size:28px;}
   .gem-message{font-size:12px;}
   .gem-meta{font-size:10px;}
+  .gem-royal-benefit{
+    margin-top:10px;
+    padding:11px 12px;
+    border-radius:14px;
+  }
+  .gem-royal-benefit-title{font-size:11px;}
+  .gem-royal-benefit p{font-size:10px;}
 
   .monthly-leave-box,
   .remaining{margin-top:12px;}
@@ -829,7 +867,11 @@ body::before{
         </div>
         <div class="gem-message" id="gemMessage">직원을 선택하면 보유한 평화의 보석이 보여요.</div>
         <div class="gem-meta" id="gemMeta">자발적인 일정 조정으로만 적립됩니다.</div>
-        <div class="gem-throne-badge" id="gemThroneBadge">🪑 평화의 왕좌 입성 · 보석왕관 수여 완료</div>
+        <div class="gem-throne-badge" id="gemThroneBadge">👑 이달의 배려왕 · 평화의 왕좌 입성</div>
+        <div class="gem-royal-benefit" id="gemRoyalBenefit">
+          <div class="gem-royal-benefit-title">✨ 왕좌카드 특별 혜택</div>
+          <p>평화 보석을 모아 왕좌카드가 열리면 <strong>이달의 배려왕</strong>으로 표시되며, 해당 월의 <strong>희망 휴무 1일</strong>을 보호받을 수 있어요. 보호된 날짜는 휴무 조율이 발생해도 우선적으로 유지됩니다.</p>
+        </div>
       </div>
 
       <div class="monthly-leave-box" id="monthlyLeaveBox">
@@ -936,7 +978,7 @@ body::before{
     </div>
     <div class="guide-step">
       <span class="guide-step-number">6</span>
-      <div><strong>평화의 보석은 실제 일정 변경을 끝낸 뒤 적립돼요.</strong><p>단순 중복 날짜를 눌렀다가 취소하는 것으로는 적립되지는 않아요. '신청 완료'로 저장된 최초 조율 대상자 중, 본인의 조율 의사를 <b>변경 가능</b>으로 저장하고 기존 날짜를 양보한 뒤 다른 날짜를 골라 기본 휴무 8일을 다시 최종 저장해야 보석 1개가 적립됩니다. 초과 신청을 마지막으로 만들어 낸 직원과 최초 명단에 없던 추가 신청자는 해당 건의 보석 적립 대상에서 제외돼요. 같은 날짜에서는 한 번만 적립되며, 실제 우선 배정을 받으면 보석 1개가 사용됩니다. 보석을 4개 이상 모으면 <b>평화의 보석왕관</b>과 왕좌 카드가 열립니다.</p></div>
+      <div><strong>평화의 보석은 실제 일정 변경을 끝낸 뒤 적립돼요.</strong><p>단순 중복 날짜를 눌렀다가 취소하는 것으로는 적립되지는 않아요. '신청 완료'로 저장된 최초 조율 대상자 중, 본인의 조율 의사를 <b>변경 가능</b>으로 저장하고 기존 날짜를 양보한 뒤 다른 날짜를 골라 기본 휴무 8일을 다시 최종 저장해야 보석 1개가 적립됩니다. 초과 신청을 마지막으로 만들어 낸 직원과 최초 명단에 없던 추가 신청자는 해당 건의 보석 적립 대상에서 제외돼요. 같은 날짜에서는 한 번만 적립되며, 실제 우선 배정을 받으면 보석 1개가 사용됩니다. 보석을 4개 이상 모으면 <b>평화의 보석왕관</b>과 왕좌카드가 열립니다. 왕좌카드가 열린 직원은 <b>이달의 배려왕</b>으로 표시되며, 해당 월의 희망 휴무 1일을 보호받을 수 있어요. 보호된 날짜는 휴무 조율이 발생하더라도 우선적으로 유지됩니다.</p></div>
     </div>
     <div class="guide-step">
       <span class="guide-step-number">7</span>
@@ -1558,10 +1600,10 @@ function renderGemVault(){
   const royal = balance >= 4;
   vault.classList.add('show');
   vault.classList.toggle('royal', royal);
-  document.getElementById('gemTitle').textContent = `${shortNames[staff] || staff}의 ${getGemTitle(balance)}`;
+  document.getElementById('gemTitle').textContent = `${shortNames[staff] || staff} 님의 ${getGemTitle(balance)}`;
   document.getElementById('gemCount').textContent = balance;
   document.getElementById('gemMessage').textContent = royal
-    ? '우리 매장의 보석 같은 직원, 평화의 왕좌에 입성했습니다! ✨'
+    ? '배려가 왕관이 되는 순간! 이달의 배려왕으로 평화의 왕좌에 입성했어요. ✨'
     : balance === 0
       ? '양보가 필요한 순간 자발적으로 날짜를 옮기면 보석이 반짝이며 적립돼요. 다음 휴무 배정에서 우선권을 사수하세요!'
       : '매장을 반짝이게 만든 소중한 직원의 배려가 차곡차곡 쌓였어요 ✨';
