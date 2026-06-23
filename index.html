@@ -331,7 +331,7 @@ body::before{
 
   <div class="hero">
     <div class="card sidebar">
-      <h2>휴무일 정하기</h2>
+      <h2>K지니팝 직원 휴무일 정하기</h2>
       <p class="helper">직원 선택 후 PIN을 입력하고 월 8회 휴무를 선택하세요.</p>
 
       <div class="staff-select">
@@ -448,6 +448,30 @@ const shortNames = {
   "심민규":"민규",
   "박혜정":"혜정"
 };
+
+// 2026년 월별 주말 휴무 2회 가능 직원
+const doubleWeekendOffStaff = {
+  "2026-06": ["심민규", "박혜정", "이주훈"],
+  "2026-07": ["김은진", "이명규"],
+  "2026-08": ["심민규", "박혜정", "이주훈"],
+  "2026-09": ["김은진", "이명규"],
+  "2026-10": ["심민규", "박혜정", "이주훈"],
+  "2026-11": ["김은진", "이명규"],
+  "2026-12": ["심민규", "박혜정", "이주훈"]
+};
+
+function getWeekendOffLimit(staff, year = currentYear, month = currentMonth){
+  const key = `${year}-${String(month).padStart(2, '0')}`;
+  const allowedStaff = doubleWeekendOffStaff[key] || [];
+  return allowedStaff.includes(staff) ? 2 : 1;
+}
+
+function getSelectedWeekendCount(){
+  return Array.from(mySelectedDays).filter(day => {
+    const date = new Date(currentYear, currentMonth - 1, Number(day));
+    return date.getDay() === 0 || date.getDay() === 6;
+  }).length;
+}
 
 const weekdayNames = ["일", "월", "화", "수", "목", "금", "토"];
 
@@ -568,6 +592,19 @@ function toggleDay(day){
       return;
     }
 
+    const selectedDate = new Date(currentYear, currentMonth - 1, day);
+    const isWeekend = selectedDate.getDay() === 0 || selectedDate.getDay() === 6;
+
+    if(isWeekend){
+      const weekendLimit = getWeekendOffLimit(staff);
+      const selectedWeekendCount = getSelectedWeekendCount();
+
+      if(selectedWeekendCount >= weekendLimit){
+        alert(`${shortNames[staff]}님은 ${currentMonth}월 주말 휴무를 최대 ${weekendLimit}번까지 선택할 수 있습니다.`);
+        return;
+      }
+    }
+
     const otherApplicants = getSavedApplicantsForDay(day).filter(name => name !== staff);
 
     if(otherApplicants.length >= maxSlot){
@@ -666,6 +703,17 @@ function showConflict(day, applicants, maxSlot){
 }
 
 function validateBeforeSubmit(staff){
+  const weekendLimit = getWeekendOffLimit(staff);
+  const selectedWeekendCount = getSelectedWeekendCount();
+
+  if(selectedWeekendCount > weekendLimit){
+    alert(
+      `${shortNames[staff]}님의 ${currentMonth}월 주말 휴무는 최대 ${weekendLimit}번까지 신청할 수 있습니다.\n` +
+      `현재 ${selectedWeekendCount}번 선택되어 있습니다.`
+    );
+    return false;
+  }
+
   const conflicts = [];
 
   Array.from(mySelectedDays).forEach(day => {
