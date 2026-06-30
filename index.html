@@ -361,7 +361,30 @@ body::before{
 .day.selected{outline:3px solid rgba(71,85,105,.62);outline-offset:-4px;}
 .day.overlap{outline:2px dashed rgba(245,158,11,.82);outline-offset:-4px;}
 .day.monthly-leave{box-shadow:0 0 0 3px rgba(168,85,247,.5) inset,0 10px 26px rgba(148,163,184,.15);}
-.monthly-leave-tag{font-size:9.5px;font-weight:900;padding:4px 7px;border-radius:999px;background:#f3e8ff;color:#7e22ce;border:1px solid #d8b4fe;box-shadow:0 4px 12px rgba(126,34,206,.14);}
+.monthly-leave-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:3px;
+  font-size:9px;
+  font-weight:900;
+  line-height:1;
+  padding:4px 7px 4px 4px;
+  border-radius:999px;
+  background:#f3e8ff;
+  color:#7e22ce;
+  border:1px solid #d8b4fe;
+  box-shadow:0 4px 12px rgba(126,34,206,.14);
+  white-space:nowrap;
+}
+.monthly-leave-tag::before{
+  content:"";
+  width:10px;
+  height:10px;
+  flex:0 0 10px;
+  border-radius:50%;
+  background:#c084fc;
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.55);
+}
 .monthly-leave-box{margin-top:14px;padding:14px;border-radius:18px;background:rgba(243,232,255,.58);border:1px solid rgba(216,180,254,.75);}
 .monthly-leave-box label{display:block;font-size:13px;font-weight:800;color:#7e22ce;margin-bottom:8px;}
 .monthly-leave-box select{width:100%;padding:13px;background:rgba(255,255,255,.82);border:1px solid rgba(216,180,254,.9);border-radius:14px;color:#475569;outline:none;}
@@ -674,23 +697,25 @@ body::before{
     letter-spacing:-.04em;
   }
   .monthly-leave-tag{
-    width:15px;
-    height:15px;
-    padding:0;
-    overflow:hidden;
-    color:transparent;
-    font-size:0;
-    position:relative;
-  }
-  .monthly-leave-tag::after{
-    content:"🌙";
-    position:absolute;
-    inset:0;
-    display:flex;
+    display:inline-flex;
     align-items:center;
-    justify-content:center;
+    gap:2px;
+    width:auto;
+    height:auto;
+    padding:2px 4px 2px 2px;
+    overflow:visible;
     color:#7e22ce;
-    font-size:10px;
+    font-size:7px;
+    line-height:1;
+    white-space:nowrap;
+    background:rgba(243,232,255,.92);
+    box-shadow:none;
+  }
+  .monthly-leave-tag::before{
+    width:8px;
+    height:8px;
+    flex-basis:8px;
+    box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.6);
   }
   .slot{display:none;}
   .legend{
@@ -1395,7 +1420,7 @@ function paintSavedSchedules(){
     monthlyLeaveUsers.forEach(name => {
       const tag = document.createElement('div');
       tag.className = 'monthly-leave-tag';
-      tag.textContent = `${shortNames[name] || name} 월차`;
+      tag.textContent = shortNames[name] || name;
       if(staffList) staffList.appendChild(tag);
     });
     if(monthlyLeaveUsers.length) dayBox.classList.add('monthly-leave');
