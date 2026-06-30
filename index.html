@@ -545,6 +545,39 @@ body::before{
 .monthly-leave-day-btn.selected{background:linear-gradient(135deg,#ede9fe,#f5d0fe);color:#7e22ce;border-color:#c084fc;box-shadow:0 6px 14px rgba(168,85,247,.18);}
 .monthly-leave-day-btn.disabled{opacity:.4;cursor:not-allowed;transform:none;}
 .monthly-leave-selected{margin-top:10px;text-align:center;font-size:12px;font-weight:900;color:#7e22ce;}
+
+.monthly-leave-approval{
+  margin-top:12px;
+  padding:12px 13px;
+  border-radius:15px;
+  background:rgba(255,255,255,.74);
+  border:1px dashed rgba(168,85,247,.5);
+}
+.monthly-leave-approval label{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:0;
+  color:#6d28d9;
+  font-size:12px;
+  font-weight:900;
+  cursor:pointer;
+}
+.monthly-leave-approval input{
+  width:17px;
+  height:17px;
+  accent-color:#8b5cf6;
+}
+.monthly-leave-approval small{
+  display:block;
+  margin-top:7px;
+  color:#7c6f91;
+  font-size:10.5px;
+  line-height:1.55;
+}
+.monthly-leave-approval.locked{
+  opacity:.65;
+}
 @media(max-width:430px){.monthly-leave-days{grid-template-columns:repeat(4,1fr);}}
 
 
@@ -908,6 +941,9 @@ body::before{
         <p class="monthly-leave-help" id="monthlyLeaveHelp">월차는 한 달을 만근하면 다음 달에 1일이 발생하며, 미사용분은 계속 이월됩니다. 한 달에는 최대 3일까지 사용할 수 있어요.</p>
         <div class="monthly-leave-days" id="monthlyLeaveDays"></div>
         <div class="monthly-leave-selected" id="monthlyLeaveSelected">선택한 월차 0일</div>
+        <div class="monthly-leave-approval" id="monthlyLeaveApprovalBox">
+          <small id="monthlyLeaveApprovalHelp">신청 기간이 지난 뒤 월차 날짜를 선택하면 결재 승인 확인 팝업이 표시됩니다. ‘예’를 선택한 경우에만 월차 변경이 적용되며 기본 휴무는 변경되지 않습니다.</small>
+        </div>
       </div>
 
       <div class="remaining">
@@ -952,7 +988,7 @@ body::before{
 
       <div class="card conflict-card">
         <div class="conflict-head">
-          <h3>🤝 평화롭고, 공정하고, 스무스하게 GO~ 😊</h3>
+          <h3>🤝 평화롭고, 공정하게~ 😊</h3>
           <button class="guide-open-btn" type="button" onclick="openCoordinationGuide()">📖 조율 방법 자세히 보기</button>
           <small>정원을 넘은 날짜만 쏙 모아 보여드려요 ✨</small>
         </div>
@@ -1105,6 +1141,7 @@ let allSchedules = {};
 let conflictData = {};
 let mySelectedDays = new Set();
 let myMonthlyLeaveDays = new Set();
+let lateMonthlyLeaveApprovalConfirmed = false;
 const managerAccounts = {
   "정부영": { pin:"7777", anonymousId:"directorA" },
   "윤희준": { pin:"8888", anonymousId:"directorB" }
@@ -1140,6 +1177,48 @@ function isMonthEditable(year, month){
     (day === 25 && (hour < 23 || (hour === 23 && minute <= 59)));
 
   return viewingMonth === nextMonth && opened && beforeDeadline;
+}
+
+function isLateMonthlyLeaveEditMode(){
+  return hasMonthlyLeave() && !isMonthEditable(currentYear, currentMonth);
+}
+
+function confirmLateMonthlyLeaveApproval(){
+  if(isMonthEditable(currentYear, currentMonth)) return true;
+  if(lateMonthlyLeaveApprovalConfirmed) return true;
+
+  const approved = window.confirm(
+    '결재 승인을 받았습니까?\n\n[확인] 예, 결재 승인을 받았습니다.\n[취소] 아니오'
+  );
+
+  if(approved){
+    lateMonthlyLeaveApprovalConfirmed = true;
+    updateMonthlyLeaveApprovalUI();
+  }
+  return approved;
+}
+
+function updateMonthlyLeaveApprovalUI(){
+  const help = document.getElementById('monthlyLeaveApprovalHelp');
+  const submitBtn = document.getElementById('submitBtn');
+  if(!help || !submitBtn) return;
+
+  const normalPeriod = isMonthEditable(currentYear, currentMonth);
+  const staff = document.getElementById('staffSelect').value;
+
+  if(normalPeriod){
+    help.textContent = '현재는 정상 신청 기간입니다. 기본 휴무와 월차를 함께 저장할 수 있습니다.';
+    submitBtn.textContent = '신청 완료하기';
+  } else if(!staff){
+    help.textContent = '직원을 선택하면, 이사의 결재 승인을 받은 월차에 한해 날짜를 변경할 수 있습니다.';
+    submitBtn.textContent = '월차 변경 저장하기';
+  } else if(lateMonthlyLeaveApprovalConfirmed){
+    help.textContent = '결재 승인 확인됨 · 월차 날짜만 변경할 수 있으며 기본 휴무 8일은 유지됩니다.';
+    submitBtn.textContent = '결재 승인 월차 변경 저장하기';
+  } else {
+    help.textContent = '월차 날짜를 누르면 “결재 승인을 받았습니까?” 확인창이 표시됩니다. ‘예’를 선택해야 변경할 수 있습니다.';
+    submitBtn.textContent = '월차 변경 저장하기';
+  }
 }
 
 function renderLegend(){
@@ -1333,6 +1412,7 @@ function populateMonthlyLeaveSelect(){
   const enabled = hasMonthlyLeave();
   const staff = document.getElementById('staffSelect').value;
   box.style.display = enabled ? 'block' : 'none';
+  updateMonthlyLeaveApprovalUI();
   if(!enabled) return;
 
   const balance = getMonthlyLeaveBalance(staff);
@@ -1347,8 +1427,10 @@ function populateMonthlyLeaveSelect(){
     const day = i + 1;
     const selected = myMonthlyLeaveDays.has(day);
     const isBasicLeaveDay = mySelectedDays.has(day);
+    const monthlyLeaveCanEdit = isMonthEditable(currentYear, currentMonth) || (isLateMonthlyLeaveEditMode() && Boolean(staff));
     const disabled =
       !staff ||
+      !monthlyLeaveCanEdit ||
       isBasicLeaveDay ||
       (!selected && myMonthlyLeaveDays.size >= limit);
 
@@ -1368,6 +1450,13 @@ function populateMonthlyLeaveSelect(){
 
   daysWrap.querySelectorAll('[data-leave-day]').forEach(button => {
     button.addEventListener('click', () => {
+      if(!isMonthEditable(currentYear, currentMonth)){
+        if(!isLateMonthlyLeaveEditMode()){
+          alert('이 달은 월차 변경 대상이 아닙니다.');
+          return;
+        }
+        if(!confirmLateMonthlyLeaveApproval()) return;
+      }
       const day = Number(button.dataset.leaveDay);
       if(myMonthlyLeaveDays.has(day)){
         myMonthlyLeaveDays.delete(day);
@@ -2087,7 +2176,9 @@ function renderMonthlySummary(){
 }
 
 document.getElementById('staffSelect').addEventListener('change', () => {
+  lateMonthlyLeaveApprovalConfirmed = false;
   loadMySchedule();
+  populateMonthlyLeaveSelect();
   renderGemVault();
 });
 
@@ -2096,6 +2187,7 @@ document.getElementById('prevBtn').addEventListener('click', () => {
   if(currentMonth < 1){ currentMonth = 12; currentYear--; }
   mySelectedDays.clear();
   myMonthlyLeaveDays.clear();
+  lateMonthlyLeaveApprovalConfirmed = false;
   render();
   loadMySchedule();
 });
@@ -2105,13 +2197,17 @@ document.getElementById('nextBtn').addEventListener('click', () => {
   if(currentMonth > 12){ currentMonth = 1; currentYear++; }
   mySelectedDays.clear();
   myMonthlyLeaveDays.clear();
+  lateMonthlyLeaveApprovalConfirmed = false;
   render();
   loadMySchedule();
 });
 
 document.getElementById('submitBtn').addEventListener('click', () => {
-  if(!isMonthEditable(currentYear, currentMonth)){
-    alert('휴무 신청 기간이 아닙니다.\n매월 15일부터 25일 23:59까지 다음 달 휴무만 신청할 수 있습니다.');
+  const normalEdit = isMonthEditable(currentYear, currentMonth);
+  const lateMonthlyLeaveEdit = isLateMonthlyLeaveEditMode();
+
+  if(!normalEdit && !lateMonthlyLeaveEdit){
+    alert('휴무 신청 기간이 아닙니다.\n기본 휴무는 변경할 수 없으며, 이사의 결재 승인을 받은 월차 변경만 가능합니다.');
     return;
   }
 
@@ -2120,25 +2216,68 @@ document.getElementById('submitBtn').addEventListener('click', () => {
 
   if(!staff){ alert('직원을 선택해주세요.'); return; }
   if(employeePins[staff] !== pin){ alert('PIN 번호가 올바르지 않습니다.'); return; }
-  const leaveLimit = 8;
-  if(mySelectedDays.size !== leaveLimit){ alert(`휴무를 ${leaveLimit}일 선택해주세요.\n현재 ${mySelectedDays.size}일 선택됨`); return; }
-  if(!validateBeforeSubmit(staff)) return;
+  if(!db){ alert('Firebase 연결을 확인해주세요.'); return; }
+
+  if(lateMonthlyLeaveEdit && !confirmLateMonthlyLeaveApproval()){
+    alert('결재 승인이 확인되지 않아 월차 변경을 취소했습니다.');
+    return;
+  }
+
   const monthlyLeaveLimit = getMonthlyLeaveSelectableLimit(staff);
   if(myMonthlyLeaveDays.size > monthlyLeaveLimit){
     alert(`현재 사용할 수 있는 월차는 최대 ${monthlyLeaveLimit}일입니다.`);
     return;
   }
-  if(!db){ alert('Firebase 연결을 확인해주세요.'); return; }
 
   const now = Date.now();
+  const newMonthlyLeaveDays = Array.from(myMonthlyLeaveDays).sort((a,b) => a-b);
+
+  // 신청 기간이 지난 경우: 기본 휴무는 건드리지 않고 월차만 변경합니다.
+  if(lateMonthlyLeaveEdit){
+    const savedData = allSchedules[monthKey()]?.[staff];
+    if(!savedData){
+      alert('저장된 기본 휴무 일정이 없어 월차만 별도로 변경할 수 없습니다.');
+      return;
+    }
+
+    const updates = {};
+    updates[`schedules/${monthKey()}/${staff}/monthlyLeaveDays`] = newMonthlyLeaveDays;
+    updates[`schedules/${monthKey()}/${staff}/monthlyLeaveDay`] = null;
+    updates[`schedules/${monthKey()}/${staff}/monthlyLeaveApprovalConfirmed`] = true;
+    updates[`schedules/${monthKey()}/${staff}/monthlyLeaveApprovalConfirmedAt`] = now;
+    updates[`schedules/${monthKey()}/${staff}/updatedAt`] = now;
+
+    db.ref().update(updates).then(() => {
+      showNotice(`${staff}님의 결재 승인된 월차 변경이 저장되었습니다. 기본 휴무는 변경되지 않았습니다.`, 'success');
+      alert(`${staff}님의 월차 날짜가 변경되었습니다.\n기본 휴무 8일은 기존 일정 그대로 유지됩니다.`);
+      lateMonthlyLeaveApprovalConfirmed = false;
+      updateMonthlyLeaveApprovalUI();
+      populateMonthlyLeaveSelect();
+    }).catch(error => {
+      showNotice('월차 변경 저장에 실패했습니다. Firebase 설정을 확인해주세요.', 'error');
+      alert('월차 변경 저장 실패');
+      console.error(error);
+    });
+    return;
+  }
+
+  // 정상 신청 기간: 기존 방식대로 기본 휴무와 월차를 함께 저장합니다.
+  const leaveLimit = 8;
+  if(mySelectedDays.size !== leaveLimit){
+    alert(`휴무를 ${leaveLimit}일 선택해주세요.\n현재 ${mySelectedDays.size}일 선택됨`);
+    return;
+  }
+  if(!validateBeforeSubmit(staff)) return;
+
   const newDays = Array.from(mySelectedDays).sort((a,b) => a-b);
   const updates = {};
 
   updates[`schedules/${monthKey()}/${staff}`] = {
     name: staff,
     days: newDays,
-    monthlyLeaveDays: hasMonthlyLeave() ? Array.from(myMonthlyLeaveDays).sort((a,b) => a-b) : [],
+    monthlyLeaveDays: hasMonthlyLeave() ? newMonthlyLeaveDays : [],
     monthlyLeaveDay: null,
+    monthlyLeaveApprovalConfirmed: false,
     updatedAt: now
   };
 
