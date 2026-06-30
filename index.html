@@ -881,6 +881,33 @@ body::before{
   .guide-step-number{width:27px;height:27px;border-radius:9px;font-size:12px;}
 }
 
+/* 웹 제작자용 작은 휴무 정정 버튼 */
+.admin-fix-btn{
+  position:fixed;
+  right:10px;
+  bottom:10px;
+  z-index:9998;
+  width:25px;
+  height:25px;
+  padding:0;
+  border:1px solid rgba(148,163,184,.35);
+  border-radius:50%;
+  background:rgba(255,255,255,.38);
+  color:rgba(100,116,139,.5);
+  font-size:12px;
+  cursor:pointer;
+  opacity:.42;
+  box-shadow:none;
+}
+.admin-fix-btn:hover{opacity:1;background:#fff;color:#7c3aed;}
+.admin-fix-btn.active{
+  opacity:1;
+  color:#fff;
+  background:#8b5cf6;
+  border-color:#8b5cf6;
+  box-shadow:0 6px 16px rgba(139,92,246,.28);
+}
+
 </style>
 </head>
 <body>
@@ -988,7 +1015,7 @@ body::before{
 
       <div class="card conflict-card">
         <div class="conflict-head">
-          <h3>🤝 평화롭고, 공정하게~ 😊</h3>
+          <h3>🤝 평화롭고, 공정하고, 스무스하게 GO~ 😊</h3>
           <button class="guide-open-btn" type="button" onclick="openCoordinationGuide()">📖 조율 방법 자세히 보기</button>
           <small>정원을 넘은 날짜만 쏙 모아 보여드려요 ✨</small>
         </div>
@@ -1009,12 +1036,14 @@ body::before{
   </div>
 </div>
 
+<button type="button" class="admin-fix-btn" id="adminFixBtn" title="휴무 정정">✎</button>
+
 <div class="guide-modal" id="coordinationGuideModal" aria-hidden="true">
   <div class="guide-modal-backdrop" onclick="closeCoordinationGuide()"></div>
   <section class="guide-modal-panel" role="dialog" aria-modal="true" aria-labelledby="coordinationGuideTitle">
     <button class="guide-close-btn" type="button" onclick="closeCoordinationGuide()" aria-label="안내창 닫기">×</button>
     <div class="guide-modal-kicker">K GENIE POP 휴무 조율 가이드</div>
-    <h2 id="coordinationGuideTitle">평화롭고, 공정하게 GO~😊</h2>
+    <h2 id="coordinationGuideTitle">평화롭고, 공정하고, 스무스하게 GO~😊</h2>
     <p class="guide-intro">소중한 직원님! 이 안내만 읽으면 신청부터 최종 확정까지 한 번에 이해할 수 있어요.</p>
 
     <div class="guide-step">
@@ -1142,6 +1171,8 @@ let conflictData = {};
 let mySelectedDays = new Set();
 let myMonthlyLeaveDays = new Set();
 let lateMonthlyLeaveApprovalConfirmed = false;
+let adminCorrectionMode = false;
+let adminCorrectionBy = "";
 const managerAccounts = {
   "정부영": { pin:"7777", anonymousId:"directorA" },
   "윤희준": { pin:"8888", anonymousId:"directorB" }
@@ -1206,11 +1237,14 @@ function updateMonthlyLeaveApprovalUI(){
   const normalPeriod = isMonthEditable(currentYear, currentMonth);
   const staff = document.getElementById('staffSelect').value;
 
-  if(normalPeriod){
+  if(adminCorrectionMode){
+    help.textContent = '관리자 휴무 정정 모드 · 선택한 직원의 기본 휴무를 현재 달에서 직접 수정할 수 있습니다.';
+    submitBtn.textContent = '관리자 휴무 정정 저장하기';
+  } else if(normalPeriod){
     help.textContent = '현재는 정상 신청 기간입니다. 기본 휴무와 월차를 함께 저장할 수 있습니다.';
     submitBtn.textContent = '신청 완료하기';
   } else if(!staff){
-    help.textContent = '직원을 선택하면, 이사의 결재 승인을 받은 월차에 한해 날짜를 변경할 수 있습니다.';
+    help.textContent = '직원을 선택하면, 결재 승인을 받은 월차에 한해 날짜를 변경할 수 있습니다.';
     submitBtn.textContent = '월차 변경 저장하기';
   } else if(lateMonthlyLeaveApprovalConfirmed){
     help.textContent = '결재 승인 확인됨 · 월차 날짜만 변경할 수 있으며 기본 휴무 8일은 유지됩니다.';
@@ -1280,7 +1314,7 @@ function generateCalendar(year, month){
 }
 
 function toggleDay(day){
-  if(!isMonthEditable(currentYear, currentMonth)){
+  if(!isMonthEditable(currentYear, currentMonth) && !adminCorrectionMode){
     alert('휴무일 신청 기간이 아닙니다.\n매월 15일부터 25일 23:59까지 다음 달 휴무일을 신청할 수 있습니다.');
     return;
   }
@@ -2175,6 +2209,37 @@ function renderMonthlySummary(){
   summary.innerHTML = items.join('');
 }
 
+document.getElementById('adminFixBtn').addEventListener('click', () => {
+  const button = document.getElementById('adminFixBtn');
+
+  if(adminCorrectionMode){
+    adminCorrectionMode = false;
+    adminCorrectionBy = '';
+    button.classList.remove('active');
+    button.title = '휴무 정정';
+    updateMonthlyLeaveApprovalUI();
+    showNotice('관리자 휴무 정정 모드가 종료되었습니다.', 'success');
+    return;
+  }
+
+  const pin = window.prompt('관리자 휴무 정정 PIN을 입력하세요.');
+  if(pin === null) return;
+
+  const managerEntry = Object.entries(managerAccounts).find(([, account]) => account.pin === pin);
+  if(!managerEntry){
+    alert('관리자 PIN이 올바르지 않습니다.');
+    return;
+  }
+
+  adminCorrectionMode = true;
+  adminCorrectionBy = managerEntry[1].anonymousId;
+  button.classList.add('active');
+  button.title = '휴무 정정 모드 종료';
+  updateMonthlyLeaveApprovalUI();
+  loadMySchedule();
+  alert('관리자 휴무 정정 모드가 켜졌습니다.\n직원을 선택하고 기존 휴무를 해제한 뒤 새 날짜를 선택해 저장하세요.');
+});
+
 document.getElementById('staffSelect').addEventListener('change', () => {
   lateMonthlyLeaveApprovalConfirmed = false;
   loadMySchedule();
@@ -2206,8 +2271,8 @@ document.getElementById('submitBtn').addEventListener('click', () => {
   const normalEdit = isMonthEditable(currentYear, currentMonth);
   const lateMonthlyLeaveEdit = isLateMonthlyLeaveEditMode();
 
-  if(!normalEdit && !lateMonthlyLeaveEdit){
-    alert('휴무 신청 기간이 아닙니다.\n기본 휴무는 변경할 수 없으며, 이사의 결재 승인을 받은 월차 변경만 가능합니다.');
+  if(!normalEdit && !lateMonthlyLeaveEdit && !adminCorrectionMode){
+    alert('휴무 신청 기간이 아닙니다.\n기본 휴무는 변경할 수 없으며, 결재 승인을 받은 월차 변경만 가능합니다.');
     return;
   }
 
@@ -2215,11 +2280,49 @@ document.getElementById('submitBtn').addEventListener('click', () => {
   const pin = document.getElementById('pinInput').value;
 
   if(!staff){ alert('직원을 선택해주세요.'); return; }
-  if(employeePins[staff] !== pin){ alert('PIN 번호가 올바르지 않습니다.'); return; }
+  if(!adminCorrectionMode && employeePins[staff] !== pin){ alert('PIN 번호가 올바르지 않습니다.'); return; }
   if(!db){ alert('Firebase 연결을 확인해주세요.'); return; }
 
-  if(lateMonthlyLeaveEdit && !confirmLateMonthlyLeaveApproval()){
+  if(lateMonthlyLeaveEdit && !adminCorrectionMode && !confirmLateMonthlyLeaveApproval()){
     alert('결재 승인이 확인되지 않아 월차 변경을 취소했습니다.');
+    return;
+  }
+
+  // 웹 제작자용 관리자 휴무 정정: 신청 기간과 직원 PIN을 우회하되 관리자 PIN 확인 후에만 실행됩니다.
+  if(adminCorrectionMode){
+    if(mySelectedDays.size !== 8){
+      alert(`기본 휴무를 정확히 8일 선택해주세요.\n현재 ${mySelectedDays.size}일 선택됨`);
+      return;
+    }
+
+    const savedData = allSchedules[monthKey()]?.[staff] || {};
+    const previousDays = Array.isArray(savedData.days) ? savedData.days.map(Number).sort((a,b)=>a-b) : [];
+    const correctedDays = Array.from(mySelectedDays).sort((a,b)=>a-b);
+    const approved = window.confirm(
+      `${staff}님의 기본 휴무를 정정하시겠습니까?\n\n기존: ${previousDays.join(', ') || '없음'}\n변경: ${correctedDays.join(', ')}\n\n월차는 변경되지 않습니다.`
+    );
+    if(!approved) return;
+
+    const now = Date.now();
+    const updates = {};
+    updates[`schedules/${monthKey()}/${staff}/name`] = staff;
+    updates[`schedules/${monthKey()}/${staff}/days`] = correctedDays;
+    updates[`schedules/${monthKey()}/${staff}/updatedAt`] = now;
+    updates[`schedules/${monthKey()}/${staff}/adminCorrection`] = {
+      correctedBy: adminCorrectionBy,
+      correctedAt: now,
+      previousDays,
+      updatedDays: correctedDays
+    };
+
+    db.ref().update(updates).then(() => {
+      showNotice(`${staff}님의 기본 휴무가 관리자 정정으로 저장되었습니다.`, 'success');
+      alert(`${staff}님의 기본 휴무가 정정되었습니다.\n월차 일정은 그대로 유지됩니다.`);
+    }).catch(error => {
+      showNotice('관리자 휴무 정정 저장에 실패했습니다.', 'error');
+      alert('휴무 정정 저장 실패');
+      console.error(error);
+    });
     return;
   }
 
