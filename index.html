@@ -259,6 +259,14 @@ body::before{
   text-shadow:0 8px 22px rgba(120,198,176,.18);
 }
 .remaining small,.remaining p{color:var(--sub);}
+.weekend-count-text{
+  display:block;
+  margin-top:8px;
+  font-size:11px;
+  line-height:1.5;
+  color:#8b7fa5 !important;
+  font-weight:700;
+}
 
 .rules{margin-top:22px;display:grid;gap:9px;}
 .rule{
@@ -927,7 +935,7 @@ body::before{
   <div class="hero">
     <div class="card sidebar">
       <h2>K지니POP 직원 휴무 세팅ZONE</h2>
-      <p class="helper">직원 선택 후 PIN을 입력하고 기본 휴무 8일을 선택하세요. 월차는 한 달을 만근하면 다음 달에 1일이 발생하며, 사용하지 않은 월차는 다음 달로 이월됩니다.</p>
+      <p class="helper">직원 선택 후 PIN을 입력하고 해당 월의 토·일 개수만큼 기본 휴무를 선택하세요. 월차는 한 달을 만근하면 다음 달에 1일이 발생하며, 사용하지 않은 월차는 다음 달로 이월됩니다.</p>
 
       <div class="staff-select">
         <select id="staffSelect">
@@ -977,12 +985,13 @@ body::before{
         <p>남은 휴무</p>
         <h1 id="remainingDays">8</h1>
         <small id="leaveLimitText">총 8회 선택 가능</small>
+        <small id="weekendCountText" class="weekend-count-text">이달의 토·일 개수를 계산 중입니다.</small>
       </div>
 
       <details class="mobile-collapsible" open>
         <summary class="mobile-section-summary">📌 신청 규칙 한눈에 보기</summary>
         <div class="rules">
-          <div class="rule" id="leaveRule">✓ 직원별 월 8회 휴무 신청</div>
+          <div class="rule" id="leaveRule">✓ 해당 월의 토·일 개수만큼 기본 휴무 신청</div>
           <div class="rule">✓ 월차는 전월 만근 시 다음 달 1일 발생 · 미사용분 이월 · 월 최대 3일 사용</div>
           <div class="rule">✓ 매월 15일부터 다음 달 휴무 신청 가능</div>
           <div class="rule">✓ 신청 마감일 : 매월 25일 (23:59까지)</div>
@@ -1068,7 +1077,7 @@ body::before{
     </div>
     <div class="guide-step">
       <span class="guide-step-number">6</span>
-      <div><strong> 보석은 실제 일정 변경을 끝낸 뒤 적립돼요.</strong><p>단순 중복 날짜를 눌렀다가 취소하는 것으로는 적립되지는 않아요. '신청 완료'로 저장된 최초 조율 대상자 중, 본인의 조율 의사를 <b>변경 가능</b>으로 저장하고 기존 날짜를 양보한 뒤 다른 날짜를 골라 기본 휴무 8일을 다시 최종 저장해야 보석 1개가 적립됩니다. 초과 신청을 마지막으로 만들어 낸 직원과 최초 명단에 없던 추가 신청자는 해당 건의 보석 적립 대상에서 제외돼요. 같은 날짜에서는 한 번만 적립되며, 실제 우선 배정을 받으면 보석 1개가 사용됩니다. 보석을 4개 이상 모으면 <b>평화의 보석왕관</b>과 왕좌카드가 열립니다. 왕좌카드가 열린 직원은 <b>이달의 배려왕</b>으로 표시되며, 해당 월의 희망 휴무 1일을 보호받을 수 있어요. 보호된 날짜는 휴무 조율이 발생하더라도 우선적으로 유지됩니다.</p></div>
+      <div><strong> 보석은 실제 일정 변경을 끝낸 뒤 적립돼요.</strong><p>단순 중복 날짜를 눌렀다가 취소하는 것으로는 적립되지는 않아요. '신청 완료'로 저장된 최초 조율 대상자 중, 본인의 조율 의사를 <b>변경 가능</b>으로 저장하고 기존 날짜를 양보한 뒤 다른 날짜를 골라 해당 월의 기본 휴무 일수를 다시 최종 저장해야 보석 1개가 적립됩니다. 초과 신청을 마지막으로 만들어 낸 직원과 최초 명단에 없던 추가 신청자는 해당 건의 보석 적립 대상에서 제외돼요. 같은 날짜에서는 한 번만 적립되며, 실제 우선 배정을 받으면 보석 1개가 사용됩니다. 보석을 4개 이상 모으면 <b>평화의 보석왕관</b>과 왕좌카드가 열립니다. 왕좌카드가 열린 직원은 <b>이달의 배려왕</b>으로 표시되며, 해당 월의 희망 휴무 1일을 보호받을 수 있어요. 보호된 날짜는 휴무 조율이 발생하더라도 우선적으로 유지됩니다.</p></div>
     </div>
     <div class="guide-step">
       <span class="guide-step-number">7</span>
@@ -1137,6 +1146,23 @@ const shortNames = {
   "심민규":"민규",
   "박혜정":"혜정"
 };
+
+// 해당 월의 토요일·일요일 수를 계산해 기본 휴무 일수로 사용합니다.
+function getWeekendDayCount(year = currentYear, month = currentMonth){
+  const lastDate = new Date(year, month, 0).getDate();
+  let weekendCount = 0;
+
+  for(let day = 1; day <= lastDate; day++){
+    const dayOfWeek = new Date(year, month - 1, day).getDay();
+    if(dayOfWeek === 0 || dayOfWeek === 6) weekendCount++;
+  }
+
+  return weekendCount;
+}
+
+function getBasicLeaveLimit(year = currentYear, month = currentMonth){
+  return getWeekendDayCount(year, month);
+}
 
 // 2026년 월별 주말 휴무 2회 가능 직원
 const doubleWeekendOffStaff = {
@@ -1247,7 +1273,7 @@ function updateMonthlyLeaveApprovalUI(){
     help.textContent = '직원을 선택하면, 결재 승인을 받은 월차에 한해 날짜를 변경할 수 있습니다.';
     submitBtn.textContent = '월차 변경 저장하기';
   } else if(lateMonthlyLeaveApprovalConfirmed){
-    help.textContent = '결재 승인 확인됨 · 월차 날짜만 변경할 수 있으며 기본 휴무 8일은 유지됩니다.';
+    help.textContent = `결재 승인 확인됨 · 월차 날짜만 변경할 수 있으며 기본 휴무 ${getBasicLeaveLimit()}일은 유지됩니다.`;
     submitBtn.textContent = '결재 승인 월차 변경 저장하기';
   } else {
     help.textContent = '월차 날짜를 누르면 “결재 승인을 받았습니까?” 확인창이 표시됩니다. ‘예’를 선택해야 변경할 수 있습니다.';
@@ -1333,8 +1359,9 @@ function toggleDay(day){
       return;
     }
 
-    if(mySelectedDays.size >= 8){
-      alert('기본 휴무는 최대 8일까지만 선택 가능합니다.');
+    const leaveLimit = getBasicLeaveLimit();
+    if(mySelectedDays.size >= leaveLimit){
+      alert(`기본 휴무는 최대 ${leaveLimit}일까지만 선택 가능합니다.`);
       return;
     }
 
@@ -1955,7 +1982,7 @@ function voluntaryYield(day, staff){
   if(!confirm(
     `${currentMonth}월 ${day}일 휴무를 양보하시겠어요?\n\n` +
     `지금은 보석이 바로 적립되지 않습니다.\n` +
-    `다른 날짜를 선택해 기본 휴무 8일을 다시 저장하면 💎 1개가 적립됩니다.`
+    `다른 날짜를 선택해 해당 월의 기본 휴무 일수를 다시 저장하면 💎 1개가 적립됩니다.`
   )) return;
 
   const daysAfterYield = currentDays.filter(d => d !== Number(day));
@@ -2101,11 +2128,16 @@ function finalizeConflict(day){
 }
 
 function updateRemaining(){
-  document.getElementById('remainingDays').textContent = 8 - mySelectedDays.size;
-  document.getElementById('leaveLimitText').textContent = '기본 휴무 총 8회 선택 가능';
+  const leaveLimit = getBasicLeaveLimit();
+  document.getElementById('remainingDays').textContent = Math.max(0, leaveLimit - mySelectedDays.size);
+  document.getElementById('leaveLimitText').textContent = `기본 휴무 총 ${leaveLimit}회 선택 가능`;
+  const weekendCountText = document.getElementById('weekendCountText');
+  if(weekendCountText){
+    weekendCountText.textContent = `${currentMonth}월은 토요일·일요일에 해당하는 주말이 총 ${leaveLimit}일입니다.`;
+  }
   document.getElementById('leaveRule').textContent = hasMonthlyLeave()
-    ? '✓ 기본 휴무 8일 + 누적 월차 별도 신청 (월 최대 3일)'
-    : '✓ 직원별 월 8회 휴무 신청';
+    ? `✓ 기본 휴무 ${leaveLimit}일 + 누적 월차 별도 신청 (월 최대 3일)`
+    : `✓ 직원별 월 ${leaveLimit}회 휴무 신청`;
   populateMonthlyLeaveSelect();
 }
 
@@ -2290,8 +2322,9 @@ document.getElementById('submitBtn').addEventListener('click', () => {
 
   // 웹 제작자용 관리자 휴무 정정: 신청 기간과 직원 PIN을 우회하되 관리자 PIN 확인 후에만 실행됩니다.
   if(adminCorrectionMode){
-    if(mySelectedDays.size !== 8){
-      alert(`기본 휴무를 정확히 8일 선택해주세요.\n현재 ${mySelectedDays.size}일 선택됨`);
+    const leaveLimit = getBasicLeaveLimit();
+    if(mySelectedDays.size !== leaveLimit){
+      alert(`기본 휴무를 정확히 ${leaveLimit}일 선택해주세요.\n현재 ${mySelectedDays.size}일 선택됨`);
       return;
     }
 
@@ -2352,7 +2385,7 @@ document.getElementById('submitBtn').addEventListener('click', () => {
 
     db.ref().update(updates).then(() => {
       showNotice(`${staff}님의 결재 승인된 월차 변경이 저장되었습니다. 기본 휴무는 변경되지 않았습니다.`, 'success');
-      alert(`${staff}님의 월차 날짜가 변경되었습니다.\n기본 휴무 8일은 기존 일정 그대로 유지됩니다.`);
+      alert(`${staff}님의 월차 날짜가 변경되었습니다.\n기본 휴무 ${getBasicLeaveLimit()}일은 기존 일정 그대로 유지됩니다.`);
       lateMonthlyLeaveApprovalConfirmed = false;
       updateMonthlyLeaveApprovalUI();
       populateMonthlyLeaveSelect();
@@ -2365,7 +2398,7 @@ document.getElementById('submitBtn').addEventListener('click', () => {
   }
 
   // 정상 신청 기간: 기존 방식대로 기본 휴무와 월차를 함께 저장합니다.
-  const leaveLimit = 8;
+  const leaveLimit = getBasicLeaveLimit();
   if(mySelectedDays.size !== leaveLimit){
     alert(`휴무를 ${leaveLimit}일 선택해주세요.\n현재 ${mySelectedDays.size}일 선택됨`);
     return;
