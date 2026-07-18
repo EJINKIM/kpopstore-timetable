@@ -916,6 +916,315 @@ body::before{
   box-shadow:0 6px 16px rgba(139,92,246,.28);
 }
 
+
+/* =========================================================
+   2026 PASTEL SIGNATURE PALETTE
+   Lavender #B7B1F2 · Pink #FDB7EA · Peach #FFDCCC · Butter #FBF3B9
+   ========================================================= */
+:root{
+  --bg:#fcfbff;
+  --bg2:#fffdf8;
+  --card:rgba(255,255,255,.76);
+  --card-strong:rgba(255,255,255,.93);
+  --border:rgba(183,177,242,.30);
+  --text:#4f4a63;
+  --sub:#777087;
+  --primary:#B7B1F2;
+  --green:#B7B1F2;
+  --danger:#e682a7;
+  --day:rgba(255,255,255,.74);
+  --shadow:0 20px 55px rgba(130,116,170,.16);
+
+  --lavender:#B7B1F2;
+  --pink:#FDB7EA;
+  --peach:#FFDCCC;
+  --butter:#FBF3B9;
+  --ink:#4f4a63;
+  --muted:#777087;
+}
+
+body{
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 7% 4%, rgba(183,177,242,.58), transparent 29%),
+    radial-gradient(circle at 84% 9%, rgba(253,183,234,.50), transparent 31%),
+    radial-gradient(circle at 47% 48%, rgba(255,220,204,.48), transparent 35%),
+    radial-gradient(circle at 90% 88%, rgba(251,243,185,.64), transparent 32%),
+    linear-gradient(135deg,#fbfaff 0%,#fff9fd 42%,#fffdf5 100%);
+}
+body::before{
+  background:
+    linear-gradient(110deg,rgba(183,177,242,.08),rgba(255,255,255,0) 38%,rgba(253,183,234,.08)),
+    radial-gradient(circle at 50% 0%,rgba(255,255,255,.72),transparent 44%);
+}
+
+.card{
+  background:linear-gradient(145deg,rgba(255,255,255,.84),rgba(255,255,255,.66));
+  border-color:rgba(255,255,255,.94);
+  box-shadow:0 20px 55px rgba(125,110,165,.16);
+}
+
+.brand-lockup::before{
+  background:linear-gradient(180deg,var(--lavender),var(--pink) 38%,var(--peach) 70%,var(--butter));
+  box-shadow:0 0 22px rgba(183,177,242,.48);
+}
+.brand-main .brand-k{
+  background:linear-gradient(90deg,#756dcc 0%,#b06ea8 48%,#cf9279 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.brand-main .brand-time{color:#77708d;}
+.brand-sub{color:#9c83a5;}
+.brand-sub::before{background:linear-gradient(90deg,var(--lavender),var(--pink));}
+.brand-sub span{
+  background:linear-gradient(90deg,#8179d2,#c36fa8,#c98c72);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.status-pill{
+  color:#6f6883;
+  background:rgba(255,255,255,.70);
+  border-color:rgba(183,177,242,.24);
+}
+
+.sidebar h2,
+.conflict-head h3{
+  background:linear-gradient(90deg,#756dcc,#bd68a2 52%,#c98c72);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.helper,.remaining small,.remaining p,.summary-title small,.conflict-head small{color:var(--muted);}
+
+.staff-select select,.staff-select input{
+  background:rgba(255,255,255,.82);
+  border-color:rgba(183,177,242,.38);
+  color:var(--ink);
+}
+.staff-select select:focus,.staff-select input:focus{
+  border-color:var(--lavender);
+  box-shadow:0 0 0 4px rgba(183,177,242,.22),inset 0 1px 0 rgba(255,255,255,.92);
+}
+
+.gem-vault{
+  background:
+    radial-gradient(circle at 18% 18%,rgba(255,255,255,.96),transparent 24%),
+    linear-gradient(135deg,rgba(183,177,242,.36),rgba(253,183,234,.34) 45%,rgba(255,220,204,.40));
+  border-color:rgba(255,255,255,.96);
+  box-shadow:0 16px 38px rgba(159,119,176,.17);
+}
+.gem-vault.royal{
+  background:
+    radial-gradient(circle at 50% -5%,rgba(255,255,255,.98),transparent 28%),
+    linear-gradient(135deg,rgba(251,243,185,.88),rgba(255,220,204,.76) 48%,rgba(183,177,242,.62));
+  border-color:rgba(211,173,92,.35);
+}
+.gem-eyebrow{color:#8d78bd;}
+.gem-title{color:#7168aa;}
+.gem-count{color:#756dcc;}
+.gem-unit{color:#9a78a8;}
+.gem-throne-badge{background:rgba(255,255,255,.72);}
+.gem-royal-benefit{
+  background:linear-gradient(135deg,rgba(255,255,255,.86),rgba(251,243,185,.48));
+}
+
+.remaining{
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.94),rgba(183,177,242,.22)),
+    linear-gradient(90deg,rgba(253,183,234,.20),rgba(251,243,185,.30));
+  border-color:rgba(255,255,255,.95);
+  box-shadow:0 13px 34px rgba(153,131,177,.16);
+}
+.remaining h1{
+  color:#8a82d7;
+  text-shadow:0 8px 22px rgba(183,177,242,.25);
+}
+.weekend-count-text{color:#9683a6 !important;}
+
+.rule{
+  color:#7168aa;
+  background:linear-gradient(90deg,rgba(183,177,242,.13),rgba(253,183,234,.10),rgba(251,243,185,.14));
+  border-color:rgba(255,255,255,.90);
+}
+.submit,.guide-confirm-btn{
+  background:linear-gradient(135deg,#9f97e8 0%,#e59bce 38%,#f1bda8 68%,#eadf92 100%);
+  box-shadow:0 15px 30px rgba(167,119,174,.24);
+}
+
+.notice.success{
+  background:rgba(251,243,185,.54);
+  color:#746126;
+  border-color:rgba(223,204,105,.55);
+}
+.notice.error{
+  background:rgba(253,183,234,.38);
+  color:#9b3f70;
+  border-color:rgba(229,130,174,.48);
+}
+
+.calendar-header h2,.summary-title h3{color:var(--ink);}
+.btn{
+  background:rgba(255,255,255,.75);
+  color:#77708d;
+  border-color:rgba(183,177,242,.28);
+  box-shadow:0 8px 22px rgba(128,114,164,.14);
+}
+.btn:hover{background:linear-gradient(135deg,rgba(183,177,242,.28),rgba(253,183,234,.22));}
+.weekdays{color:#9b91aa;}
+.day{
+  background:rgba(255,255,255,.72);
+  border-color:rgba(255,255,255,.94);
+  box-shadow:0 10px 26px rgba(128,114,164,.12);
+}
+.day:hover{
+  border-color:rgba(183,177,242,.70);
+  box-shadow:0 16px 34px rgba(128,114,164,.20);
+}
+.day-number{color:#5c566e;}
+.day.available{box-shadow:0 10px 26px rgba(128,114,164,.12),0 0 0 1px rgba(253,183,234,.20);}
+.day.selected{outline-color:rgba(112,103,179,.72);}
+.day.overlap{outline-color:rgba(221,160,103,.80);}
+.day.monthly-leave{box-shadow:0 0 0 3px rgba(183,177,242,.65) inset,0 10px 26px rgba(128,114,164,.12);}
+.slot{color:#827a91;}
+
+.monthly-leave-box{
+  background:linear-gradient(135deg,rgba(183,177,242,.18),rgba(253,183,234,.14));
+  border-color:rgba(183,177,242,.48);
+}
+.monthly-leave-box label,.monthly-leave-selected{color:#756dcc;}
+.monthly-leave-balance{background:rgba(255,255,255,.78);color:var(--muted);}
+.monthly-leave-balance strong{color:#756dcc;}
+.monthly-leave-help{color:#81778e;}
+.monthly-leave-day-btn{
+  border-color:rgba(183,177,242,.52);
+  background:rgba(255,255,255,.84);
+  color:#716a7f;
+}
+.monthly-leave-day-btn:hover{border-color:#9f97e8;}
+.monthly-leave-day-btn.selected{
+  background:linear-gradient(135deg,rgba(183,177,242,.56),rgba(253,183,234,.46));
+  color:#6158a9;
+  border-color:#9f97e8;
+  box-shadow:0 6px 14px rgba(183,177,242,.24);
+}
+.monthly-leave-approval{
+  background:rgba(255,255,255,.78);
+  border-color:rgba(183,177,242,.58);
+}
+.monthly-leave-approval label{color:#6f66b9;}
+.monthly-leave-approval input{accent-color:#9f97e8;}
+.monthly-leave-approval small{color:#81778e;}
+.monthly-leave-tag{
+  background:rgba(225,221,252,.94);
+  color:#665db2;
+  border-color:rgba(183,177,242,.72);
+}
+.monthly-leave-tag::before{background:#9f97e8;}
+
+.badge{
+  background:rgba(255,255,255,.64);
+  color:#746d82;
+  border-color:rgba(183,177,242,.23);
+}
+.summary-item{
+  background:rgba(255,255,255,.64);
+  border-color:rgba(183,177,242,.20);
+  color:#746d82;
+}
+.summary-item strong{color:var(--ink);}
+.summary-name{background:rgba(255,255,255,.78);}
+
+.conflict-card{
+  background:linear-gradient(145deg,rgba(255,255,255,.82),rgba(253,183,234,.11));
+}
+.conflict-item{
+  background:linear-gradient(145deg,rgba(255,255,255,.86),rgba(255,220,204,.26));
+  border-color:rgba(220,154,117,.28);
+}
+.conflict-item.resolved{
+  border-color:rgba(183,177,242,.52);
+  background:linear-gradient(145deg,rgba(255,255,255,.86),rgba(183,177,242,.18));
+}
+.conflict-status{
+  background:rgba(255,220,204,.62);
+  color:#a9674f;
+  border-color:rgba(225,153,121,.34);
+}
+.conflict-item.resolved .conflict-status{
+  background:rgba(251,243,185,.68);
+  color:#7c6a25;
+  border-color:rgba(209,190,88,.38);
+}
+.conflict-guide{
+  background:linear-gradient(135deg,rgba(255,220,204,.55),rgba(251,243,185,.46));
+  color:#8a5f4c;
+}
+.preference-help{
+  background:rgba(255,255,255,.82);
+  border-color:rgba(183,177,242,.36);
+}
+.small-action{
+  background:linear-gradient(135deg,rgba(183,177,242,.52),rgba(253,183,234,.42));
+  color:#665db2;
+  box-shadow:0 6px 14px rgba(183,177,242,.18);
+}
+.small-action.manager{
+  background:linear-gradient(135deg,rgba(251,243,185,.74),rgba(255,220,204,.66));
+  color:#80642a;
+}
+.approval-row input{accent-color:#9f97e8;}
+.approval-row.auto-target{
+  background:rgba(183,177,242,.18);
+  border-color:rgba(159,151,232,.52);
+}
+.approval-row.auto-target .auto-note,.cheer-note{color:#8d83d8;}
+
+.guide-open-btn{
+  background:linear-gradient(135deg,rgba(251,243,185,.70),rgba(253,183,234,.42),rgba(183,177,242,.44));
+  color:#6f66b9;
+  box-shadow:0 8px 18px rgba(159,119,176,.14);
+}
+.guide-modal-panel{
+  background:linear-gradient(145deg,rgba(255,255,255,.99),rgba(255,250,253,.97));
+}
+.guide-modal-kicker{background:rgba(183,177,242,.30);color:#6f66b9;}
+.guide-step-number{
+  background:linear-gradient(135deg,rgba(253,183,234,.58),rgba(183,177,242,.52));
+  color:#655cb0;
+}
+.guide-fairness-note{
+  background:linear-gradient(135deg,rgba(183,177,242,.24),rgba(253,183,234,.22),rgba(251,243,185,.44));
+  color:#625c70;
+}
+
+.admin-fix-btn.active{
+  background:#8f87dc;
+  border-color:#8f87dc;
+  box-shadow:0 6px 16px rgba(143,135,220,.28);
+}
+
+@media(max-width:700px){
+  body{
+    background:
+      radial-gradient(circle at 12% 2%,rgba(183,177,242,.38),transparent 31%),
+      radial-gradient(circle at 90% 18%,rgba(253,183,234,.30),transparent 35%),
+      linear-gradient(180deg,#fbfaff 0%,#fff9fc 52%,#fffdf5 100%);
+  }
+  .mobile-collapsible,.compact-details{
+    border-color:rgba(183,177,242,.30);
+    background:rgba(255,255,255,.60);
+  }
+  .mobile-section-summary::after,
+  .compact-details > summary::after,
+  .summary-details > summary::after{color:#8f87dc;}
+  .summary-details > summary{
+    background:rgba(255,255,255,.72);
+    color:#746d82;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -995,7 +1304,7 @@ body::before{
           <div class="rule">✓ 월차는 전월 만근 시 다음 달 1일 발생 · 미사용분 이월 · 월 최대 3일 사용</div>
           <div class="rule">✓ 매월 15일부터 다음 달 휴무 신청 가능</div>
           <div class="rule">✓ 신청 마감일 : 매월 25일 (23:59까지)</div>
-          <div class="rule">✓ 평일 2명·토/일 1명 초과 시 객관적 기준으로 조율</div>
+          <div class="rule">✓ 9월부터 목·금·토 1명 · 일요일 자유 선택 · 그 외 평일 2명</div>
           <div class="rule">✓ 보석은 저장된 최초 조율 대상자가 다른 날짜까지 최종 저장한 뒤 적립</div>
           <div class="rule">✓ 두 분의 이사 중 한 분이 본인 계정과 PIN으로 익명 확정</div>
         </div>
@@ -1057,7 +1366,7 @@ body::before{
 
     <div class="guide-step">
       <span class="guide-step-number">1</span>
-      <div><strong>먼저 원하는 휴무를 신청해요.</strong><p>선착순이 아닙니다. 평일은 2명, 토요일과 일요일은 1명까지 정상 신청으로 처리돼요.</p></div>
+      <div><strong>먼저 원하는 휴무를 신청해요.</strong><p>선착순이 아닙니다. 8월부터 직원별 토·일 선택 횟수 제한은 없습니다. 9월부터는 목·금·토는 날짜별 1명, 일요일은 인원 제한 없이 자유롭게 선택할 수 있고, 월·화·수는 2명까지 정상 신청으로 처리돼요.</p></div>
     </div>
     <div class="guide-step">
       <span class="guide-step-number">2</span>
@@ -1065,7 +1374,7 @@ body::before{
     </div>
     <div class="guide-step">
       <span class="guide-step-number">3</span>
-      <div><strong>허용 인원을 넘은 휴무일은 날짜를 조율하게돼요.</strong><p>평일 3명 이상, 토·일요일 2명 이상 신청한 경우에만 조율 카드가 자동으로 나타나요.</p></div>
+      <div><strong>허용 인원을 넘은 휴무일은 날짜를 조율하게돼요.</strong><p>9월부터 목·금·토는 2명 이상, 월·화·수는 3명 이상 신청한 경우 조율 카드가 자동으로 나타나요. 일요일은 인원 제한이 없어 조율 대상이 되지 않아요.</p></div>
     </div>
     <div class="guide-step">
       <span class="guide-step-number">4</span>
@@ -1113,7 +1422,30 @@ try {
   document.getElementById('saveStatus').textContent = 'Firebase 연결 오류';
 }
 
+// 전체 직원 목록입니다. 과거 달력(7월까지)의 기록 표시를 위해 심민규도 유지합니다.
 const employees = ["김은진", "이주훈", "이명규", "심민규", "박혜정"];
+
+// 심민규 직원은 2026년 7월까지만 근무합니다.
+function getActiveEmployees(year = currentYear, month = currentMonth){
+  const viewingSerial = year * 12 + month;
+  const august2026Serial = 2026 * 12 + 8;
+  return viewingSerial >= august2026Serial
+    ? employees.filter(name => name !== "심민규")
+    : [...employees];
+}
+
+function updateStaffSelectForMonth(){
+  const select = document.getElementById('staffSelect');
+  if(!select) return;
+
+  const previousValue = select.value;
+  const activeEmployees = getActiveEmployees();
+  select.innerHTML = '<option value="">K지니팝 직원 선택</option>' + activeEmployees.map(name =>
+    `<option value="${name}">${name}</option>`
+  ).join('');
+
+  if(activeEmployees.includes(previousValue)) select.value = previousValue;
+}
 
 const employeePins = {
   "김은진":"6666",
@@ -1124,19 +1456,19 @@ const employeePins = {
 };
 
 const staffColors = {
-  "김은진":"#7dd3fc",
-  "이주훈":"#fde68a",
-  "이명규":"#bbf7d0",
-  "심민규":"#DDD6FE",
-  "박혜정":"#fbcfe8"
+  "김은진":"#B7B1F2",
+  "이주훈":"#FBF3B9",
+  "이명규":"#FFDCCC",
+  "심민규":"#D9D5FA",
+  "박혜정":"#FDB7EA"
 };
 
 const staffTextColors = {
-  "김은진":"#43ADD0",
-  "이주훈":"#FFC94D",
-  "이명규":"#84C5B1",
-  "심민규":"#8B5CF6",
-  "박혜정":"#E17DC2"
+  "김은진":"#6D64C6",
+  "이주훈":"#9B842D",
+  "이명규":"#C4775E",
+  "심민규":"#756CCB",
+  "박혜정":"#BE5D9A"
 };
 
 const shortNames = {
@@ -1164,18 +1496,16 @@ function getBasicLeaveLimit(year = currentYear, month = currentMonth){
   return getWeekendDayCount(year, month);
 }
 
-// 2026년 월별 주말 휴무 2회 가능 직원
+// 2026년 7월까지만 기존 주말 선택 횟수 제한을 적용합니다.
 const doubleWeekendOffStaff = {
   "2026-06": ["심민규", "박혜정", "이주훈"],
-  "2026-07": ["김은진", "이명규"],
-  "2026-08": ["심민규", "박혜정", "이주훈"],
-  "2026-09": ["김은진", "이명규"],
-  "2026-10": ["심민규", "박혜정", "이주훈"],
-  "2026-11": ["김은진", "이명규"],
-  "2026-12": ["심민규", "박혜정", "이주훈"]
+  "2026-07": ["김은진", "이명규"]
 };
 
 function getWeekendOffLimit(staff, year = currentYear, month = currentMonth){
+  // 2026년 8월부터는 토요일·일요일 선택 횟수 제한이 없습니다.
+  if((year * 12 + month) >= (2026 * 12 + 8)) return Infinity;
+
   const key = `${year}-${String(month).padStart(2, '0')}`;
   const allowedStaff = doubleWeekendOffStaff[key] || [];
   return allowedStaff.includes(staff) ? 2 : 1;
@@ -1283,7 +1613,7 @@ function updateMonthlyLeaveApprovalUI(){
 
 function renderLegend(){
   const legend = document.getElementById('legend');
-  legend.innerHTML = employees.map(name => `
+  legend.innerHTML = getActiveEmployees().map(name => `
     <div class="badge"><span class="dot" style="background:${staffColors[name]}"></span>${shortNames[name]}</div>
   `).join('') + `<div class="badge">작은 이름표 = 휴무 신청자</div><div class="badge">진한 테두리 = 내가 선택한 휴무</div><div class="badge">보라색 표시 = 월차</div><div class="badge">점선 테두리 = 중복 신청 · 일정 조율 필요</div>`;
 }
@@ -1299,6 +1629,8 @@ function showNotice(message, type='success'){
 
 function render(){
   document.getElementById('monthTitle').textContent = `${currentYear}년 ${currentMonth}월`;
+  updateStaffSelectForMonth();
+  renderLegend();
   generateCalendar(currentYear, currentMonth);
   populateMonthlyLeaveSelect();
   paintSavedSchedules();
@@ -1372,7 +1704,7 @@ function toggleDay(day){
       const weekendLimit = getWeekendOffLimit(staff);
       const selectedWeekendCount = getSelectedWeekendCount();
 
-      if(selectedWeekendCount >= weekendLimit){
+      if(Number.isFinite(weekendLimit) && selectedWeekendCount >= weekendLimit){
         alert(`${shortNames[staff]}님은 ${currentMonth}월 주말 휴무를 최대 ${weekendLimit}번까지 선택할 수 있습니다.`);
         return;
       }
@@ -1596,7 +1928,7 @@ function paintSavedSchedules(){
 
     slot.innerHTML = isOverCapacity(day, applicants.length)
       ? `<span class="application-count">신청 ${applicants.length}명</span> · <span class="cheer-note">조율 필요</span>`
-      : `<span class="application-count">신청 ${applicants.length}명</span> <span class="soft-divider">/</span> <span class="capacity-text">허용 ${getDayCapacity(day)}명</span>`;
+      : `<span class="application-count">신청 ${applicants.length}명</span> <span class="soft-divider">/</span> <span class="capacity-text">허용 ${getCapacityLabel(day)}</span>`;
   });
 }
 
@@ -1616,7 +1948,7 @@ function validateBeforeSubmit(staff){
   const weekendLimit = getWeekendOffLimit(staff);
   const selectedWeekendCount = getSelectedWeekendCount();
 
-  if(selectedWeekendCount > weekendLimit){
+  if(Number.isFinite(weekendLimit) && selectedWeekendCount > weekendLimit){
     alert(
       `${shortNames[staff]}님의 ${currentMonth}월 주말 휴무는 최대 ${weekendLimit}번까지 신청할 수 있습니다.\n` +
       `현재 ${selectedWeekendCount}번 선택되어 있습니다.`
@@ -1630,7 +1962,23 @@ function validateBeforeSubmit(staff){
 function getDayCapacity(day){
   const date = new Date(currentYear, currentMonth - 1, Number(day));
   const weekday = date.getDay();
+  const viewingSerial = currentYear * 12 + currentMonth;
+  const september2026Serial = 2026 * 12 + 9;
+
+  // 2026년 9월부터 목·금·토는 1명, 일요일은 인원 제한 없이 자유 선택합니다.
+  if(viewingSerial >= september2026Serial){
+    if(weekday === 0) return Infinity;
+    if(weekday === 4 || weekday === 5 || weekday === 6) return 1;
+    return 2;
+  }
+
+  // 2026년 8월까지는 평일 2명, 토·일 1명입니다.
   return (weekday === 0 || weekday === 6) ? 1 : 2;
+}
+
+function getCapacityLabel(day){
+  const capacity = getDayCapacity(day);
+  return Number.isFinite(capacity) ? `${capacity}명` : '제한 없음';
 }
 
 function isOverCapacity(day, applicantCount){
@@ -2133,7 +2481,14 @@ function updateRemaining(){
   document.getElementById('leaveLimitText').textContent = `기본 휴무 총 ${leaveLimit}회 선택 가능`;
   const weekendCountText = document.getElementById('weekendCountText');
   if(weekendCountText){
-    weekendCountText.textContent = `${currentMonth}월은 토요일·일요일에 해당하는 주말이 총 ${leaveLimit}일입니다.`;
+    const viewingSerial = currentYear * 12 + currentMonth;
+    if(viewingSerial >= (2026 * 12 + 9)){
+      weekendCountText.textContent = `${currentMonth}월부터 목·금·토는 날짜별 1명, 일요일은 인원 제한 없이 선택할 수 있습니다.`;
+    } else if(viewingSerial >= (2026 * 12 + 8)){
+      weekendCountText.textContent = `${currentMonth}월부터 직원별 토·일 선택 횟수 제한이 없습니다.`;
+    } else {
+      weekendCountText.textContent = `${currentMonth}월은 토요일·일요일에 해당하는 주말이 총 ${leaveLimit}일입니다.`;
+    }
   }
   document.getElementById('leaveRule').textContent = hasMonthlyLeave()
     ? `✓ 기본 휴무 ${leaveLimit}일 + 누적 월차 별도 신청 (월 최대 3일)`
@@ -2190,7 +2545,7 @@ function getAttendanceForDay(day){
   // 기본 휴무자와 월차 사용자를 모두 실제 휴무자로 계산합니다.
   // 같은 사람이 과거 데이터에서 두 항목에 중복 저장되어 있어도 한 번만 포함합니다.
   const off = Array.from(new Set([...basicOff, ...monthlyLeaveUsers]));
-  const working = employees.filter(name => !off.includes(name));
+  const working = getActiveEmployees().filter(name => !off.includes(name));
 
   return { basicOff, monthlyLeaveUsers, off, working };
 }
@@ -2222,7 +2577,7 @@ function renderMonthlySummary(){
     const resolution = overCapacity ? getResolutionForDay(day, basicOff) : null;
 
     const basicOffSentence = basicOff.length
-      ? `${coloredNames(basicOff)}님이 기본 휴무입니다.${overCapacity ? (resolution ? ' <strong>허용 인원에 맞게 최종 확정되었습니다.</strong>' : ` <strong>허용 인원 ${getDayCapacity(day)}명을 초과하여 일정 조율이 필요합니다.</strong>`) : ''}`
+      ? `${coloredNames(basicOff)}님이 기본 휴무입니다.${overCapacity ? (resolution ? ' <strong>허용 인원에 맞게 최종 확정되었습니다.</strong>' : ` <strong>허용 인원 ${getCapacityLabel(day)}을 초과하여 일정 조율이 필요합니다.</strong>`) : ''}`
       : `기본 휴무자는 없습니다.`;
 
     const monthlyLeaveSentence = monthlyLeaveUsers.length
