@@ -1040,7 +1040,7 @@ body::before{
 
       <div class="card conflict-card">
         <div class="conflict-head">
-          <h3>🤝 평화롭고, 공정하게 GO~ 😊</h3>
+          <h3>🤝휴무일 조율란😊</h3>
           <button class="guide-open-btn" type="button" onclick="openCoordinationGuide()">📖 조율 방법 자세히 보기</button>
           <small>정원을 넘은 날짜만 쏙 모아 보여드려요 ✨</small>
         </div>
@@ -1068,7 +1068,7 @@ body::before{
   <section class="guide-modal-panel" role="dialog" aria-modal="true" aria-labelledby="coordinationGuideTitle">
     <button class="guide-close-btn" type="button" onclick="closeCoordinationGuide()" aria-label="안내창 닫기">×</button>
     <div class="guide-modal-kicker">K GENIE POP 휴무 조율 가이드</div>
-    <h2 id="coordinationGuideTitle">평화롭고, 공정하게 GO~😊</h2>
+    <h2 id="coordinationGuideTitle">휴무일 조율하기~😊</h2>
     <p class="guide-intro">소중한 직원님! 이 안내만 읽으면 신청부터 최종 확정까지 한 번에 이해할 수 있어요.</p>
 
     <div class="guide-step">
@@ -1101,7 +1101,7 @@ body::before{
     </div>
 
     <div class="guide-fairness-note">💎 당신의 양보와 배려는 사라지지 않아요. 양보한 사람이 계속 손해 보지 않고, 배려받은 사람이 양보할 수 있도록 시스템은 자동 관리되어 적용됩니다.</div>
-    <button class="guide-confirm-btn" type="button" onclick="closeCoordinationGuide()">이해했어요! 평화롭게 Go~ 😊</button>
+    <button class="guide-confirm-btn" type="button" onclick="closeCoordinationGuide()">이해했어요! 😊</button>
   </section>
 </div>
 
@@ -1368,8 +1368,8 @@ function updateMonthlyLeaveApprovalUI(){
   const staff = document.getElementById('staffSelect').value;
 
   if(adminCorrectionMode){
-    help.textContent = '관리자 휴무 정정 모드 · 선택한 직원의 기본 휴무를 현재 달에서 직접 수정할 수 있습니다.';
-    submitBtn.textContent = '관리자 휴무 정정 저장하기';
+    help.textContent = '관리자 일정 관리 모드 · 신청 기간과 개수 제한 없이 기본 휴무와 월차를 자유롭게 추가·삭제할 수 있습니다.';
+    submitBtn.textContent = '관리자 일정 저장하기';
   } else if(normalPeriod){
     help.textContent = '현재는 정상 신청 기간입니다. 기본 휴무와 월차를 함께 저장할 수 있습니다.';
     submitBtn.textContent = '신청 완료하기';
@@ -1469,22 +1469,26 @@ function toggleDay(day){
       return;
     }
 
-    const leaveLimit = getBasicLeaveLimit();
-    if(mySelectedDays.size >= leaveLimit){
-      alert(`기본 휴무는 최대 ${leaveLimit}일까지만 선택 가능합니다.`);
-      return;
-    }
-
-    const selectedDate = new Date(currentYear, currentMonth - 1, day);
-    const isWeekend = selectedDate.getDay() === 0 || selectedDate.getDay() === 6;
-
-    if(isWeekend){
-      const weekendLimit = getWeekendOffLimit(staff);
-      const selectedWeekendCount = getSelectedWeekendCount();
-
-      if(Number.isFinite(weekendLimit) && selectedWeekendCount >= weekendLimit){
-        alert(`${shortNames[staff]}님은 ${currentMonth}월 주말 휴무를 최대 ${weekendLimit}번까지 선택할 수 있습니다.`);
+    // 일반 직원에게만 기본 휴무 개수와 주말 선택 제한을 적용합니다.
+    // 관리자 일정 관리 모드에서는 날짜와 개수 제한 없이 자유롭게 정정할 수 있습니다.
+    if(!adminCorrectionMode){
+      const leaveLimit = getBasicLeaveLimit();
+      if(mySelectedDays.size >= leaveLimit){
+        alert(`기본 휴무는 최대 ${leaveLimit}일까지만 선택 가능합니다.`);
         return;
+      }
+
+      const selectedDate = new Date(currentYear, currentMonth - 1, day);
+      const isWeekend = selectedDate.getDay() === 0 || selectedDate.getDay() === 6;
+
+      if(isWeekend){
+        const weekendLimit = getWeekendOffLimit(staff);
+        const selectedWeekendCount = getSelectedWeekendCount();
+
+        if(Number.isFinite(weekendLimit) && selectedWeekendCount >= weekendLimit){
+          alert(`${shortNames[staff]}님은 ${currentMonth}월 주말 휴무를 최대 ${weekendLimit}번까지 선택할 수 있습니다.`);
+          return;
+        }
       }
     }
 
@@ -1580,7 +1584,10 @@ function populateMonthlyLeaveSelect(){
   const balanceEl = document.getElementById('monthlyLeaveBalance');
   const selectedEl = document.getElementById('monthlyLeaveSelected');
   const helpEl = document.getElementById('monthlyLeaveHelp');
-  const enabled = hasMonthlyLeave();
+
+  // 일반 직원은 2026년 7월부터 월차를 사용할 수 있고,
+  // 관리자는 과거·현재·미래 월 모두 월차를 직접 관리할 수 있습니다.
+  const enabled = hasMonthlyLeave() || adminCorrectionMode;
   const staff = document.getElementById('staffSelect').value;
   box.style.display = enabled ? 'block' : 'none';
   updateMonthlyLeaveApprovalUI();
@@ -1588,22 +1595,31 @@ function populateMonthlyLeaveSelect(){
 
   const balance = getMonthlyLeaveBalance(staff);
   const limit = getMonthlyLeaveSelectableLimit(staff);
-  balanceEl.textContent = staff ? `${balance}일` : '직원 선택';
-  helpEl.textContent = staff
-    ? `전월까지 만근하여 발생한 월차는 ${balance}일입니다. 이번 달에는 최대 ${limit}일까지 사용할 수 있고, 미사용분은 다음 달로 이월됩니다.`
-    : '직원을 선택하면 현재 보유 월차와 선택 가능한 날짜가 표시됩니다.';
-
   const lastDate = new Date(currentYear, currentMonth, 0).getDate();
+
+  if(adminCorrectionMode){
+    balanceEl.textContent = staff ? '제한 없음' : '직원 선택';
+    helpEl.textContent = staff
+      ? '관리자 모드에서는 월차 잔액과 월 3일 제한을 적용하지 않습니다. 필요한 날짜를 자유롭게 추가하거나 해제하세요.'
+      : '직원을 선택하면 관리자가 기본 휴무와 월차를 자유롭게 수정할 수 있습니다.';
+  } else {
+    balanceEl.textContent = staff ? `${balance}일` : '직원 선택';
+    helpEl.textContent = staff
+      ? `전월까지 만근하여 발생한 월차는 ${balance}일입니다. 이번 달에는 최대 ${limit}일까지 사용할 수 있고, 미사용분은 다음 달로 이월됩니다.`
+      : '직원을 선택하면 현재 보유 월차와 선택 가능한 날짜가 표시됩니다.';
+  }
+
   daysWrap.innerHTML = Array.from({length:lastDate}, (_,i) => {
     const day = i + 1;
     const selected = myMonthlyLeaveDays.has(day);
     const isBasicLeaveDay = mySelectedDays.has(day);
-    const monthlyLeaveCanEdit = isMonthEditable(currentYear, currentMonth) || (isLateMonthlyLeaveEditMode() && Boolean(staff));
+    const monthlyLeaveCanEdit = adminCorrectionMode || isMonthEditable(currentYear, currentMonth) || (isLateMonthlyLeaveEditMode() && Boolean(staff));
+    const reachedLimit = !adminCorrectionMode && !selected && myMonthlyLeaveDays.size >= limit;
     const disabled =
       !staff ||
       !monthlyLeaveCanEdit ||
       isBasicLeaveDay ||
-      (!selected && myMonthlyLeaveDays.size >= limit);
+      reachedLimit;
 
     const title = isBasicLeaveDay
       ? '이미 기본 휴무로 선택한 날짜입니다.'
@@ -1617,17 +1633,21 @@ function populateMonthlyLeaveSelect(){
       ${title ? `title="${title}"` : ''}
     >${day}일</button>`;
   }).join('');
-  selectedEl.textContent = `선택한 월차 ${myMonthlyLeaveDays.size}일 / 이번 달 최대 ${limit}일`;
+
+  selectedEl.textContent = adminCorrectionMode
+    ? `관리자 선택 월차 ${myMonthlyLeaveDays.size}일 · 제한 없음`
+    : `선택한 월차 ${myMonthlyLeaveDays.size}일 / 이번 달 최대 ${limit}일`;
 
   daysWrap.querySelectorAll('[data-leave-day]').forEach(button => {
     button.addEventListener('click', () => {
-      if(!isMonthEditable(currentYear, currentMonth)){
+      if(!adminCorrectionMode && !isMonthEditable(currentYear, currentMonth)){
         if(!isLateMonthlyLeaveEditMode()){
           alert('이 달은 월차 변경 대상이 아닙니다.');
           return;
         }
         if(!confirmLateMonthlyLeaveApproval()) return;
       }
+
       const day = Number(button.dataset.leaveDay);
       if(myMonthlyLeaveDays.has(day)){
         myMonthlyLeaveDays.delete(day);
@@ -1637,13 +1657,16 @@ function populateMonthlyLeaveSelect(){
           return;
         }
 
-        const currentLimit = getMonthlyLeaveSelectableLimit(staff);
-        if(myMonthlyLeaveDays.size >= currentLimit){
-          alert(`이번 달에는 월차를 최대 ${currentLimit}일까지 사용할 수 있습니다.`);
-          return;
+        if(!adminCorrectionMode){
+          const currentLimit = getMonthlyLeaveSelectableLimit(staff);
+          if(myMonthlyLeaveDays.size >= currentLimit){
+            alert(`이번 달에는 월차를 최대 ${currentLimit}일까지 사용할 수 있습니다.`);
+            return;
+          }
         }
         myMonthlyLeaveDays.add(day);
       }
+
       populateMonthlyLeaveSelect();
       paintSavedSchedules();
       renderMonthlySummary();
@@ -1942,7 +1965,7 @@ function renderConflictPanel(){
   const monthData = getConflictMonthData();
 
   if(!conflicts.length){
-    list.innerHTML = '<div class="conflict-empty">🎉 지금은 조율할 날짜가 없어요. 모두 평화롭게 신청 완료!</div>';
+    list.innerHTML = '<div class="conflict-empty">🎉 지금은 조율할 날짜가 없어요. 모두 신청 완료!</div>';
     return;
   }
 
@@ -1989,7 +2012,7 @@ function renderConflictPanel(){
           <span>${currentMonth}월 ${day}일(${weekday}) <span class="soft-divider">·</span> <span class="application-count">신청 ${applicants.length}명</span> <span class="soft-divider">/</span> <span class="capacity-text">허용 ${capacity}명</span></span>
           <span class="conflict-status">${resolution ? '최종 확정' : '조율 필요'}</span>
         </div>
-        <div class="conflict-guide"><span class="cheer-note">평화롭고, 공정하게 GO~ 😊</span><br>먼저 신청자끼리 조율해 주세요. 변경 가능한 직원은 아래 버튼으로 자발적으로 날짜를 옮길 수 있어요.<br><small>직원끼리 합의가 되지 않을 때만 이사가 최종 결정합니다.</small><br>${approvedText}<br><small>보석은 저장된 최초 조율 대상자가 ‘변경 가능’을 선택하고 다른 날짜까지 최종 저장한 경우에만 적립됩니다. 단순 선택 취소에는 적립되지 않아요.</small></div>
+        <div class="conflict-guide"><span class="cheer-note">휴무일 조율하기~😊</span><br>먼저 신청자끼리 조율해 주세요. 변경 가능한 직원은 아래 버튼으로 자발적으로 날짜를 옮길 수 있어요.<br><small>직원끼리 합의가 되지 않을 때만 이사가 최종 결정합니다.</small><br>${approvedText}<br><small>보석은 저장된 최초 조율 대상자가 ‘변경 가능’을 선택하고 다른 날짜까지 최종 저장한 경우에만 적립됩니다. 단순 선택 취소에는 적립되지 않아요.</small></div>
         <details class="compact-details">
           <summary>조율 선택 기준 자세히</summary>
           <div class="preference-help">
@@ -2257,22 +2280,39 @@ function finalizeConflict(day){
 
 function updateRemaining(){
   const leaveLimit = getBasicLeaveLimit();
-  document.getElementById('remainingDays').textContent = Math.max(0, leaveLimit - mySelectedDays.size);
-  document.getElementById('leaveLimitText').textContent = `기본 휴무 총 ${leaveLimit}회 선택 가능`;
+  const remainingDaysEl = document.getElementById('remainingDays');
+  const leaveLimitTextEl = document.getElementById('leaveLimitText');
+
+  if(adminCorrectionMode){
+    remainingDaysEl.textContent = mySelectedDays.size;
+    leaveLimitTextEl.textContent = '관리자 선택 기본 휴무 · 개수 제한 없음';
+  } else {
+    remainingDaysEl.textContent = Math.max(0, leaveLimit - mySelectedDays.size);
+    leaveLimitTextEl.textContent = `기본 휴무 총 ${leaveLimit}회 선택 가능`;
+  }
+
   const weekendCountText = document.getElementById('weekendCountText');
   if(weekendCountText){
-    const viewingSerial = currentYear * 12 + currentMonth;
-    if(viewingSerial >= (2026 * 12 + 9)){
-      weekendCountText.textContent = `${currentMonth}월부터 목·금·토는 날짜별 1명, 일요일은 인원 제한 없이 선택할 수 있습니다.`;
-    } else if(viewingSerial >= (2026 * 12 + 8)){
-      weekendCountText.textContent = `${currentMonth}월부터 직원별 토·일 선택 횟수 제한이 없습니다.`;
+    if(adminCorrectionMode){
+      weekendCountText.textContent = '관리자 모드에서는 신청 기간·요일·개수 제한 없이 기본 휴무와 월차를 수정할 수 있습니다.';
     } else {
-      weekendCountText.textContent = `${currentMonth}월은 토요일·일요일에 해당하는 주말이 총 ${leaveLimit}일입니다.`;
+      const viewingSerial = currentYear * 12 + currentMonth;
+      if(viewingSerial >= (2026 * 12 + 9)){
+        weekendCountText.textContent = `${currentMonth}월부터 목·금·토는 날짜별 1명, 일요일은 인원 제한 없이 선택할 수 있습니다.`;
+      } else if(viewingSerial >= (2026 * 12 + 8)){
+        weekendCountText.textContent = `${currentMonth}월부터 직원별 토·일 선택 횟수 제한이 없습니다.`;
+      } else {
+        weekendCountText.textContent = `${currentMonth}월은 토요일·일요일에 해당하는 주말이 총 ${leaveLimit}일입니다.`;
+      }
     }
   }
-  document.getElementById('leaveRule').textContent = hasMonthlyLeave()
-    ? `✓ 기본 휴무 ${leaveLimit}일 + 누적 월차 별도 신청 (월 최대 3일)`
-    : `✓ 직원별 월 ${leaveLimit}회 휴무 신청`;
+
+  document.getElementById('leaveRule').textContent = adminCorrectionMode
+    ? '✓ 관리자 모드: 기본 휴무·월차 자유 추가 및 삭제'
+    : (hasMonthlyLeave()
+      ? `✓ 기본 휴무 ${leaveLimit}일 + 누적 월차 별도 신청 (월 최대 3일)`
+      : `✓ 직원별 월 ${leaveLimit}회 휴무 신청`);
+
   populateMonthlyLeaveSelect();
 }
 
@@ -2384,12 +2424,13 @@ document.getElementById('adminFixBtn').addEventListener('click', () => {
     adminCorrectionBy = '';
     button.classList.remove('active');
     button.title = '휴무 정정';
+    loadMySchedule();
     updateMonthlyLeaveApprovalUI();
-    showNotice('관리자 휴무 정정 모드가 종료되었습니다.', 'success');
+    showNotice('관리자 일정 관리 모드가 종료되었습니다.', 'success');
     return;
   }
 
-  const pin = window.prompt('관리자 휴무 정정 PIN을 입력하세요.');
+  const pin = window.prompt('관리자 일정 관리 PIN을 입력하세요.');
   if(pin === null) return;
 
   const managerEntry = Object.entries(managerAccounts).find(([, account]) => account.pin === pin);
@@ -2401,10 +2442,10 @@ document.getElementById('adminFixBtn').addEventListener('click', () => {
   adminCorrectionMode = true;
   adminCorrectionBy = managerEntry[1].anonymousId;
   button.classList.add('active');
-  button.title = '휴무 정정 모드 종료';
+  button.title = '관리자 일정 관리 모드 종료';
   updateMonthlyLeaveApprovalUI();
   loadMySchedule();
-  alert('관리자 휴무 정정 모드가 켜졌습니다.\n직원을 선택하고 기존 휴무를 해제한 뒤 새 날짜를 선택해 저장하세요.');
+  alert('관리자 일정 관리 모드가 켜졌습니다.\n직원과 월을 선택한 뒤 기본 휴무와 월차를 개수 제한 없이 추가·삭제하고 저장할 수 있습니다.');
 });
 
 document.getElementById('staffSelect').addEventListener('change', () => {
@@ -2456,19 +2497,35 @@ document.getElementById('submitBtn').addEventListener('click', () => {
     return;
   }
 
-  // 웹 제작자용 관리자 휴무 정정: 신청 기간과 직원 PIN을 우회하되 관리자 PIN 확인 후에만 실행됩니다.
+  // 관리자 일정 관리: 신청 기간·직원 PIN·기본 휴무 개수·월차 잔액 제한을 우회합니다.
+  // 단, 같은 날짜를 기본 휴무와 월차로 동시에 저장하는 것은 허용하지 않습니다.
   if(adminCorrectionMode){
-    const leaveLimit = getBasicLeaveLimit();
-    if(mySelectedDays.size !== leaveLimit){
-      alert(`기본 휴무를 정확히 ${leaveLimit}일 선택해주세요.\n현재 ${mySelectedDays.size}일 선택됨`);
+    const duplicatedDays = Array.from(mySelectedDays)
+      .filter(day => myMonthlyLeaveDays.has(Number(day)))
+      .sort((a,b) => Number(a) - Number(b));
+
+    if(duplicatedDays.length){
+      alert(
+        `기본 휴무와 월차를 같은 날짜에 함께 저장할 수 없습니다.\n` +
+        `중복 날짜: ${duplicatedDays.map(day => `${day}일`).join(', ')}`
+      );
       return;
     }
 
     const savedData = allSchedules[monthKey()]?.[staff] || {};
-    const previousDays = Array.isArray(savedData.days) ? savedData.days.map(Number).sort((a,b)=>a-b) : [];
+    const previousDays = Array.isArray(savedData.days)
+      ? savedData.days.map(Number).sort((a,b)=>a-b)
+      : [];
+    const previousMonthlyLeaveDays = getMonthlyLeaveDaysFromData(savedData).sort((a,b)=>a-b);
     const correctedDays = Array.from(mySelectedDays).sort((a,b)=>a-b);
+    const correctedMonthlyLeaveDays = Array.from(myMonthlyLeaveDays).sort((a,b)=>a-b);
+
+    const formatDays = days => days.length ? days.map(day => `${day}일`).join(', ') : '없음';
     const approved = window.confirm(
-      `${staff}님의 기본 휴무를 정정하시겠습니까?\n\n기존: ${previousDays.join(', ') || '없음'}\n변경: ${correctedDays.join(', ')}\n\n월차는 변경되지 않습니다.`
+      `${staff}님의 ${currentYear}년 ${currentMonth}월 일정을 저장하시겠습니까?\n\n` +
+      `[기본 휴무]\n기존: ${formatDays(previousDays)}\n변경: ${formatDays(correctedDays)}\n\n` +
+      `[월차]\n기존: ${formatDays(previousMonthlyLeaveDays)}\n변경: ${formatDays(correctedMonthlyLeaveDays)}\n\n` +
+      `관리자 저장은 신청 기간과 개수 제한을 적용하지 않습니다.`
     );
     if(!approved) return;
 
@@ -2476,20 +2533,32 @@ document.getElementById('submitBtn').addEventListener('click', () => {
     const updates = {};
     updates[`schedules/${monthKey()}/${staff}/name`] = staff;
     updates[`schedules/${monthKey()}/${staff}/days`] = correctedDays;
+    updates[`schedules/${monthKey()}/${staff}/monthlyLeaveDays`] = correctedMonthlyLeaveDays;
+    updates[`schedules/${monthKey()}/${staff}/monthlyLeaveDay`] = null;
+    updates[`schedules/${monthKey()}/${staff}/monthlyLeaveApprovalConfirmed`] = true;
+    updates[`schedules/${monthKey()}/${staff}/monthlyLeaveApprovalConfirmedAt`] = now;
     updates[`schedules/${monthKey()}/${staff}/updatedAt`] = now;
     updates[`schedules/${monthKey()}/${staff}/adminCorrection`] = {
       correctedBy: adminCorrectionBy,
       correctedAt: now,
       previousDays,
-      updatedDays: correctedDays
+      updatedDays: correctedDays,
+      previousMonthlyLeaveDays,
+      updatedMonthlyLeaveDays: correctedMonthlyLeaveDays
     };
 
+    // 기본 휴무 변경으로 조율 대상이 달라질 수 있으므로 충돌 데이터도 함께 갱신합니다.
+    Object.assign(updates, buildConflictCaseUpdates(staff, correctedDays, now));
+
     db.ref().update(updates).then(() => {
-      showNotice(`${staff}님의 기본 휴무가 관리자 정정으로 저장되었습니다.`, 'success');
-      alert(`${staff}님의 기본 휴무가 정정되었습니다.\n월차 일정은 그대로 유지됩니다.`);
+      showNotice(`${staff}님의 기본 휴무와 월차가 관리자 설정으로 저장되었습니다.`, 'success');
+      alert(
+        `${staff}님의 ${currentYear}년 ${currentMonth}월 일정이 저장되었습니다.\n` +
+        `기본 휴무 ${correctedDays.length}일 · 월차 ${correctedMonthlyLeaveDays.length}일`
+      );
     }).catch(error => {
-      showNotice('관리자 휴무 정정 저장에 실패했습니다.', 'error');
-      alert('휴무 정정 저장 실패');
+      showNotice('관리자 일정 저장에 실패했습니다.', 'error');
+      alert('관리자 일정 저장 실패');
       console.error(error);
     });
     return;
