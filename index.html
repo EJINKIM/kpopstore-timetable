@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>K GENIE POP TIMETABLE - THE PERFECT BREAK</title>
+<title>K GENIE POP STORE TIMETABLE</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1231,144 +1231,133 @@ body::before{
 
 
 
+
 <style id="photo-ui-style-override">
 :root{
-  --bg:#eef7fd;
-  --bg2:#f8eff5;
-  --card:rgba(255,255,255,0.84);
-  --card-strong:rgba(255,255,255,0.96);
-  --border:rgba(255,255,255,.72);
-  --text:#556575;
-  --sub:#8092a3;
-  --primary:#9fc9e7;
-  --green:#b7dff0;
-  --danger:#efbfd5;
-  --day:rgba(255,255,255,.86);
-  --shadow:0 24px 54px rgba(156,187,214,.16);
+  --bg:#f4f4f4;
+  --bg2:#ececec;
+  --card:#ffffff;
+  --card-strong:#ffffff;
+  --border:#d8d8d8;
+  --text:#111111;
+  --sub:#767676;
+  --primary:#111111;
+  --green:#111111;
+  --danger:#d73a49;
+  --day:#ffffff;
+  --shadow:none;
+}
+
+*{
+  scrollbar-width:thin;
+  scrollbar-color:#1a1a1a #eeeeee;
 }
 
 body{
-  color:var(--text);
-  background:
-    radial-gradient(circle at 12% 14%, rgba(255,255,255,.80), transparent 18%),
-    radial-gradient(circle at 26% 30%, rgba(184,220,243,.42), transparent 26%),
-    radial-gradient(circle at 52% 36%, rgba(240,210,225,.34), transparent 25%),
-    radial-gradient(circle at 76% 16%, rgba(215,236,249,.46), transparent 26%),
-    radial-gradient(circle at 88% 84%, rgba(255,241,232,.42), transparent 22%),
-    linear-gradient(120deg,#edf7fd 0%, #eaf4fc 28%, #f6edf4 62%, #fff7ef 100%);
-  background-attachment:fixed;
+  color:#111;
+  background:#f4f4f4;
+  background-attachment:scroll;
 }
-body::before{
-  background:
-    radial-gradient(circle at 22% 0%, rgba(255,255,255,.52), transparent 28%),
-    radial-gradient(circle at 100% 50%, rgba(255,246,238,.34), transparent 22%),
-    linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,0));
-  opacity:1;
-}
+body::before{display:none;}
 
-.topbar{margin-bottom:24px;}
-.brand-lockup::before{
-  background:linear-gradient(180deg,#a9d4ef 0%, #e9c8dc 54%, #f7dfc8 100%);
-  box-shadow:0 0 22px rgba(169,212,239,.36);
+.container{
+  max-width:1480px;
+  padding:28px 32px 48px;
 }
-.brand-main{color:#576679;text-shadow:0 8px 20px rgba(170,193,214,.10);}
+.topbar{
+  align-items:flex-end;
+  margin-bottom:24px;
+  padding:0 0 20px;
+  border-bottom:2px solid #111;
+}
+.brand-lockup{
+  display:block;
+  padding:0;
+  text-transform:uppercase;
+}
+.brand-lockup::before,
+.brand-sub{display:none;}
+.brand-main{
+  display:block;
+  font-size:clamp(25px,3vw,42px);
+  line-height:.95;
+  font-weight:900;
+  letter-spacing:-.055em;
+  color:#111;
+  text-shadow:none;
+}
 .brand-main .brand-k{
-  background:linear-gradient(90deg,#8cbfe4 0%, #d9b9d8 48%, #f0cfac 100%);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-}
-.brand-main .brand-time{color:#84a1b7;}
-.brand-sub{color:#9da8be;}
-.brand-sub::before{background:linear-gradient(90deg,#b6dcef,#efcfde);}
-.brand-sub span{
-  background:linear-gradient(90deg,#96c8e8,#e1c1d6,#f1d9bc);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
+  display:block;
+  color:#111;
+  background:none;
+  -webkit-text-fill-color:#111;
 }
 .status-pill{
-  background:rgba(255,255,255,.78);
-  border:1px solid rgba(255,255,255,.88);
-  box-shadow:0 10px 24px rgba(170,193,214,.10);
-  color:#7d91a4;
+  padding:7px 10px;
+  color:#fff;
+  background:#111;
+  border:1px solid #111;
+  border-radius:2px;
+  box-shadow:none;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.02em;
 }
 
-.container{max-width:1460px;}
-.hero{gap:26px;}
+.hero{
+  grid-template-columns:340px minmax(0,1fr);
+  gap:18px;
+}
 .card{
-  background:linear-gradient(180deg, rgba(255,255,255,.88) 0%, rgba(255,255,255,.78) 100%);
-  border:1px solid rgba(255,255,255,.82);
-  border-radius:34px;
-  box-shadow:0 24px 48px rgba(173,195,214,.14);
-  backdrop-filter:blur(24px);
-  -webkit-backdrop-filter:blur(24px);
+  background:#fff;
+  border:1px solid #d6d6d6;
+  border-radius:4px;
+  box-shadow:none;
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
 }
 .sidebar,
 .calendar-card,
 .summary-card,
-.conflict-card{position:relative;overflow:hidden;}
+.conflict-card{overflow:visible;}
 .sidebar::before,
-.calendar-card::before,
-.summary-card::before,
-.conflict-card::before{
-  content:"";
-  position:absolute;
-  inset:auto -40px -65px auto;
-  width:180px;height:180px;border-radius:50%;
-  background:radial-gradient(circle, rgba(199,228,246,.30) 0%, rgba(199,228,246,0) 68%);
-  pointer-events:none;
-}
 .sidebar::after,
-.calendar-card::after{
-  content:"";
-  position:absolute;
-  inset:-35px auto auto -45px;
-  width:150px;height:150px;border-radius:50%;
-  background:radial-gradient(circle, rgba(242,214,226,.24) 0%, rgba(242,214,226,0) 68%);
-  pointer-events:none;
-}
-.sidebar h2,
-.calendar-header h2,
-.summary-title h3,
-.conflict-head h3{position:relative;z-index:1;}
+.calendar-card::before,
+.calendar-card::after,
+.summary-card::before,
+.conflict-card::before{display:none;}
+.sidebar{padding:22px;top:16px;}
 .sidebar h2{
-  background:linear-gradient(90deg,#95c7e8 0%, #ddbdda 52%, #f0d7bb 100%);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
+  margin-bottom:8px;
+  color:#111;
+  background:none;
+  -webkit-text-fill-color:#111;
+  font-size:21px;
+  line-height:1.25;
+  letter-spacing:-.045em;
+  font-weight:900;
 }
-.helper,
-.notice,
-.rule,
-.badge,
-.summary-item,
-.conflict-empty,
-.conflict-guide,
-.preference-help,
-.manager-note,
-.monthly-leave-help,
-.remaining p,
-.remaining small,
-.weekend-count-text,
-.status-pill,
-.slot,
-.weekdays,
-.monthly-leave-selected,
-.monthly-leave-balance,
-.monthly-leave-approval small,
-.conflict-head small,
-.summary-title small{color:#8194a5 !important;}
+.helper{
+  margin-bottom:18px;
+  color:#767676 !important;
+  font-size:12px;
+  line-height:1.65;
+}
 
+.staff-select{gap:8px;}
 .staff-select select,
 .staff-select input,
 .manager-row select,
 .manager-row input,
 .conflict-person select,
 .monthly-leave-box select{
-  background:rgba(255,255,255,.92);
-  border:1px solid rgba(237,243,248,.98);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.96), 0 8px 18px rgba(179,200,219,.06);
+  min-height:46px;
+  padding:12px 13px;
+  color:#111;
+  background:#fff;
+  border:1px solid #bdbdbd;
+  border-radius:2px;
+  box-shadow:none;
 }
 .staff-select select:focus,
 .staff-select input:focus,
@@ -1376,124 +1365,389 @@ body::before{
 .manager-row input:focus,
 .conflict-person select:focus,
 .monthly-leave-box select:focus{
-  border-color:#b9d9ee;
-  box-shadow:0 0 0 4px rgba(185,217,238,.20), inset 0 1px 0 rgba(255,255,255,.94);
+  border-color:#111;
+  box-shadow:0 0 0 1px #111;
 }
 
-.gem-vault{
-  background:
-    radial-gradient(circle at 18% 18%, rgba(255,255,255,.95), transparent 22%),
-    linear-gradient(135deg, rgba(255,255,255,.92) 0%, rgba(237,247,252,.96) 42%, rgba(250,240,246,.96) 100%);
-  border:1px solid rgba(255,255,255,.88);
-  box-shadow:0 14px 34px rgba(180,204,225,.10);
-}
+.gem-vault,
 .gem-vault.royal{
-  background:
-    radial-gradient(circle at 50% -5%, rgba(255,255,255,.98), transparent 28%),
-    linear-gradient(135deg, rgba(255,250,232,.96), rgba(241,248,252,.94) 44%, rgba(252,242,247,.94));
-  box-shadow:0 18px 40px rgba(208,193,158,.14), 0 0 0 4px rgba(255,255,255,.34) inset;
+  padding:18px;
+  color:#fff;
+  background:#111;
+  border:1px solid #111;
+  border-radius:3px;
+  box-shadow:none;
 }
+.gem-vault::before{display:none;}
+.gem-eyebrow,
+.gem-title,
+.gem-count,
+.gem-unit,
+.gem-message,
+.gem-meta,
+.gem-vault.royal .gem-title,
+.gem-vault.royal .gem-count,
+.gem-vault.royal .gem-eyebrow{color:#fff;}
+.gem-eyebrow{opacity:.58;letter-spacing:.18em;}
+.gem-title{font-size:15px;}
+.gem-count{font-size:44px;text-shadow:none;}
+.gem-icon,.gem-crown{filter:grayscale(1);}
+.gem-throne-badge{
+  color:#111;
+  background:#fff;
+  border-color:#fff;
+  border-radius:2px;
+}
+.gem-royal-benefit{
+  color:#111;
+  background:#fff;
+  border:0;
+  border-radius:2px;
+  box-shadow:none;
+}
+.gem-royal-benefit-title,
+.gem-royal-benefit p,
+.gem-royal-benefit strong{color:#111;}
+
+.monthly-leave-box{
+  margin-top:14px;
+  padding:14px;
+  background:#fafafa;
+  border:1px solid #dedede;
+  border-radius:2px;
+}
+.monthly-leave-box label,
+.monthly-leave-balance strong,
+.monthly-leave-selected{color:#111;}
+.monthly-leave-balance{
+  background:#fff;
+  border:1px solid #e0e0e0;
+  border-radius:2px;
+}
+.monthly-leave-day-btn{
+  color:#555;
+  background:#fff;
+  border:1px solid #d8d8d8;
+  border-radius:2px;
+  box-shadow:none;
+}
+.monthly-leave-day-btn:hover{border-color:#111;}
+.monthly-leave-day-btn.selected{
+  color:#fff;
+  background:#111;
+  border-color:#111;
+  box-shadow:none;
+}
+.monthly-leave-approval{
+  background:#fff;
+  border:1px dashed #999;
+  border-radius:2px;
+}
+.monthly-leave-approval label{color:#111;}
+
 .remaining{
-  background:linear-gradient(135deg, rgba(255,255,255,.95) 0%, rgba(239,248,253,.90) 48%, rgba(252,244,239,.90) 100%);
-  border:1px solid rgba(255,255,255,.86);
-  box-shadow:0 14px 30px rgba(170,193,214,.08);
+  margin-top:14px;
+  padding:18px;
+  color:#fff;
+  background:#111;
+  border:1px solid #111;
+  border-radius:2px;
+  box-shadow:none;
 }
-.remaining h1{color:#8fc2e3;text-shadow:0 10px 22px rgba(159,201,231,.18);}
-.rule{color:#7f94a5;background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.88);}
+.remaining p,
+.remaining small,
+.weekend-count-text{color:#bbb !important;}
+.remaining h1{
+  color:#fff;
+  text-shadow:none;
+  font-size:52px;
+}
+
+.mobile-collapsible{
+  border:1px solid #dedede;
+  border-radius:2px;
+  background:#fafafa;
+}
+.mobile-section-summary{color:#111;}
+.mobile-section-summary::after{color:#111;}
+.rules{gap:6px;}
+.rule{
+  color:#333 !important;
+  background:#f7f7f7;
+  border:1px solid #e5e5e5;
+  border-radius:2px;
+  font-size:12px;
+  font-weight:650;
+}
 
 .submit,
 .guide-confirm-btn{
-  background:linear-gradient(135deg,#a8d4ef 0%, #eac8dc 54%, #f4dcc3 100%);
-  color:#ffffff;
-  box-shadow:0 16px 30px rgba(191,205,220,.22);
-  text-shadow:0 1px 2px rgba(120,136,152,.16);
+  min-height:52px;
+  color:#fff;
+  background:#111;
+  border:1px solid #111;
+  border-radius:2px;
+  box-shadow:none;
+  text-shadow:none;
+  letter-spacing:.01em;
 }
 .submit:hover,
-.guide-confirm-btn:hover,
-.small-action:hover,
-.btn:hover{filter:brightness(1.03);}
-.small-action{background:linear-gradient(135deg,#f3fbff,#fff5fa);color:#8aa4bf;}
-.small-action.manager{background:linear-gradient(135deg,#f6fbff,#fffaf4);color:#97adbf;}
-.guide-open-btn{background:linear-gradient(135deg,#ffffff,#f3faff,#fff7f3);color:#96afc8;box-shadow:0 8px 18px rgba(173,195,214,.10);}
-.btn{background:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.90);color:#91a7bb;box-shadow:0 10px 22px rgba(173,195,214,.08);}
-
-.day{
-  background:linear-gradient(180deg, rgba(255,255,255,.94) 0%, rgba(255,255,255,.80) 100%);
-  border:1px solid rgba(255,255,255,.92);
-  border-radius:24px;
-  box-shadow:0 10px 24px rgba(173,195,214,.08);
+.guide-confirm-btn:hover{
+  background:#333;
+  filter:none;
+  transform:none;
 }
-.day:hover{border-color:rgba(189,216,236,.56);box-shadow:0 18px 30px rgba(173,195,214,.12);}
-.day.available{box-shadow:0 10px 24px rgba(173,195,214,.08), 0 0 0 1px rgba(221,237,248,.24);}
-.day.selected{outline:3px solid rgba(168,210,237,.56);}
-.day.overlap{outline:2px dashed rgba(226,194,216,.88);}
-.day.monthly-leave{box-shadow:0 0 0 3px rgba(210,215,245,.30) inset, 0 10px 24px rgba(173,195,214,.08);}
-.day-number{color:#617285;}
-.staff-tag{background:rgba(255,255,255,.94);box-shadow:0 6px 12px rgba(173,195,214,.06);}
-.monthly-leave-tag{background:#f5f0ff;color:#9a91d6;border:1px solid #e0d8fa;}
-.monthly-leave-box{background:linear-gradient(135deg, rgba(245,251,255,.86), rgba(255,247,243,.80));border:1px solid rgba(255,255,255,.88);}
-.monthly-leave-balance strong,
-.monthly-leave-selected,
-.monthly-leave-box label{color:#9fc9e7;}
-.monthly-leave-day-btn{background:rgba(255,255,255,.92);border:1px solid rgba(230,238,246,.90);}
-.monthly-leave-day-btn.selected{background:linear-gradient(135deg,#eef7fd,#fff4f8);color:#90bde0;border-color:#d9e6f1;}
-.monthly-leave-approval{background:rgba(255,255,255,.76);border:1px dashed rgba(191,210,228,.54);}
+.notice{border-radius:2px;}
 
-.legend .badge,
-.summary-item,
-.conflict-item,
-.conflict-empty,
-.preference-help,
-.monthly-leave-balance,
-.monthly-leave-approval,
-.compact-details,
-.summary-details > summary,
-.guide-modal-panel,
-.guide-fairness-note,
-.conflict-guide,
-.mobile-collapsible,
+.calendar-card{padding:22px;}
+.calendar-header{
+  margin-bottom:18px;
+  padding-bottom:14px;
+  border-bottom:1px solid #111;
+}
+.calendar-header h2{
+  color:#111;
+  font-size:24px;
+  font-weight:900;
+  letter-spacing:-.045em;
+}
+.month-nav{gap:6px;}
+.btn{
+  width:38px;
+  height:38px;
+  color:#111;
+  background:#fff;
+  border:1px solid #111;
+  border-radius:2px;
+  box-shadow:none;
+}
+.btn:hover{
+  color:#fff;
+  background:#111;
+  transform:none;
+  filter:none;
+}
+.weekdays{
+  color:#555;
+  font-size:12px;
+  letter-spacing:.04em;
+}
+.calendar{gap:6px;}
+.day{
+  min-height:108px;
+  padding:10px;
+  background:#fff;
+  border:1px solid #dedede;
+  border-radius:2px;
+  box-shadow:none;
+}
+.day:hover{
+  transform:none;
+  border-color:#111;
+  box-shadow:none;
+}
+.day.available{box-shadow:none;}
+.day.selected{
+  outline:2px solid #111;
+  outline-offset:-2px;
+}
+.day.overlap{
+  outline:2px dashed #111;
+  outline-offset:-2px;
+}
+.day.monthly-leave{
+  box-shadow:inset 0 0 0 2px #111;
+}
+.day-number{color:#111;font-size:13px;}
+.slot{color:#777 !important;font-size:10px;}
+.staff-list{gap:3px;}
+.staff-tag{
+  padding:5px 7px;
+  border-radius:2px !important;
+  box-shadow:none !important;
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+  letter-spacing:-.025em;
+}
+.monthly-leave-tag{
+  color:#111;
+  background:#fff;
+  border:1px solid #111;
+  border-radius:2px;
+  box-shadow:none;
+}
+.monthly-leave-tag::before{background:#111;}
+
+.legend{
+  gap:6px;
+  margin-top:16px;
+  padding-top:14px;
+  border-top:1px solid #e3e3e3;
+}
+.badge{
+  padding:7px 9px;
+  color:#333 !important;
+  background:#fff;
+  border:1px solid #d8d8d8;
+  border-radius:2px;
+  box-shadow:none;
+  font-size:11px;
+}
+.dot{border:1px solid rgba(0,0,0,.14);}
+
 .conflict-card,
-.summary-card{background-color:rgba(255,255,255,.74);}
-.badge,
-.summary-item,
+.summary-card{
+  margin-top:16px;
+  padding:20px;
+  background:#fff;
+}
+.conflict-head,
+.summary-title{
+  padding-bottom:12px;
+  border-bottom:1px solid #111;
+}
+.conflict-head h3,
+.summary-title h3{
+  color:#111;
+  font-weight:900;
+  letter-spacing:-.04em;
+}
+.guide-open-btn,
+.small-action,
+.small-action.manager{
+  color:#111;
+  background:#fff;
+  border:1px solid #111;
+  border-radius:2px;
+  box-shadow:none;
+}
+.guide-open-btn:hover,
+.small-action:hover,
+.small-action.manager:hover{
+  color:#fff;
+  background:#111;
+  filter:none;
+  transform:none;
+}
 .conflict-item,
+.conflict-item.resolved,
+.summary-item,
 .conflict-empty,
 .preference-help,
-.monthly-leave-balance,
-.summary-details > summary,
+.conflict-guide,
 .compact-details,
-.mobile-collapsible{border:1px solid rgba(255,255,255,.88);}
-.conflict-card{background:linear-gradient(145deg, rgba(255,255,255,.86), rgba(250,246,249,.80));}
-.conflict-head h3{color:#9ec8e6;}
-.conflict-item{background:linear-gradient(145deg, rgba(255,255,255,.94), rgba(249,251,254,.80));border:1px solid rgba(226,235,243,.60);box-shadow:0 10px 22px rgba(173,195,214,.08);}
-.conflict-item.resolved{border-color:rgba(193,226,218,.44);background:linear-gradient(145deg, rgba(248,255,253,.94), rgba(247,251,252,.80));}
-.conflict-status{background:#fff5fa;color:#d8afc9;border:1px solid #f0d5e4;}
-.conflict-item.resolved .conflict-status{background:#f1fbff;color:#9ec5df;border-color:#d7edf7;}
+.summary-details > summary{
+  color:#333;
+  background:#fafafa;
+  border:1px solid #dedede;
+  border-radius:2px;
+  box-shadow:none;
+}
+.conflict-status,
+.conflict-item.resolved .conflict-status{
+  color:#fff;
+  background:#111;
+  border:1px solid #111;
+  border-radius:2px;
+}
 .summary-item strong,
 .conflict-date,
-.preference-help strong,
-.monthly-leave-balance strong,
-.gem-title{color:#5d6e81;}
-.approval-row.auto-target{background:rgba(246,251,255,.62);border:1px dashed rgba(191,210,228,.44);}
-.auto-note,.cheer-note{color:#b9bddf;}
-.capacity-text{color:#bcc7d8;}
+.preference-help strong{color:#111;}
+.approval-row.auto-target{
+  background:#f7f7f7;
+  border:1px dashed #999;
+  border-radius:2px;
+}
+.auto-note,.cheer-note,.capacity-text{color:#666;}
+.summary-name{border-radius:2px !important;box-shadow:none !important;}
 
-.guide-modal-backdrop{background:rgba(146,169,191,.24);backdrop-filter:blur(10px);}
-.guide-modal-panel{background:linear-gradient(145deg, rgba(255,255,255,.98), rgba(250,252,255,.97));box-shadow:0 30px 80px rgba(173,195,214,.18);}
-.guide-modal-kicker{background:#f2f9ff;color:#9fc9e7;}
-.guide-step-number{background:linear-gradient(135deg,#f1f9ff,#fff4f8);color:#9dc6e4;}
-.guide-fairness-note{background:linear-gradient(135deg,#f1f9ff,#fff7f4,#fffafd);}
-.admin-fix-btn.active{background:#9fc9e7;border-color:#9fc9e7;}
+.guide-modal-backdrop{
+  background:rgba(0,0,0,.58);
+  backdrop-filter:blur(3px);
+}
+.guide-modal-panel{
+  background:#fff;
+  border:1px solid #111;
+  border-radius:4px;
+  box-shadow:0 24px 70px rgba(0,0,0,.24);
+}
+.guide-modal-kicker,
+.guide-step-number{
+  color:#fff;
+  background:#111;
+  border-radius:2px;
+}
+.guide-fairness-note{
+  color:#111;
+  background:#f4f4f4;
+  border:1px solid #dedede;
+  border-radius:2px;
+}
+.guide-close-btn{color:#111;background:#fff;border:1px solid #111;}
+.admin-fix-btn{border-radius:2px;}
+.admin-fix-btn.active{background:#111;border-color:#111;}
 
+@media(max-width:900px){
+  .container{padding:18px;}
+  .hero{grid-template-columns:1fr;}
+  .sidebar{position:static;}
+}
 @media(max-width:700px){
-  body{
-    background:
-      radial-gradient(circle at 18% 0%, rgba(255,255,255,.30), transparent 26%),
-      linear-gradient(180deg,#edf7fd 0%, #edf6fc 38%, #f7edf4 70%, #fff7ef 100%);
-    background-attachment:scroll;
+  body{background:#f2f2f2;}
+  .container{padding:12px;}
+  .topbar{
+    align-items:flex-start;
+    padding-bottom:14px;
   }
-  .card{border-radius:24px;}
-  .day{border-radius:12px;}
+  .brand-main{font-size:25px;line-height:1.02;}
+  .card{border-radius:2px;}
+  .sidebar,.calendar-card{padding:14px;}
+  .day{min-height:66px;border-radius:1px;padding:6px 4px;}
+  .staff-tag{font-size:7px;padding:3px 4px;}
+  .submit{bottom:8px;}
+}
+</style>
+
+
+
+<style id="staff-identity-style">
+.staff-tag{
+  padding:5px 8px;
+  letter-spacing:-.035em;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  text-shadow:0 1px 0 rgba(255,255,255,.42);
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+.staff-tag:hover{transform:translateY(-1px);}
+.staff-legend-badge{
+  background:linear-gradient(145deg,rgba(255,255,255,.86),rgba(255,255,255,.68));
+  box-shadow:0 8px 18px rgba(173,195,214,.08);
+}
+.staff-legend-badge .dot{
+  width:12px;
+  height:12px;
+  border:1px solid rgba(255,255,255,.82);
+}
+.summary-name{
+  padding:3px 8px;
+  text-shadow:0 1px 0 rgba(255,255,255,.46);
+}
+.staff-identity{
+  padding:8px 10px;
+  border-radius:14px;
+  line-height:1.35;
+  text-shadow:0 1px 0 rgba(255,255,255,.42);
+}
+.staff-identity small{color:inherit;opacity:.78;}
+.color-fill{
+  opacity:.58;
+  filter:saturate(.92) brightness(1.03);
+}
+@media(max-width:700px){
+  .staff-tag{padding:2px 4px;box-shadow:none !important;}
+  .staff-legend-badge .dot{width:9px;height:9px;}
+  .staff-identity{padding:7px 8px;}
 }
 </style>
 
@@ -1502,19 +1756,17 @@ body::before{
 
 <div class="container">
   <div class="topbar">
-    <div class="brand-lockup" aria-label="K GENIE POP TIMETABLE - THE PERFECT BREAK">
+    <div class="brand-lockup" aria-label="K GENIE POP STORE TIMETABLE">
       <div class="brand-main">
-        <span class="brand-k">K GENIE POP</span>
-        <span class="brand-time">TIMETABLE</span>
+        <span class="brand-k">K GENIE POP STORE TIMETABLE</span>
       </div>
-      <div class="brand-sub"><span>THE PERFECT BREAK</span></div>
     </div>
     <div class="status-pill" id="saveStatus">달력 준비 중</div>
   </div>
 
   <div class="hero">
     <div class="card sidebar">
-      <h2>K지니팝 매장 직원 휴무일 신청</h2>
+      <h2>K지팝 직원 휴무일 신청</h2>
       <p class="helper">직원 선택 후 PIN을 입력하고 해당 월의 토·일 개수만큼 기본 휴무를 선택하세요. 월차는 한 달을 만근하면 다음 달에 1일이 발생하며, 사용하지 않은 월차는 다음 달로 이월됩니다.</p>
 
       <div class="staff-select">
@@ -1604,7 +1856,7 @@ body::before{
 
       <div class="card conflict-card">
         <div class="conflict-head">
-          <h3>🤝 휴무일 조율란 </h3>
+          <h3>🤝 평화롭고, 공정하게 GO~ 😊</h3>
           <button class="guide-open-btn" type="button" onclick="openCoordinationGuide()">📖 조율 방법 자세히 보기</button>
           <small>정원을 넘은 날짜만 쏙 모아 보여드려요 ✨</small>
         </div>
@@ -1632,7 +1884,7 @@ body::before{
   <section class="guide-modal-panel" role="dialog" aria-modal="true" aria-labelledby="coordinationGuideTitle">
     <button class="guide-close-btn" type="button" onclick="closeCoordinationGuide()" aria-label="안내창 닫기">×</button>
     <div class="guide-modal-kicker">K GENIE POP 휴무 조율 가이드</div>
-    <h2 id="coordinationGuideTitle">휴무일 조정란</h2>
+    <h2 id="coordinationGuideTitle">평화롭고, 공정하게 GO~😊</h2>
     <p class="guide-intro">소중한 직원님! 이 안내만 읽으면 신청부터 최종 확정까지 한 번에 이해할 수 있어요.</p>
 
     <div class="guide-step">
@@ -1665,7 +1917,7 @@ body::before{
     </div>
 
     <div class="guide-fairness-note">💎 당신의 양보와 배려는 사라지지 않아요. 양보한 사람이 계속 손해 보지 않고, 배려받은 사람이 양보할 수 있도록 시스템은 자동 관리되어 적용됩니다.</div>
-    <button class="guide-confirm-btn" type="button" onclick="closeCoordinationGuide()">이해했어요!😊</button>
+    <button class="guide-confirm-btn" type="button" onclick="closeCoordinationGuide()">이해했어요! 평화롭게 Go~ 😊</button>
   </section>
 </div>
 
@@ -1726,21 +1978,63 @@ const employeePins = {
   "박혜정":"5555"
 };
 
+// 사진의 화사한 파스텔 톤 안에서 직원별 개성이 분명하게 보이도록 구성한 컬러 시스템입니다.
 const staffColors = {
-  "김은진":"#00E0BA",
-  "이주훈":"#FF80C7",
-  "이명규":"#5996FF",
-  "심민규":"#00E0BA",
-  "박혜정":"#FFCF00"
+  "김은진":"#79D4C2",  // 아쿠아 민트
+  "이주훈":"#F0AFC6",  // 블러쉬 핑크
+  "이명규":"#8FB5EE",  // 에디토리얼 블루
+  "심민규":"#B7A8E5",  // 소프트 라일락
+  "박혜정":"#E6C451"   // 머스터드 옐로
 };
 
-// 이름표 글자는 같은 계열의 짙은 색을 사용해 밝은 배경에서도 잘 보이게 합니다.
+const staffGradients = {
+  "김은진":"linear-gradient(135deg,#DDF7F1 0%,#79D4C2 100%)",
+  "이주훈":"linear-gradient(135deg,#FCE4ED 0%,#F0AFC6 100%)",
+  "이명규":"linear-gradient(135deg,#E1ECFC 0%,#8FB5EE 100%)",
+  "심민규":"linear-gradient(135deg,#ECE7F9 0%,#B7A8E5 100%)",
+  "박혜정":"linear-gradient(135deg,#FFF2BC 0%,#E6C451 100%)"
+};
+
+// 달력 칸 전체에는 이름표보다 한 단계 더 밝고 투명한 그라데이션을 사용합니다.
+const staffDayGradients = {
+  "김은진":"linear-gradient(135deg,#FFFFFF 0%,#EDF9F6 62%,#C5EDE4 100%)",
+  "이주훈":"linear-gradient(135deg,#FFFFFF 0%,#FFF0F5 62%,#F7D3E0 100%)",
+  "이명규":"linear-gradient(135deg,#FFFFFF 0%,#F0F5FD 62%,#CFDDF6 100%)",
+  "심민규":"linear-gradient(135deg,#FFFFFF 0%,#F5F2FC 62%,#DED7F3 100%)",
+  "박혜정":"linear-gradient(135deg,#FFFFFF 0%,#FFF9E8 62%,#F3E4A6 100%)"
+};
+
+// 밝은 배경에서도 선명하게 읽히는 각 컬러의 딥 톤입니다.
 const staffTextColors = {
-  "김은진":"#007F6B",
-  "이주훈":"#C83D8E",
-  "이명규":"#2869C9",
-  "심민규":"#007F6B",
-  "박혜정":"#9A7900"
+  "김은진":"#145E54",
+  "이주훈":"#833D5A",
+  "이명규":"#2F548B",
+  "심민규":"#584681",
+  "박혜정":"#6A5600"
+};
+
+const staffBorderColors = {
+  "김은진":"rgba(77,174,164,.34)",
+  "이주훈":"rgba(205,111,151,.32)",
+  "이명규":"rgba(101,153,201,.32)",
+  "심민규":"rgba(126,105,178,.30)",
+  "박혜정":"rgba(199,159,52,.34)"
+};
+
+const staffShadowColors = {
+  "김은진":"rgba(63,164,154,.16)",
+  "이주훈":"rgba(206,108,151,.15)",
+  "이명규":"rgba(91,145,197,.15)",
+  "심민규":"rgba(121,100,174,.14)",
+  "박혜정":"rgba(190,149,35,.15)"
+};
+
+const staffSoftBackgrounds = {
+  "김은진":"rgba(220,248,244,.72)",
+  "이주훈":"rgba(253,232,241,.72)",
+  "이명규":"rgba(229,242,251,.76)",
+  "심민규":"rgba(238,233,249,.76)",
+  "박혜정":"rgba(255,247,215,.78)"
 };
 
 const shortNames = {
@@ -1886,7 +2180,10 @@ function updateMonthlyLeaveApprovalUI(){
 function renderLegend(){
   const legend = document.getElementById('legend');
   legend.innerHTML = getActiveEmployees().map(name => `
-    <div class="badge"><span class="dot" style="background:${staffColors[name]}"></span>${shortNames[name]}</div>
+    <div class="badge staff-legend-badge" style="border-color:${staffBorderColors[name]};">
+      <span class="dot" style="background:${staffGradients[name]};box-shadow:0 3px 9px ${staffShadowColors[name]};"></span>
+      <span style="color:${staffTextColors[name]};font-weight:900;">${shortNames[name]}</span>
+    </div>
   `).join('') + `<div class="badge">작은 이름표 = 휴무 신청자</div><div class="badge">진한 테두리 = 내가 선택한 휴무</div><div class="badge">보라색 표시 = 월차</div><div class="badge">점선 테두리 = 중복 신청 · 일정 조율 필요</div>`;
 }
 
@@ -2166,7 +2463,9 @@ function paintSavedSchedules(){
       tag.className = 'staff-tag';
       tag.textContent = shortNames[name] || name;
       tag.style.color = staffTextColors[name] || '#111827';
-      tag.style.border = `1px solid ${staffTextColors[name] || '#111827'}22`;
+      tag.style.background = staffGradients[name] || 'rgba(255,255,255,.92)';
+      tag.style.border = `1px solid ${staffBorderColors[name] || 'rgba(255,255,255,.76)'}`;
+      tag.style.boxShadow = `0 5px 13px ${staffShadowColors[name] || 'rgba(148,163,184,.12)'}`;
       if (staffList) staffList.appendChild(tag);
     });
 
@@ -2180,7 +2479,7 @@ function paintSavedSchedules(){
     if(monthlyLeaveUsers.length) dayBox.classList.add('monthly-leave');
 
     if(applicants.length === 1){
-      if (fill) fill.style.background = staffColors[applicants[0]];
+      if (fill) fill.style.background = staffDayGradients[applicants[0]] || staffColors[applicants[0]];
     } else if(applicants.length >= 2){
       const colors = applicants.map((name, index) => {
         const start = Math.round(index * 100 / applicants.length);
@@ -2434,7 +2733,7 @@ function renderConflictPanel(){
   const monthData = getConflictMonthData();
 
   if(!conflicts.length){
-    list.innerHTML = '<div class="conflict-empty">🎉 지금은 조율할 날짜가 없어요. 모두 휴무일 신청 완료!</div>';
+    list.innerHTML = '<div class="conflict-empty">🎉 지금은 조율할 날짜가 없어요. 모두 평화롭게 신청 완료!</div>';
     return;
   }
 
@@ -2453,7 +2752,7 @@ function renderConflictPanel(){
       const checked = resolution?.approved?.includes(name) || (!resolution && recommended.includes(name));
       return `
         <div class="conflict-person">
-          <span class="preference-label" style="color:${staffTextColors[name] || '#475569'}">
+          <span class="preference-label staff-identity" style="color:${staffTextColors[name] || '#475569'};background:${staffSoftBackgrounds[name] || 'rgba(255,255,255,.7)'};border:1px solid ${staffBorderColors[name] || 'rgba(203,213,225,.7)'};box-shadow:0 6px 14px ${staffShadowColors[name] || 'rgba(148,163,184,.08)'};">
             ${shortNames[name] || name}<br><small> 보석 💎 ${yieldCredit}개 · 누적 배려 ${yieldCount}회${gemEligible ? ' · 이번 건 적립 가능' : ' · 이번 건 적립 제외'}</small>
           </span>
           ${canEdit ? `
@@ -2481,7 +2780,7 @@ function renderConflictPanel(){
           <span>${currentMonth}월 ${day}일(${weekday}) <span class="soft-divider">·</span> <span class="application-count">신청 ${applicants.length}명</span> <span class="soft-divider">/</span> <span class="capacity-text">허용 ${capacity}명</span></span>
           <span class="conflict-status">${resolution ? '최종 확정' : '조율 필요'}</span>
         </div>
-        <div class="conflict-guide"><span class="cheer-note"> 😊</span><br>먼저 신청자끼리 조율해 주세요. 변경 가능한 직원은 아래 버튼으로 자발적으로 날짜를 옮길 수 있어요.<br><small>직원끼리 합의가 되지 않을 때만 이사가 최종 결정합니다.</small><br>${approvedText}<br><small>보석은 저장된 최초 조율 대상자가 ‘변경 가능’을 선택하고 다른 날짜까지 최종 저장한 경우에만 적립됩니다. 단순 선택 취소에는 적립되지 않아요.</small></div>
+        <div class="conflict-guide"><span class="cheer-note">평화롭고, 공정하게 GO~ 😊</span><br>먼저 신청자끼리 조율해 주세요. 변경 가능한 직원은 아래 버튼으로 자발적으로 날짜를 옮길 수 있어요.<br><small>직원끼리 합의가 되지 않을 때만 이사가 최종 결정합니다.</small><br>${approvedText}<br><small>보석은 저장된 최초 조율 대상자가 ‘변경 가능’을 선택하고 다른 날짜까지 최종 저장한 경우에만 적립됩니다. 단순 선택 취소에는 적립되지 않아요.</small></div>
         <details class="compact-details">
           <summary>조율 선택 기준 자세히</summary>
           <div class="preference-help">
@@ -2832,7 +3131,7 @@ function renderMonthlySummary(){
     return names.map(name => `
       <span
         class="summary-name"
-        style="color:${staffTextColors[name] || '#334155'}; border:1px solid ${(staffTextColors[name] || '#334155')}22;"
+        style="color:${staffTextColors[name] || '#334155'};background:${staffGradients[name] || 'rgba(255,255,255,.82)'};border:1px solid ${staffBorderColors[name] || 'rgba(203,213,225,.7)'};box-shadow:0 5px 12px ${staffShadowColors[name] || 'rgba(148,163,184,.08)'};"
       >${shortNames[name] || name}</span>
     `).join('');
   }
