@@ -935,6 +935,22 @@ body::before{
 }
 </style>
 
+
+<style id="admin-monthly-note-style">
+.admin-monthly-note{display:none;margin-top:11px;border:1px solid rgba(177,180,221,.34);border-radius:16px;background:linear-gradient(135deg,rgba(255,255,255,.78),rgba(239,246,255,.56));overflow:hidden;box-shadow:0 8px 20px rgba(148,163,184,.09);}
+.admin-monthly-note.show{display:block;}
+.admin-monthly-note-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 12px;border:0;background:transparent;color:#667085;font-size:12px;font-weight:900;cursor:pointer;text-align:left;}
+.admin-monthly-note-btn small{flex-shrink:0;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,.82);color:#8b7fa5;border:1px solid rgba(177,180,221,.28);font-size:10px;font-weight:900;}
+.admin-monthly-note.has-note .admin-monthly-note-btn small{color:#567f78;background:rgba(226,252,245,.86);border-color:rgba(124,207,178,.42);}
+.admin-monthly-note.needs-note .admin-monthly-note-btn small{color:#a15c38;background:rgba(255,237,224,.9);border-color:rgba(245,178,126,.48);}
+.admin-monthly-note-editor{display:none;padding:0 12px 12px;}
+.admin-monthly-note.open .admin-monthly-note-editor{display:block;}
+.admin-monthly-note-editor textarea{width:100%;min-height:88px;resize:vertical;padding:11px 12px;border-radius:13px;border:1px solid rgba(203,213,225,.72);background:rgba(255,255,255,.9);color:#475569;font-size:12px;line-height:1.55;outline:none;}
+.admin-monthly-note-editor textarea:focus{border-color:#9fc6ff;box-shadow:0 0 0 4px rgba(159,198,255,.15);}
+.admin-monthly-note-meta{display:flex;justify-content:space-between;gap:10px;margin-top:6px;color:#94a3b8;font-size:9.5px;line-height:1.4;}
+@media(max-width:700px){.admin-monthly-note{border-radius:13px}.admin-monthly-note-btn{padding:10px;font-size:11px}.admin-monthly-note-editor{padding:0 10px 10px}.admin-monthly-note-meta{font-size:9px}}
+</style>
+
 </head>
 <body>
 
@@ -950,7 +966,7 @@ body::before{
 
   <div class="hero">
     <div class="card sidebar">
-      <h2>K지니팝 직원 휴무 신청</h2>
+      <h2>K지니팝 직원 휴무일 신청</h2>
       <p class="helper">직원 선택 후 PIN을 입력하고 해당 월의 토·일 개수만큼 기본 휴무를 선택하세요. 월차는 한 달을 만근하면 다음 달에 1일이 발생하며, 사용하지 않은 월차는 다음 달로 이월됩니다.</p>
 
       <div class="staff-select">
@@ -992,6 +1008,19 @@ body::before{
         <p class="monthly-leave-help" id="monthlyLeaveHelp">월차는 한 달을 만근하면 다음 달에 1일이 발생하며, 미사용분은 계속 이월됩니다. 한 달에는 최대 3일까지 사용할 수 있어요.</p>
         <div class="monthly-leave-days" id="monthlyLeaveDays"></div>
         <div class="monthly-leave-selected" id="monthlyLeaveSelected">선택한 월차 0일</div>
+        <div class="admin-monthly-note" id="adminMonthlyNoteBox">
+          <button type="button" class="admin-monthly-note-btn" id="adminMonthlyNoteBtn">
+            <span>📝 관리자 월차 메모</span>
+            <small id="adminMonthlyNoteStatus">메모 없음</small>
+          </button>
+          <div class="admin-monthly-note-editor" id="adminMonthlyNoteEditor">
+            <textarea id="adminMonthlyNoteInput" maxlength="300" placeholder="예: 8월 발생 월차를 7월 31일에 선사용 · 이사 승인 완료"></textarea>
+            <div class="admin-monthly-note-meta">
+              <span>해당 직원·해당 월의 월차 변경 사유로 저장됩니다.</span>
+              <span id="adminMonthlyNoteCount">0/300</span>
+            </div>
+          </div>
+        </div>
         <div class="monthly-leave-approval" id="monthlyLeaveApprovalBox">
           <small id="monthlyLeaveApprovalHelp">신청 기간이 지난 뒤 월차 날짜를 선택하면 결재 승인 확인 팝업이 표시됩니다. ‘예’를 선택한 경우에만 월차 변경이 적용되며 기본 휴무는 변경되지 않습니다.</small>
         </div>
@@ -1040,7 +1069,7 @@ body::before{
 
       <div class="card conflict-card">
         <div class="conflict-head">
-          <h3>🤝휴무일 조율란😊</h3>
+          <h3>🤝 GO~ 😊</h3>
           <button class="guide-open-btn" type="button" onclick="openCoordinationGuide()">📖 조율 방법 자세히 보기</button>
           <small>정원을 넘은 날짜만 쏙 모아 보여드려요 ✨</small>
         </div>
@@ -1068,7 +1097,7 @@ body::before{
   <section class="guide-modal-panel" role="dialog" aria-modal="true" aria-labelledby="coordinationGuideTitle">
     <button class="guide-close-btn" type="button" onclick="closeCoordinationGuide()" aria-label="안내창 닫기">×</button>
     <div class="guide-modal-kicker">K GENIE POP 휴무 조율 가이드</div>
-    <h2 id="coordinationGuideTitle">휴무일 조율하기~😊</h2>
+    <h2 id="coordinationGuideTitle">평화롭고, 공정하게 GO~😊</h2>
     <p class="guide-intro">소중한 직원님! 이 안내만 읽으면 신청부터 최종 확정까지 한 번에 이해할 수 있어요.</p>
 
     <div class="guide-step">
@@ -1101,7 +1130,7 @@ body::before{
     </div>
 
     <div class="guide-fairness-note">💎 당신의 양보와 배려는 사라지지 않아요. 양보한 사람이 계속 손해 보지 않고, 배려받은 사람이 양보할 수 있도록 시스템은 자동 관리되어 적용됩니다.</div>
-    <button class="guide-confirm-btn" type="button" onclick="closeCoordinationGuide()">이해했어요! 😊</button>
+    <button class="guide-confirm-btn" type="button" onclick="closeCoordinationGuide()">이해했어요! 평화롭게 Go~ 😊</button>
   </section>
 </div>
 
@@ -1132,13 +1161,19 @@ try {
 // 전체 직원 목록입니다. 과거 달력(7월까지)의 기록 표시를 위해 심민규도 유지합니다.
 const employees = ["김은진", "이주훈", "이명규", "심민규", "박혜정"];
 
-// 심민규 직원은 2026년 7월까지만 근무합니다.
+// 직원별 퇴사 월을 반영합니다.
+// 심민규: 2026년 7월까지 근무 / 이주훈: 2026년 8월까지 근무
+// 과거 달의 저장 기록은 유지하고, 해당 월 이후의 선택 목록·범례·출근 요약에서만 제외합니다.
 function getActiveEmployees(year = currentYear, month = currentMonth){
   const viewingSerial = year * 12 + month;
   const august2026Serial = 2026 * 12 + 8;
-  return viewingSerial >= august2026Serial
-    ? employees.filter(name => name !== "심민규")
-    : [...employees];
+  const september2026Serial = 2026 * 12 + 9;
+
+  return employees.filter(name => {
+    if(name === "심민규" && viewingSerial >= august2026Serial) return false;
+    if(name === "이주훈" && viewingSerial >= september2026Serial) return false;
+    return true;
+  });
 }
 
 function updateStaffSelectForMonth(){
@@ -1300,6 +1335,8 @@ let allSchedules = {};
 let conflictData = {};
 let mySelectedDays = new Set();
 let myMonthlyLeaveDays = new Set();
+let loadedMonthlyLeaveDays = new Set();
+let loadedAdminMonthlyLeaveMemo = "";
 let lateMonthlyLeaveApprovalConfirmed = false;
 let adminCorrectionMode = false;
 let adminCorrectionBy = "";
@@ -1415,6 +1452,7 @@ function render(){
   renderMonthlySummary();
   renderConflictPanel();
   updateRemaining();
+  updateAdminMonthlyNoteUI();
 }
 
 function generateCalendar(year, month){
@@ -1505,9 +1543,11 @@ function toggleDay(day){
 
 function getSavedApplicantsForDay(day){
   const monthData = allSchedules[monthKey()] || {};
+  const activeEmployees = new Set(getActiveEmployees());
   const applicants = [];
 
   Object.keys(monthData).forEach(staff => {
+    if(!activeEmployees.has(staff)) return;
     const days = monthData[staff]?.days || [];
     if(days.map(Number).includes(Number(day))) applicants.push(staff);
   });
@@ -1534,12 +1574,14 @@ function getMonthlyLeaveDaysFromData(data){
 
 function getMonthlyLeaveUsersForDay(day){
   const monthData = allSchedules[monthKey()] || {};
+  const activeEmployees = new Set(getActiveEmployees());
   const users = [];
   Object.keys(monthData).forEach(staff => {
+    if(!activeEmployees.has(staff)) return;
     if(getMonthlyLeaveDaysFromData(monthData[staff]).includes(Number(day))) users.push(staff);
   });
   const currentStaff = document.getElementById('staffSelect').value;
-  if(currentStaff && myMonthlyLeaveDays.has(Number(day)) && !users.includes(currentStaff)) users.push(currentStaff);
+  if(currentStaff && activeEmployees.has(currentStaff) && myMonthlyLeaveDays.has(Number(day)) && !users.includes(currentStaff)) users.push(currentStaff);
   return users;
 }
 
@@ -1576,6 +1618,61 @@ function getMonthlyLeaveBalance(staff, year = currentYear, month = currentMonth)
 
 function getMonthlyLeaveSelectableLimit(staff){
   return Math.min(3, getMonthlyLeaveBalance(staff));
+}
+
+function normalizeDayArray(days){
+  return Array.from(days || []).map(Number).filter(Boolean).sort((a,b) => a-b);
+}
+
+function sameDayArray(a, b){
+  const left = normalizeDayArray(a);
+  const right = normalizeDayArray(b);
+  return left.length === right.length && left.every((day, index) => day === right[index]);
+}
+
+function hasAdminMonthlyLeaveChange(){
+  return !sameDayArray(loadedMonthlyLeaveDays, myMonthlyLeaveDays);
+}
+
+function getAdminMonthlyLeaveMemo(){
+  return (document.getElementById('adminMonthlyNoteInput')?.value || '').trim();
+}
+
+function updateAdminMonthlyNoteUI({autoOpen = false} = {}){
+  const box = document.getElementById('adminMonthlyNoteBox');
+  const status = document.getElementById('adminMonthlyNoteStatus');
+  const input = document.getElementById('adminMonthlyNoteInput');
+  const count = document.getElementById('adminMonthlyNoteCount');
+  const staff = document.getElementById('staffSelect')?.value || '';
+  if(!box || !status || !input || !count) return;
+
+  box.classList.toggle('show', adminCorrectionMode && Boolean(staff));
+  if(!adminCorrectionMode || !staff){
+    box.classList.remove('open','has-note','needs-note');
+    return;
+  }
+
+  const memo = input.value.trim();
+  const changed = hasAdminMonthlyLeaveChange();
+  box.classList.toggle('has-note', Boolean(memo));
+  box.classList.toggle('needs-note', changed && !memo);
+  count.textContent = `${input.value.length}/300`;
+
+  if(changed && !memo){
+    status.textContent = '월차 변경 · 메모 필요';
+    if(autoOpen) box.classList.add('open');
+  } else if(memo){
+    status.textContent = '메모 있음';
+  } else {
+    status.textContent = '메모 없음';
+  }
+}
+
+function loadAdminMonthlyLeaveMemo(savedData = {}){
+  loadedAdminMonthlyLeaveMemo = String(savedData.adminMonthlyLeaveMemo || '');
+  const input = document.getElementById('adminMonthlyNoteInput');
+  if(input) input.value = loadedAdminMonthlyLeaveMemo;
+  updateAdminMonthlyNoteUI();
 }
 
 function populateMonthlyLeaveSelect(){
@@ -1668,6 +1765,7 @@ function populateMonthlyLeaveSelect(){
       }
 
       populateMonthlyLeaveSelect();
+      updateAdminMonthlyNoteUI({autoOpen:true});
       paintSavedSchedules();
       renderMonthlySummary();
       renderConflictPanel();
@@ -1965,7 +2063,7 @@ function renderConflictPanel(){
   const monthData = getConflictMonthData();
 
   if(!conflicts.length){
-    list.innerHTML = '<div class="conflict-empty">🎉 지금은 조율할 날짜가 없어요. 모두 신청 완료!</div>';
+    list.innerHTML = '<div class="conflict-empty">🎉 지금은 조율할 날짜가 없어요. 모두 평화롭게 신청 완료!</div>';
     return;
   }
 
@@ -2012,7 +2110,7 @@ function renderConflictPanel(){
           <span>${currentMonth}월 ${day}일(${weekday}) <span class="soft-divider">·</span> <span class="application-count">신청 ${applicants.length}명</span> <span class="soft-divider">/</span> <span class="capacity-text">허용 ${capacity}명</span></span>
           <span class="conflict-status">${resolution ? '최종 확정' : '조율 필요'}</span>
         </div>
-        <div class="conflict-guide"><span class="cheer-note">휴무일 조율하기~😊</span><br>먼저 신청자끼리 조율해 주세요. 변경 가능한 직원은 아래 버튼으로 자발적으로 날짜를 옮길 수 있어요.<br><small>직원끼리 합의가 되지 않을 때만 이사가 최종 결정합니다.</small><br>${approvedText}<br><small>보석은 저장된 최초 조율 대상자가 ‘변경 가능’을 선택하고 다른 날짜까지 최종 저장한 경우에만 적립됩니다. 단순 선택 취소에는 적립되지 않아요.</small></div>
+        <div class="conflict-guide"><span class="cheer-note">평화롭고, 공정하게 GO~ 😊</span><br>먼저 신청자끼리 조율해 주세요. 변경 가능한 직원은 아래 버튼으로 자발적으로 날짜를 옮길 수 있어요.<br><small>직원끼리 합의가 되지 않을 때만 이사가 최종 결정합니다.</small><br>${approvedText}<br><small>보석은 저장된 최초 조율 대상자가 ‘변경 가능’을 선택하고 다른 날짜까지 최종 저장한 경우에만 적립됩니다. 단순 선택 취소에는 적립되지 않아요.</small></div>
         <details class="compact-details">
           <summary>조율 선택 기준 자세히</summary>
           <div class="preference-help">
@@ -2342,13 +2440,21 @@ function loadMySchedule(shouldPaint = true){
   const staff = document.getElementById('staffSelect').value;
   mySelectedDays.clear();
   myMonthlyLeaveDays.clear();
+  loadedMonthlyLeaveDays.clear();
+  loadedAdminMonthlyLeaveMemo = "";
 
+  let savedData = {};
   if(staff){
-    const savedData = allSchedules[monthKey()]?.[staff] || {};
+    savedData = allSchedules[monthKey()]?.[staff] || {};
     const saved = savedData.days || [];
     saved.map(Number).forEach(day => mySelectedDays.add(day));
-    getMonthlyLeaveDaysFromData(savedData).forEach(day => myMonthlyLeaveDays.add(day));
+    getMonthlyLeaveDaysFromData(savedData).forEach(day => {
+      myMonthlyLeaveDays.add(day);
+      loadedMonthlyLeaveDays.add(day);
+    });
   }
+
+  loadAdminMonthlyLeaveMemo(savedData);
 
   if(shouldPaint){
     paintSavedSchedules();
@@ -2356,6 +2462,7 @@ function loadMySchedule(shouldPaint = true){
     renderConflictPanel();
   }
   updateRemaining();
+  updateAdminMonthlyNoteUI();
 }
 
 function getAttendanceForDay(day){
@@ -2416,6 +2523,15 @@ function renderMonthlySummary(){
   summary.innerHTML = items.join('');
 }
 
+document.getElementById('adminMonthlyNoteBtn').addEventListener('click', () => {
+  if(!adminCorrectionMode) return;
+  document.getElementById('adminMonthlyNoteBox')?.classList.toggle('open');
+});
+
+document.getElementById('adminMonthlyNoteInput').addEventListener('input', () => {
+  updateAdminMonthlyNoteUI();
+});
+
 document.getElementById('adminFixBtn').addEventListener('click', () => {
   const button = document.getElementById('adminFixBtn');
 
@@ -2426,6 +2542,7 @@ document.getElementById('adminFixBtn').addEventListener('click', () => {
     button.title = '휴무 정정';
     loadMySchedule();
     updateMonthlyLeaveApprovalUI();
+    updateAdminMonthlyNoteUI();
     showNotice('관리자 일정 관리 모드가 종료되었습니다.', 'success');
     return;
   }
@@ -2445,6 +2562,7 @@ document.getElementById('adminFixBtn').addEventListener('click', () => {
   button.title = '관리자 일정 관리 모드 종료';
   updateMonthlyLeaveApprovalUI();
   loadMySchedule();
+  updateAdminMonthlyNoteUI();
   alert('관리자 일정 관리 모드가 켜졌습니다.\n직원과 월을 선택한 뒤 기본 휴무와 월차를 개수 제한 없이 추가·삭제하고 저장할 수 있습니다.');
 });
 
@@ -2519,12 +2637,31 @@ document.getElementById('submitBtn').addEventListener('click', () => {
     const previousMonthlyLeaveDays = getMonthlyLeaveDaysFromData(savedData).sort((a,b)=>a-b);
     const correctedDays = Array.from(mySelectedDays).sort((a,b)=>a-b);
     const correctedMonthlyLeaveDays = Array.from(myMonthlyLeaveDays).sort((a,b)=>a-b);
+    const monthlyLeaveChanged = !sameDayArray(previousMonthlyLeaveDays, correctedMonthlyLeaveDays);
+    const previousAdminMonthlyLeaveMemo = String(savedData.adminMonthlyLeaveMemo || '');
+    const adminMonthlyLeaveMemo = getAdminMonthlyLeaveMemo();
+
+    if(monthlyLeaveChanged && !adminMonthlyLeaveMemo){
+      document.getElementById('adminMonthlyNoteBox')?.classList.add('open','needs-note');
+      updateAdminMonthlyNoteUI({autoOpen:true});
+      alert('관리자가 월차를 변경할 때는 나중에 기억할 수 있도록 월차 변경 사유를 메모에 입력해주세요.');
+      document.getElementById('adminMonthlyNoteInput')?.focus();
+      return;
+    }
 
     const formatDays = days => days.length ? days.map(day => `${day}일`).join(', ') : '없음';
     const approved = window.confirm(
       `${staff}님의 ${currentYear}년 ${currentMonth}월 일정을 저장하시겠습니까?\n\n` +
       `[기본 휴무]\n기존: ${formatDays(previousDays)}\n변경: ${formatDays(correctedDays)}\n\n` +
-      `[월차]\n기존: ${formatDays(previousMonthlyLeaveDays)}\n변경: ${formatDays(correctedMonthlyLeaveDays)}\n\n` +
+      `[월차]
+기존: ${formatDays(previousMonthlyLeaveDays)}
+변경: ${formatDays(correctedMonthlyLeaveDays)}
+
+` +
+      `[관리자 월차 메모]
+${adminMonthlyLeaveMemo || '없음'}
+
+` +
       `관리자 저장은 신청 기간과 개수 제한을 적용하지 않습니다.`
     );
     if(!approved) return;
@@ -2538,19 +2675,38 @@ document.getElementById('submitBtn').addEventListener('click', () => {
     updates[`schedules/${monthKey()}/${staff}/monthlyLeaveApprovalConfirmed`] = true;
     updates[`schedules/${monthKey()}/${staff}/monthlyLeaveApprovalConfirmedAt`] = now;
     updates[`schedules/${monthKey()}/${staff}/updatedAt`] = now;
+    updates[`schedules/${monthKey()}/${staff}/adminMonthlyLeaveMemo`] = adminMonthlyLeaveMemo || null;
+    updates[`schedules/${monthKey()}/${staff}/adminMonthlyLeaveMemoUpdatedAt`] = adminMonthlyLeaveMemo ? now : null;
+    updates[`schedules/${monthKey()}/${staff}/adminMonthlyLeaveMemoUpdatedBy`] = adminMonthlyLeaveMemo ? adminCorrectionBy : null;
     updates[`schedules/${monthKey()}/${staff}/adminCorrection`] = {
       correctedBy: adminCorrectionBy,
       correctedAt: now,
       previousDays,
       updatedDays: correctedDays,
       previousMonthlyLeaveDays,
-      updatedMonthlyLeaveDays: correctedMonthlyLeaveDays
+      updatedMonthlyLeaveDays: correctedMonthlyLeaveDays,
+      previousAdminMonthlyLeaveMemo,
+      adminMonthlyLeaveMemo
     };
+
+    if(monthlyLeaveChanged || adminMonthlyLeaveMemo !== previousAdminMonthlyLeaveMemo){
+      updates[`adminScheduleNotes/${monthKey()}/${staff}/${now}`] = {
+        type: 'monthlyLeave',
+        note: adminMonthlyLeaveMemo,
+        previousMonthlyLeaveDays,
+        updatedMonthlyLeaveDays: correctedMonthlyLeaveDays,
+        updatedBy: adminCorrectionBy,
+        createdAt: now
+      };
+    }
 
     // 기본 휴무 변경으로 조율 대상이 달라질 수 있으므로 충돌 데이터도 함께 갱신합니다.
     Object.assign(updates, buildConflictCaseUpdates(staff, correctedDays, now));
 
     db.ref().update(updates).then(() => {
+      loadedMonthlyLeaveDays = new Set(correctedMonthlyLeaveDays);
+      loadedAdminMonthlyLeaveMemo = adminMonthlyLeaveMemo;
+      updateAdminMonthlyNoteUI();
       showNotice(`${staff}님의 기본 휴무와 월차가 관리자 설정으로 저장되었습니다.`, 'success');
       alert(
         `${staff}님의 ${currentYear}년 ${currentMonth}월 일정이 저장되었습니다.\n` +
