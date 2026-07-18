@@ -1226,6 +1226,277 @@ body::before{
 }
 
 </style>
+
+
+
+
+
+<style id="photo-ui-style-override">
+:root{
+  --bg:#eef7fd;
+  --bg2:#f8eff5;
+  --card:rgba(255,255,255,0.84);
+  --card-strong:rgba(255,255,255,0.96);
+  --border:rgba(255,255,255,.72);
+  --text:#556575;
+  --sub:#8092a3;
+  --primary:#9fc9e7;
+  --green:#b7dff0;
+  --danger:#efbfd5;
+  --day:rgba(255,255,255,.86);
+  --shadow:0 24px 54px rgba(156,187,214,.16);
+}
+
+body{
+  color:var(--text);
+  background:
+    radial-gradient(circle at 12% 14%, rgba(255,255,255,.80), transparent 18%),
+    radial-gradient(circle at 26% 30%, rgba(184,220,243,.42), transparent 26%),
+    radial-gradient(circle at 52% 36%, rgba(240,210,225,.34), transparent 25%),
+    radial-gradient(circle at 76% 16%, rgba(215,236,249,.46), transparent 26%),
+    radial-gradient(circle at 88% 84%, rgba(255,241,232,.42), transparent 22%),
+    linear-gradient(120deg,#edf7fd 0%, #eaf4fc 28%, #f6edf4 62%, #fff7ef 100%);
+  background-attachment:fixed;
+}
+body::before{
+  background:
+    radial-gradient(circle at 22% 0%, rgba(255,255,255,.52), transparent 28%),
+    radial-gradient(circle at 100% 50%, rgba(255,246,238,.34), transparent 22%),
+    linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,0));
+  opacity:1;
+}
+
+.topbar{margin-bottom:24px;}
+.brand-lockup::before{
+  background:linear-gradient(180deg,#a9d4ef 0%, #e9c8dc 54%, #f7dfc8 100%);
+  box-shadow:0 0 22px rgba(169,212,239,.36);
+}
+.brand-main{color:#576679;text-shadow:0 8px 20px rgba(170,193,214,.10);}
+.brand-main .brand-k{
+  background:linear-gradient(90deg,#8cbfe4 0%, #d9b9d8 48%, #f0cfac 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.brand-main .brand-time{color:#84a1b7;}
+.brand-sub{color:#9da8be;}
+.brand-sub::before{background:linear-gradient(90deg,#b6dcef,#efcfde);}
+.brand-sub span{
+  background:linear-gradient(90deg,#96c8e8,#e1c1d6,#f1d9bc);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.status-pill{
+  background:rgba(255,255,255,.78);
+  border:1px solid rgba(255,255,255,.88);
+  box-shadow:0 10px 24px rgba(170,193,214,.10);
+  color:#7d91a4;
+}
+
+.container{max-width:1460px;}
+.hero{gap:26px;}
+.card{
+  background:linear-gradient(180deg, rgba(255,255,255,.88) 0%, rgba(255,255,255,.78) 100%);
+  border:1px solid rgba(255,255,255,.82);
+  border-radius:34px;
+  box-shadow:0 24px 48px rgba(173,195,214,.14);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+}
+.sidebar,
+.calendar-card,
+.summary-card,
+.conflict-card{position:relative;overflow:hidden;}
+.sidebar::before,
+.calendar-card::before,
+.summary-card::before,
+.conflict-card::before{
+  content:"";
+  position:absolute;
+  inset:auto -40px -65px auto;
+  width:180px;height:180px;border-radius:50%;
+  background:radial-gradient(circle, rgba(199,228,246,.30) 0%, rgba(199,228,246,0) 68%);
+  pointer-events:none;
+}
+.sidebar::after,
+.calendar-card::after{
+  content:"";
+  position:absolute;
+  inset:-35px auto auto -45px;
+  width:150px;height:150px;border-radius:50%;
+  background:radial-gradient(circle, rgba(242,214,226,.24) 0%, rgba(242,214,226,0) 68%);
+  pointer-events:none;
+}
+.sidebar h2,
+.calendar-header h2,
+.summary-title h3,
+.conflict-head h3{position:relative;z-index:1;}
+.sidebar h2{
+  background:linear-gradient(90deg,#95c7e8 0%, #ddbdda 52%, #f0d7bb 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.helper,
+.notice,
+.rule,
+.badge,
+.summary-item,
+.conflict-empty,
+.conflict-guide,
+.preference-help,
+.manager-note,
+.monthly-leave-help,
+.remaining p,
+.remaining small,
+.weekend-count-text,
+.status-pill,
+.slot,
+.weekdays,
+.monthly-leave-selected,
+.monthly-leave-balance,
+.monthly-leave-approval small,
+.conflict-head small,
+.summary-title small{color:#8194a5 !important;}
+
+.staff-select select,
+.staff-select input,
+.manager-row select,
+.manager-row input,
+.conflict-person select,
+.monthly-leave-box select{
+  background:rgba(255,255,255,.92);
+  border:1px solid rgba(237,243,248,.98);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.96), 0 8px 18px rgba(179,200,219,.06);
+}
+.staff-select select:focus,
+.staff-select input:focus,
+.manager-row select:focus,
+.manager-row input:focus,
+.conflict-person select:focus,
+.monthly-leave-box select:focus{
+  border-color:#b9d9ee;
+  box-shadow:0 0 0 4px rgba(185,217,238,.20), inset 0 1px 0 rgba(255,255,255,.94);
+}
+
+.gem-vault{
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255,255,255,.95), transparent 22%),
+    linear-gradient(135deg, rgba(255,255,255,.92) 0%, rgba(237,247,252,.96) 42%, rgba(250,240,246,.96) 100%);
+  border:1px solid rgba(255,255,255,.88);
+  box-shadow:0 14px 34px rgba(180,204,225,.10);
+}
+.gem-vault.royal{
+  background:
+    radial-gradient(circle at 50% -5%, rgba(255,255,255,.98), transparent 28%),
+    linear-gradient(135deg, rgba(255,250,232,.96), rgba(241,248,252,.94) 44%, rgba(252,242,247,.94));
+  box-shadow:0 18px 40px rgba(208,193,158,.14), 0 0 0 4px rgba(255,255,255,.34) inset;
+}
+.remaining{
+  background:linear-gradient(135deg, rgba(255,255,255,.95) 0%, rgba(239,248,253,.90) 48%, rgba(252,244,239,.90) 100%);
+  border:1px solid rgba(255,255,255,.86);
+  box-shadow:0 14px 30px rgba(170,193,214,.08);
+}
+.remaining h1{color:#8fc2e3;text-shadow:0 10px 22px rgba(159,201,231,.18);}
+.rule{color:#7f94a5;background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.88);}
+
+.submit,
+.guide-confirm-btn{
+  background:linear-gradient(135deg,#a8d4ef 0%, #eac8dc 54%, #f4dcc3 100%);
+  color:#ffffff;
+  box-shadow:0 16px 30px rgba(191,205,220,.22);
+  text-shadow:0 1px 2px rgba(120,136,152,.16);
+}
+.submit:hover,
+.guide-confirm-btn:hover,
+.small-action:hover,
+.btn:hover{filter:brightness(1.03);}
+.small-action{background:linear-gradient(135deg,#f3fbff,#fff5fa);color:#8aa4bf;}
+.small-action.manager{background:linear-gradient(135deg,#f6fbff,#fffaf4);color:#97adbf;}
+.guide-open-btn{background:linear-gradient(135deg,#ffffff,#f3faff,#fff7f3);color:#96afc8;box-shadow:0 8px 18px rgba(173,195,214,.10);}
+.btn{background:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.90);color:#91a7bb;box-shadow:0 10px 22px rgba(173,195,214,.08);}
+
+.day{
+  background:linear-gradient(180deg, rgba(255,255,255,.94) 0%, rgba(255,255,255,.80) 100%);
+  border:1px solid rgba(255,255,255,.92);
+  border-radius:24px;
+  box-shadow:0 10px 24px rgba(173,195,214,.08);
+}
+.day:hover{border-color:rgba(189,216,236,.56);box-shadow:0 18px 30px rgba(173,195,214,.12);}
+.day.available{box-shadow:0 10px 24px rgba(173,195,214,.08), 0 0 0 1px rgba(221,237,248,.24);}
+.day.selected{outline:3px solid rgba(168,210,237,.56);}
+.day.overlap{outline:2px dashed rgba(226,194,216,.88);}
+.day.monthly-leave{box-shadow:0 0 0 3px rgba(210,215,245,.30) inset, 0 10px 24px rgba(173,195,214,.08);}
+.day-number{color:#617285;}
+.staff-tag{background:rgba(255,255,255,.94);box-shadow:0 6px 12px rgba(173,195,214,.06);}
+.monthly-leave-tag{background:#f5f0ff;color:#9a91d6;border:1px solid #e0d8fa;}
+.monthly-leave-box{background:linear-gradient(135deg, rgba(245,251,255,.86), rgba(255,247,243,.80));border:1px solid rgba(255,255,255,.88);}
+.monthly-leave-balance strong,
+.monthly-leave-selected,
+.monthly-leave-box label{color:#9fc9e7;}
+.monthly-leave-day-btn{background:rgba(255,255,255,.92);border:1px solid rgba(230,238,246,.90);}
+.monthly-leave-day-btn.selected{background:linear-gradient(135deg,#eef7fd,#fff4f8);color:#90bde0;border-color:#d9e6f1;}
+.monthly-leave-approval{background:rgba(255,255,255,.76);border:1px dashed rgba(191,210,228,.54);}
+
+.legend .badge,
+.summary-item,
+.conflict-item,
+.conflict-empty,
+.preference-help,
+.monthly-leave-balance,
+.monthly-leave-approval,
+.compact-details,
+.summary-details > summary,
+.guide-modal-panel,
+.guide-fairness-note,
+.conflict-guide,
+.mobile-collapsible,
+.conflict-card,
+.summary-card{background-color:rgba(255,255,255,.74);}
+.badge,
+.summary-item,
+.conflict-item,
+.conflict-empty,
+.preference-help,
+.monthly-leave-balance,
+.summary-details > summary,
+.compact-details,
+.mobile-collapsible{border:1px solid rgba(255,255,255,.88);}
+.conflict-card{background:linear-gradient(145deg, rgba(255,255,255,.86), rgba(250,246,249,.80));}
+.conflict-head h3{color:#9ec8e6;}
+.conflict-item{background:linear-gradient(145deg, rgba(255,255,255,.94), rgba(249,251,254,.80));border:1px solid rgba(226,235,243,.60);box-shadow:0 10px 22px rgba(173,195,214,.08);}
+.conflict-item.resolved{border-color:rgba(193,226,218,.44);background:linear-gradient(145deg, rgba(248,255,253,.94), rgba(247,251,252,.80));}
+.conflict-status{background:#fff5fa;color:#d8afc9;border:1px solid #f0d5e4;}
+.conflict-item.resolved .conflict-status{background:#f1fbff;color:#9ec5df;border-color:#d7edf7;}
+.summary-item strong,
+.conflict-date,
+.preference-help strong,
+.monthly-leave-balance strong,
+.gem-title{color:#5d6e81;}
+.approval-row.auto-target{background:rgba(246,251,255,.62);border:1px dashed rgba(191,210,228,.44);}
+.auto-note,.cheer-note{color:#b9bddf;}
+.capacity-text{color:#bcc7d8;}
+
+.guide-modal-backdrop{background:rgba(146,169,191,.24);backdrop-filter:blur(10px);}
+.guide-modal-panel{background:linear-gradient(145deg, rgba(255,255,255,.98), rgba(250,252,255,.97));box-shadow:0 30px 80px rgba(173,195,214,.18);}
+.guide-modal-kicker{background:#f2f9ff;color:#9fc9e7;}
+.guide-step-number{background:linear-gradient(135deg,#f1f9ff,#fff4f8);color:#9dc6e4;}
+.guide-fairness-note{background:linear-gradient(135deg,#f1f9ff,#fff7f4,#fffafd);}
+.admin-fix-btn.active{background:#9fc9e7;border-color:#9fc9e7;}
+
+@media(max-width:700px){
+  body{
+    background:
+      radial-gradient(circle at 18% 0%, rgba(255,255,255,.30), transparent 26%),
+      linear-gradient(180deg,#edf7fd 0%, #edf6fc 38%, #f7edf4 70%, #fff7ef 100%);
+    background-attachment:scroll;
+  }
+  .card{border-radius:24px;}
+  .day{border-radius:12px;}
+}
+</style>
+
 </head>
 <body>
 
@@ -1243,7 +1514,7 @@ body::before{
 
   <div class="hero">
     <div class="card sidebar">
-      <h2>K지니POP 직원 휴무 세팅ZONE</h2>
+      <h2>K지니팝 매장 직원 휴무일 신청</h2>
       <p class="helper">직원 선택 후 PIN을 입력하고 해당 월의 토·일 개수만큼 기본 휴무를 선택하세요. 월차는 한 달을 만근하면 다음 달에 1일이 발생하며, 사용하지 않은 월차는 다음 달로 이월됩니다.</p>
 
       <div class="staff-select">
@@ -1333,7 +1604,7 @@ body::before{
 
       <div class="card conflict-card">
         <div class="conflict-head">
-          <h3>🤝 평화롭고, 공정하게 GO~ 😊</h3>
+          <h3>🤝 휴무일 조율란 </h3>
           <button class="guide-open-btn" type="button" onclick="openCoordinationGuide()">📖 조율 방법 자세히 보기</button>
           <small>정원을 넘은 날짜만 쏙 모아 보여드려요 ✨</small>
         </div>
@@ -1361,7 +1632,7 @@ body::before{
   <section class="guide-modal-panel" role="dialog" aria-modal="true" aria-labelledby="coordinationGuideTitle">
     <button class="guide-close-btn" type="button" onclick="closeCoordinationGuide()" aria-label="안내창 닫기">×</button>
     <div class="guide-modal-kicker">K GENIE POP 휴무 조율 가이드</div>
-    <h2 id="coordinationGuideTitle">평화롭고, 공정하게 GO~😊</h2>
+    <h2 id="coordinationGuideTitle">휴무일 조정란</h2>
     <p class="guide-intro">소중한 직원님! 이 안내만 읽으면 신청부터 최종 확정까지 한 번에 이해할 수 있어요.</p>
 
     <div class="guide-step">
@@ -1394,7 +1665,7 @@ body::before{
     </div>
 
     <div class="guide-fairness-note">💎 당신의 양보와 배려는 사라지지 않아요. 양보한 사람이 계속 손해 보지 않고, 배려받은 사람이 양보할 수 있도록 시스템은 자동 관리되어 적용됩니다.</div>
-    <button class="guide-confirm-btn" type="button" onclick="closeCoordinationGuide()">이해했어요! 평화롭게 Go~ 😊</button>
+    <button class="guide-confirm-btn" type="button" onclick="closeCoordinationGuide()">이해했어요!😊</button>
   </section>
 </div>
 
@@ -1456,19 +1727,20 @@ const employeePins = {
 };
 
 const staffColors = {
-  "김은진":"#B7B1F2",
-  "이주훈":"#FBF3B9",
-  "이명규":"#FFDCCC",
-  "심민규":"#D9D5FA",
-  "박혜정":"#FDB7EA"
+  "김은진":"#00E0BA",
+  "이주훈":"#FF80C7",
+  "이명규":"#5996FF",
+  "심민규":"#00E0BA",
+  "박혜정":"#FFCF00"
 };
 
+// 이름표 글자는 같은 계열의 짙은 색을 사용해 밝은 배경에서도 잘 보이게 합니다.
 const staffTextColors = {
-  "김은진":"#6D64C6",
-  "이주훈":"#9B842D",
-  "이명규":"#C4775E",
-  "심민규":"#756CCB",
-  "박혜정":"#BE5D9A"
+  "김은진":"#007F6B",
+  "이주훈":"#C83D8E",
+  "이명규":"#2869C9",
+  "심민규":"#007F6B",
+  "박혜정":"#9A7900"
 };
 
 const shortNames = {
@@ -2162,7 +2434,7 @@ function renderConflictPanel(){
   const monthData = getConflictMonthData();
 
   if(!conflicts.length){
-    list.innerHTML = '<div class="conflict-empty">🎉 지금은 조율할 날짜가 없어요. 모두 평화롭게 신청 완료!</div>';
+    list.innerHTML = '<div class="conflict-empty">🎉 지금은 조율할 날짜가 없어요. 모두 휴무일 신청 완료!</div>';
     return;
   }
 
@@ -2209,7 +2481,7 @@ function renderConflictPanel(){
           <span>${currentMonth}월 ${day}일(${weekday}) <span class="soft-divider">·</span> <span class="application-count">신청 ${applicants.length}명</span> <span class="soft-divider">/</span> <span class="capacity-text">허용 ${capacity}명</span></span>
           <span class="conflict-status">${resolution ? '최종 확정' : '조율 필요'}</span>
         </div>
-        <div class="conflict-guide"><span class="cheer-note">평화롭고, 공정하게 GO~ 😊</span><br>먼저 신청자끼리 조율해 주세요. 변경 가능한 직원은 아래 버튼으로 자발적으로 날짜를 옮길 수 있어요.<br><small>직원끼리 합의가 되지 않을 때만 이사가 최종 결정합니다.</small><br>${approvedText}<br><small>보석은 저장된 최초 조율 대상자가 ‘변경 가능’을 선택하고 다른 날짜까지 최종 저장한 경우에만 적립됩니다. 단순 선택 취소에는 적립되지 않아요.</small></div>
+        <div class="conflict-guide"><span class="cheer-note"> 😊</span><br>먼저 신청자끼리 조율해 주세요. 변경 가능한 직원은 아래 버튼으로 자발적으로 날짜를 옮길 수 있어요.<br><small>직원끼리 합의가 되지 않을 때만 이사가 최종 결정합니다.</small><br>${approvedText}<br><small>보석은 저장된 최초 조율 대상자가 ‘변경 가능’을 선택하고 다른 날짜까지 최종 저장한 경우에만 적립됩니다. 단순 선택 취소에는 적립되지 않아요.</small></div>
         <details class="compact-details">
           <summary>조율 선택 기준 자세히</summary>
           <div class="preference-help">
